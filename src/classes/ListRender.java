@@ -17,9 +17,17 @@ public class ListRender implements TableCellRenderer{
 		JComponent comp = new JLabel("UNK");
 		try{
 			comp = (JComboBox<Object>)value;
+			System.out.println("combo");
 		}
 		catch(java.lang.ClassCastException ex){
-			comp = new JLabel((String)value);
+			Object[] v = new Object[1];
+			v[0] = (String)value;
+			comp = new JComboBox<Object>(v);
+			
+			// adding tool tip text for this combobox
+			String productName = Main.mainProducts.get(row);
+			String tipText = Main.getValue(Main.mainOffers, (String)value,productName );
+			comp.setToolTipText(tipText);
 		}
 		
 		return comp;

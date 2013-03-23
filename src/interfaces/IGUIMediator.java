@@ -9,21 +9,19 @@ public interface IGUIMediator {
 	// method for signing into the application
 	// method receives the username and the password
 	// and returns the type of the user : "buyer"/"seller"
+	// or null if there is no user with this details
 	public String signIn(String username,String password);
 	
 	// method for signing out
 	// returns true if everything is fine, false otherwise
 	public boolean signOut(String username);
 	
-	// method for loading the products from database
+	// method for loading the offers from database
 	// to GUI module for a specific user
 	// method receives the username for this user
-	// returns an ArrayList of Products
-	// if the user is a buyer , the products returned represents
-	// the products for which he requested an offer
-	// if the user is a seller, the products returned represents
-	// the products for which he made an offer
-	public ArrayList<Product> loadProducts(String username);
+	// and the userType
+	// returns an ArrayList of offers
+	public ArrayList<Offer> loadOffers(String username ,String userType);
 	
 	// method for accepting an offer
 	// this method will be called by the Buyer with user name = "username"
@@ -40,7 +38,7 @@ public interface IGUIMediator {
 	// method for making an offer for a specific product
 	// this method will be called by a Seller identified by "username"
 	// returns true if the offer was successfully made, or false otherwise
-	public boolean makeOffer(String username, Offer offer, Product product);
+	public boolean makeOffer(String username, Offer offer, String product);
 	
 	// method for canceling the request for a specific product/service
 	// this method will be called by a Buyer who requested a product/service
@@ -49,7 +47,7 @@ public interface IGUIMediator {
 	// the product is identified by the "product" parameter
 	// returns true if the request for a product was successfully canceled
 	// or false otherwise
-	public boolean cancelRequest(String username, Product product);
+	public boolean cancelRequest(String username, String product);
 	
 	// method for canceling an offer for a Product
 	// this method will be called by a Seller
