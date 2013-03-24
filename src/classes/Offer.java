@@ -7,6 +7,7 @@ public class Offer {
 		this.product = product;
 		this.seller = seller;
 		this.value = value;
+		this.isAccepted = false;
 	}
 
 	// the product/service the offer is available for
@@ -17,6 +18,9 @@ public class Offer {
 	
 	// the value of the offer
 	private String value;
+	
+	// the flag for an accepted offer or not
+	private boolean isAccepted;
 	
 	public String getValue() {
 		return value;
@@ -44,6 +48,15 @@ public class Offer {
 	// public setter for seller field
 	public void setSeller(String seller) {
 		this.seller = seller;
+	}
+	
+	public boolean getIsAccepted(){
+		return isAccepted;
+	}
+	
+	// public setter for isAccepted field
+	public void setIsAccepted(boolean flag){
+		this.isAccepted = flag;
 	}
 
 }

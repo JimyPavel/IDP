@@ -40,14 +40,12 @@ public class Mediator implements IMediator{
 
 	@Override
 	public boolean acceptOffer(String username, Offer offer) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean refuseOffer(String username, Offer offer) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -84,6 +82,12 @@ public class Mediator implements IMediator{
 	@Override
 	public ArrayList<String> getSellers(String productName) {
 		return web.getSellers(productName);
+	}
+
+	@Override
+	public void startTransfer(String buyer, String seller, Offer offer) {
+		web.startTransfer(buyer,seller,offer);
+		
 	}
 
 }

@@ -25,7 +25,7 @@ public class ListRender implements TableCellRenderer{
 			
 			// adding tool tip text for this combobox
 			String productName = Gui.mainProducts.get(row).getName();
-		//	String tipText = Gui.getValue(Gui.mainOffers, (String)value,productName );
+		//	String tipText = "bau bau";
 		//	comp.setToolTipText(tipText);
 		}
 		

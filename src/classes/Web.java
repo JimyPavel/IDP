@@ -170,4 +170,10 @@ public class Web implements IWeb {
 		
 	}
 
+	@Override
+	public void startTransfer(String buyer, String seller, Offer offer) {
+		
+		
+	}
+
 }
