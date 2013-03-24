@@ -17,7 +17,6 @@ public class ListRender implements TableCellRenderer{
 		JComponent comp = new JLabel("UNK");
 		try{
 			comp = (JComboBox<Object>)value;
-			System.out.println("combo");
 		}
 		catch(java.lang.ClassCastException ex){
 			Object[] v = new Object[1];
@@ -25,8 +24,8 @@ public class ListRender implements TableCellRenderer{
 			comp = new JComboBox<Object>(v);
 			
 			// adding tool tip text for this combobox
-			String productName = Main.mainProducts.get(row);
-			String tipText = Main.getValue(Main.mainOffers, (String)value,productName );
+			String productName = Gui.mainProducts.get(row).getName();
+			String tipText = Gui.getValue(Gui.mainOffers, (String)value,productName );
 			comp.setToolTipText(tipText);
 		}
 		

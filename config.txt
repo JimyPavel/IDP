@@ -1,11 +1,9 @@
 jimy
 test
 buyer
-service_2:curatare toaleta
-furnizor1 no_offer
-furnizor2 25
-service_3:spalat geamuri
-furnizor3 2
-furnizor4 no_offer
-furnizor5 35
-service_0:reparat calculator
+lili
+test
+seller
+ion
+test
+seller

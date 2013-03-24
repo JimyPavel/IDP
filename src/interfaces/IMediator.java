@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import classes.*;
 
 // this interfaces the communication between GUI module and Mediator module
-public interface IGUIMediator {
+public interface IMediator {
 
 	// method for signing into the application
 	// method receives the username and the password
@@ -16,12 +16,12 @@ public interface IGUIMediator {
 	// returns true if everything is fine, false otherwise
 	public boolean signOut(String username);
 	
-	// method for loading the offers from database
+	// method for loading the products from database
 	// to GUI module for a specific user
 	// method receives the username for this user
 	// and the userType
-	// returns an ArrayList of offers
-	public ArrayList<Offer> loadOffers(String username ,String userType);
+	// returns an ArrayList of products
+	public ArrayList<Product> loadProducts(String username ,String userType);
 	
 	// method for accepting an offer
 	// this method will be called by the Buyer with user name = "username"
@@ -68,4 +68,13 @@ public interface IGUIMediator {
 	// sellerUsername = username of the seller who made this offer
 	// offer = offer object which is accepted by the Buyer
 	public int getTransferStatus(String buyerUsername, String sellerUsername, Offer offer);
+	
+	// this method will receive a gui object
+	public void registerGui(IGui gui);
+	
+	
+	public void registerWeb(IWeb web);
+	
+	
+	
 }
