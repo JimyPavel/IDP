@@ -81,4 +81,9 @@ public class Mediator implements IMediator{
 		return 0;
 	}
 
+	@Override
+	public ArrayList<String> getSellers(String productName) {
+		return web.getSellers(productName);
+	}
+
 }

@@ -23,4 +23,7 @@ public interface IWeb {
 	// and the userType
 	// returns an ArrayList of products
 	public ArrayList<Product> loadProducts(String username ,String userType);
+	
+	// this method will return a list of sellers who offer this product
+	public ArrayList<String> getSellers(String productName);
 }

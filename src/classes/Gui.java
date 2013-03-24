@@ -10,6 +10,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
@@ -17,8 +20,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JPopupMenu;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -44,7 +50,7 @@ public class Gui extends JPanel implements IGui{
 	protected String 				userName;
 	protected IMediator 			mediator;
 	public static ArrayList<Offer>  mainOffers;
-	public  static ArrayList<Product> mainProducts;
+	public static ArrayList<Product> mainProducts;
 	
 	
 	public Gui(IMediator mediator)
@@ -283,6 +289,181 @@ public class Gui extends JPanel implements IGui{
 		
 		table.setCellSelectionEnabled(true);
 		
+		// adding mouse listener on table
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+	        public void mouseReleased(MouseEvent e) {
+				
+				if(e.isMetaDown()){
+					final int r = table.rowAtPoint(e.getPoint());
+		            final int c = table.columnAtPoint(e.getPoint());
+		            if (r >= 0 && r < table.getRowCount()) {
+		                table.setRowSelectionInterval(r, r);
+		            } else {
+		                table.clearSelection();
+		            }
+		            JPopupMenu popup = new JPopupMenu();
+		            // if the user is a buyer
+		            if(userType.equals(User.BUYER_TYPE)){
+		            	// if he pressed on service name cell
+		            	if(c == 0){
+		            		popup.removeAll();
+		            		
+		            		// add launch offer request button
+		            		JMenuItem launch = new JMenuItem("Launch offer request");
+		            		launch.addActionListener(new ActionListener() {
+								
+								@Override
+								public void actionPerformed(ActionEvent arg0) {
+									String productName = (String)table.getValueAt(r, c);
+									
+									// we change the status in ACTIVE->NO OFFER
+									table.setValueAt("NO OFFER", r, 2);
+									
+									// we make a request to mediator for sellers list
+									ArrayList<String> sellers = 
+										mediator.getSellers(productName);
+									
+									if(sellers != null){
+										// we populate the comboBox
+										JComboBox combo = (JComboBox)table.getModel().getValueAt(r, 1);
+										for(int i =0; i<sellers.size();i++){
+											combo.addItem(sellers.get(i));
+										}
+										combo.setEnabled(true);
+										
+										combo.setName("combo"+r);
+										combo.addComponentListener(new ComponentAdapter() {
+										      public void componentShown(ComponentEvent e) {
+										        final JComponent c = (JComponent) e.getSource();
+										        SwingUtilities.invokeLater(new Runnable() {
+										          public void run() {
+										            c.requestFocus();
+										            System.out.println(c);
+										            if (c instanceof JComboBox) {
+										              System.out.println("a");
+										            }
+										          }
+										        });
+										      }
+										    });
+										
+										// action listener for changing item
+										combo.addActionListener(new ActionListener() {
+											
+											@Override
+											public void actionPerformed(ActionEvent arg0) {
+												
+												// we take the name of the comboBox
+												// it's like "combo0" ,where 0 is the row number in table
+												String comboName = (String)((JComboBox)arg0.getSource()).getName();
+												int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
+												
+												String sellerName =(String)((JComboBox)arg0.getSource()).getSelectedItem();
+												String productName = mainProducts.get(rowNo).getName();
+											}
+										});
+									}
+									
+								}
+							});
+		            		
+		            		// add drop offer request button
+		            		JMenuItem drop = new JMenuItem("Drop offer request");
+		            		drop.addActionListener(new ActionListener() {
+								
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									String serviceName = (String)table.getValueAt(r, c);
+									System.out.println("drop offer request for " + serviceName);
+								}
+							});
+		            		drop.setEnabled(false);
+		            		
+		            		popup.add(launch);
+		            		popup.add(drop);
+		            	}
+		            	// else if he pressed on sellers list cell
+		            	else if(c == 1){
+		            		popup.removeAll();
+		            		// add accept offer button
+		            		JMenuItem acceptOffer = new JMenuItem("Accept offer");
+		            		acceptOffer.addActionListener(new ActionListener() {
+								
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									System.out.println("accept offer");
+								}
+							});
+		            		acceptOffer.setEnabled(false);
+		            		
+		            		// add refuse offer button
+		            		JMenuItem refuseOffer = new JMenuItem("Refuse offer");
+		            		refuseOffer.addActionListener(new ActionListener() {
+								
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									System.out.println("refuse offer");
+								}
+							});
+		            		refuseOffer.setEnabled(false);
+		            		
+		            		popup.add(acceptOffer);
+		            		popup.add(refuseOffer);
+		            	}
+		            }
+		            // else, if he is a seller, we create other items in the menu
+		            else if(userType.equals(User.SELLER_TYPE)){
+		            	
+		            	// if he pressed right click on buyers list
+		            	if(c == 1){
+		            		popup.removeAll();
+		            		// add make offer button
+		            		JMenuItem makeOffer = new JMenuItem("Make offer");
+		            		makeOffer.addActionListener(new ActionListener() {
+								
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									
+									String offerValue = 
+										JOptionPane.showInputDialog("Insert the value");
+								}
+							});
+		            		makeOffer.setEnabled(true);
+		            		
+		            		// add drop auction  button
+		            		JMenuItem dropAuction = new JMenuItem("Drop auction");
+		            		dropAuction.addActionListener(new ActionListener() {
+								
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									System.out.println("drop auction");
+								}
+							});
+		            		dropAuction.setEnabled(false);
+		            		
+		            		popup.add(makeOffer);
+		            		popup.add(dropAuction);
+		            	}
+		            }
+		            
+		            popup.show(e.getComponent(), e.getX(), e.getY());
+		          //  System.out.println(r + " " + c);
+
+		        /*    int rowindex = table.getSelectedRow();
+		            if (rowindex < 0)
+		                return;
+		            if (e.isPopupTrigger() && e.getComponent() instanceof JTable ) {
+		                JPopupMenu popup = new JPopupMenu();
+		                popup.show(e.getComponent(), e.getX(), e.getY());
+		            }
+		            */
+				}
+				
+	            
+			}
+		});
+		
 		// top, bottom, center
 		JPanel top = new JPanel(new FlowLayout());			// a welcome message	
 		JPanel center = new JPanel(new FlowLayout());		// the table
@@ -335,41 +516,6 @@ public class Gui extends JPanel implements IGui{
 		return s;
 	}
 	
-	// this method returns all unique products
-	public ArrayList<String> getProducts(ArrayList<Offer> offers){
-		ArrayList<String> products = null;
-		
-		for(int i = 0; i < offers.size() ; i++){
-			Offer offer = offers.get(i);
-			if(products == null){
-				products = new ArrayList<String>();
-			}
-			
-			// if this products is not in the list, we add it
-			if(!products.contains(offer.getProduct())){
-				products.add(offer.getProduct());
-			}
-		}
-		
-		return products;
-	}
-	
-	// this method returns all sellers for a specific service
-	public ArrayList<String> getSellers(ArrayList<Offer> offers, String productName){
-		ArrayList<String> sellers = null;
-		
-		for(int i=0; i< offers.size() ; i++){
-			Offer offer = offers.get(i);
-			if(offer.getProduct().equals(productName) && offer.getSeller()!=null){
-				if(sellers == null){
-					sellers = new ArrayList<String>();
-				}
-				sellers.add(offer.getSeller());
-			}
-		}
-		
-		return sellers;
-	}
 
 	
 	

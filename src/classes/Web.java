@@ -111,11 +111,63 @@ public class Web implements IWeb {
 				  }
 				  products.add(product);
 			  }
+			  in.close();
 			  
 		    }catch (Exception e){//Catch exception if any
 			  System.err.println("Error: " + e.getMessage());
-			  }
+			 }
 		   return products;
+	}
+
+	@Override
+	public ArrayList<String> getSellers(String productName) {
+		
+		ArrayList<String> sellers = null;
+		ArrayList<String> sellersFiles = new ArrayList<String>();
+		sellersFiles.add("lili.txt");
+		sellersFiles.add("ion.txt");
+		
+		for(int i=0 ; i< sellersFiles.size() ; i++){
+			try{
+			  String path = sellersFiles.get(i);
+			  // Open the file that is the first 
+			  // command line parameter
+			  FileInputStream fstream = new FileInputStream(path);
+			  // Get the object of DataInputStream
+			  DataInputStream in = new DataInputStream(fstream);
+			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			  String strLine;
+			  
+			  
+			  // we read the products 
+			  while((strLine=br.readLine()) != null){
+				  // strLine is something like "service:name" or "offer:name"
+				  // name is the name of the service/product
+				  String[] components = strLine.split(":");
+				  String p = components[1];
+				  
+				  
+				  // if we find the service that we are looking for
+				  // then we add the seller to the list
+				  if(p.equals(productName)){
+					  String[] aux = path.split(".txt");
+					  String sellerName = aux[0];
+					  
+					  if(sellers == null){
+						  sellers = new ArrayList<String>();
+					  }
+					  sellers.add(sellerName);
+					  break;
+				  }
+			  }
+			  in.close();
+		    }catch (Exception e){//Catch exception if any
+			  System.err.println("Error: " + e.getMessage());
+			 }
+			    
+		}
+		return sellers;
+		
 	}
 
 }

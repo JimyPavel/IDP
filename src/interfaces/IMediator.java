@@ -69,12 +69,13 @@ public interface IMediator {
 	// offer = offer object which is accepted by the Buyer
 	public int getTransferStatus(String buyerUsername, String sellerUsername, Offer offer);
 	
-	// this method will receive a gui object
+	// this method will register a gui object
 	public void registerGui(IGui gui);
 	
-	
+	// this method will register a web object
 	public void registerWeb(IWeb web);
 	
-	
+	// this method will return a list of sellers who offer this product
+	public ArrayList<String> getSellers(String productName);
 	
 }
