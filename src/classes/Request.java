@@ -7,6 +7,7 @@ public class Request {
 	public Request(String productName, String buyerName) {
 		this.productName = productName;
 		this.buyerName = buyerName;
+		this.offer = null;
 	}
 	
 	public String getProductName() {
@@ -22,10 +23,21 @@ public class Request {
 		this.buyerName = buyerName;
 	}
 	
+	public Offer getOffer() {
+		return offer;
+	}
+
+	public void setOffer(Offer offer) {
+		this.offer = offer;
+	}
+	
 	// field for product Name
 	private String productName;
 	// field for buyer Name
 	private String buyerName;
+	// field for the offer for this request
+	private Offer offer;
+	
 	
 
 }

@@ -22,6 +22,17 @@ public class Offer {
 	// the flag for an accepted offer or not
 	private boolean isAccepted;
 	
+	// the flag for a refused offer
+	private boolean isRefused;
+
+	public boolean isRefused() {
+		return isRefused;
+	}
+
+	public void setRefused(boolean isRefused) {
+		this.isRefused = isRefused;
+	}
+
 	public String getValue() {
 		return value;
 	}

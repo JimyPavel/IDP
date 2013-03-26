@@ -40,11 +40,15 @@ public class Mediator implements IMediator{
 
 	@Override
 	public boolean acceptOffer(String username, Offer offer) {
+		// TODO:  network.acceptOffer() => scriere in fisier
+		// anunta utilizatorii ca s-a acceptat o oferta
 		return true;
 	}
 
 	@Override
 	public boolean refuseOffer(String username, Offer offer) {
+		// TODO:  network.acceptOffer() => scriere in fisier
+		// anunta utilizatorii ca s-a refuzat o oferta
 		return true;
 	}
 
@@ -82,6 +86,11 @@ public class Mediator implements IMediator{
 	@Override
 	public ArrayList<String> getSellers(String productName) {
 		return web.getSellers(productName);
+	}
+	
+	@Override
+	public ArrayList<String> getBuyers(String productName){
+		return web.getBuyers(productName);
 	}
 
 	@Override

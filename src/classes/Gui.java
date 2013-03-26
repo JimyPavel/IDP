@@ -17,6 +17,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -324,7 +327,7 @@ public class Gui extends JPanel implements IGui{
 												String comboName = (String)((JComboBox)arg0.getSource()).getName();
 												int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
 												
-												String userName =(String)((JComboBox)arg0.getSource()).getSelectedItem();
+												String userName1 =(String)((JComboBox)arg0.getSource()).getSelectedItem();
 												String productName = mainProducts.get(rowNo).getName();
 												
 												// we search in hashtable the user with "userName" for key = "productName"
@@ -333,7 +336,7 @@ public class Gui extends JPanel implements IGui{
 												if(users != null){
 													User user = null;
 													for(int i=0; i<users.size();i++){
-														if(users.get(i).getUsername().equals(userName)){
+														if(users.get(i).getUsername().equals(userName1)){
 															user = users.get(i);
 															break;
 														}
@@ -424,7 +427,7 @@ public class Gui extends JPanel implements IGui{
 		            		
 		            		drop.setEnabled(false);
 		            		
-		            		// if this product is ACTIVE but not accepted
+		            		// if this product is ACTIVE but not accepted or not refused
 		            		// we enable the drop button
 		            		if(tableEntries != null &&
 		            				productsStatus != null &&
@@ -499,7 +502,9 @@ public class Gui extends JPanel implements IGui{
 		            		// and the selected seller in comboBox made an offer
 		            		// then we enable the button
 		            		if(productsStatus.get(productName) &&
-		            				offerMade(productName,r)){
+		            				offerMade(productName,r) &&
+		            				!isAccepted(productName) &&
+		            				!isRefused(productName)){
 		            			acceptOfferB.setEnabled(true);
 		            		}
 		            		
@@ -509,16 +514,28 @@ public class Gui extends JPanel implements IGui{
 								
 								@Override
 								public void actionPerformed(ActionEvent e) {
-									System.out.println("refuse offer");
+									String productName = (String)table.getModel().getValueAt(r, 0);
+									
+									// we refuse the offer
+									refuseOffer(productName, r);
+									
+									// and change the status to "OFFER REFUSED"
+									table.getModel().setValueAt("OFFER REFUSED", r, 2);
+									
+									// we announce the mediator that the offer has been refused
+									mediator.refuseOffer(userName, getOffer(productName, r));
 								}
 							});
 		            		refuseOfferB.setEnabled(false);
 		            		
 		            		// if this product is active 
 		            		// and the selected seller in comboBox made an offer
+		            		// and the buyer didn't accept the offer or didn't refused it
 		            		// then we enable the button
 		            		if(productsStatus.get(productName) &&
-		            				offerMade(productName,r)){
+		            				offerMade(productName,r) &&
+		            				!isAccepted(productName) &&
+		            				!isRefused(productName)){
 		            			refuseOfferB.setEnabled(true);
 		            		}
 		            		
@@ -528,6 +545,7 @@ public class Gui extends JPanel implements IGui{
 		            }
 		            // else, if he is a seller, we create other items in the menu
 		            else if(userType.equals(User.SELLER_TYPE)){
+		            	final String productName = (String)table.getModel().getValueAt(r,0);
 		            	
 		            	// if he pressed right click on buyers list
 		            	if(c == 1){
@@ -541,9 +559,47 @@ public class Gui extends JPanel implements IGui{
 									
 									String offerValue = 
 										JOptionPane.showInputDialog("Insert the value");
+									
+									String buyerName = "";
+									try{
+										JComboBox com = (JComboBox)table.getModel().getValueAt(r, 1);
+										buyerName = (String)com.getSelectedItem();
+									}
+									catch(ClassCastException event){
+										buyerName = (String)table.getModel().getValueAt(r, 1);
+									}
+									
+									ArrayList<User> buyers = tableEntries.get(productName);
+									if(buyers != null){
+										// we find the selected buyer
+										for(int i=0 ;i< buyers.size();i++){
+											Buyer buyer = (Buyer)buyers.get(i);
+											// if we found it , we take the proper request
+											if(buyer.getUsername().equals(buyerName)){
+												ArrayList<Request> requests = buyer.getRequests();
+												for(int j=0; j<requests.size(); j++){
+													Request request = (Request)requests.get(j);
+													// once we found the proper request we set the offer
+													if(request.getProductName().equals(productName)){
+														Offer offer = new Offer(productName,userName,offerValue);
+														request.setOffer(offer);
+														
+														// and we change the status
+														table.getModel().setValueAt("OFFER MADE", r, 2);
+													}
+												}
+											}
+										}
+									}
+									
 								}
 							});
-		            		makeOffer.setEnabled(true);
+		            		makeOffer.setEnabled(false);
+		            		
+		            		// we enable this botton only if this offer request is active
+		            		if(productsStatus.get(productName)){
+		            			makeOffer.setEnabled(true);
+		            		}
 		            		
 		            		// add drop auction  button
 		            		JMenuItem dropAuction = new JMenuItem("Drop auction");
@@ -566,26 +622,7 @@ public class Gui extends JPanel implements IGui{
 			}
 		});
 		
-		// only for test
-		// remove when you are done
-		// he adds an offer for "curatare toaleta" service
-		// from the second seller
-		JButton testOfferMade = new JButton("test Offer Made");
-		testOfferMade.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				ArrayList<User> users = tableEntries.get("curatare toaleta");
-				
-				Seller seller2 = (Seller)users.get(1);
-				Offer offer2 = new Offer("curatare toaleta",seller2.getUsername(),"255");
-			//	offer2.setIsAccepted(true);
-				ArrayList<Offer> offers2 = new ArrayList<Offer>();
-				offers2.add(offer2);
-				seller2.setOffers(offers2);
-				
-			}
-		});
+		
 		
 		// top, bottom, center
 		JPanel top = new JPanel(new FlowLayout());			// a welcome message	
@@ -617,7 +654,295 @@ public class Gui extends JPanel implements IGui{
 			}
 		});
 		bottom.add(signOutB);
-		bottom.add(testOfferMade);
+		
+		// if the user is a buyer we add the button for test
+		if(userType == User.BUYER_TYPE){	
+			// only for test
+			// remove when you are done
+			// he adds an offer for every service in list which is active
+			// from the first seller
+			JButton testOfferMade = new JButton("test Offer Made");
+			testOfferMade.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(tableEntries != null){
+						Set set = tableEntries.entrySet();
+						if(set != null){
+							Iterator it = set.iterator();
+						    while (it.hasNext()) {
+						      Map.Entry entry = (Map.Entry) it.next();
+						      ArrayList<User> users = (ArrayList<User>)entry.getValue();
+						      if(users != null){
+						    	  Seller seller = (Seller) users.get(0);
+						    	  Offer offer = new Offer((String)entry.getKey(),seller.getUsername(),"255");
+						    	  ArrayList<Offer> offers = new ArrayList<Offer>();
+						    	  offers.add(offer);
+						    	  seller.setOffers(offers);
+						    	  
+						    	  // we change the status if the selected item in comboBox is the name
+						    	  // of the seller
+						    	  String selectedSellerName = "";
+						    	  int rowNo = -1;
+						    	  for(int i=0; i < mainProducts.size();i++){
+						    		  if(mainProducts.get(i).getName().equals(entry.getKey())){
+						    			  rowNo = i;
+						    			  break;
+						    		  }
+						    	  }
+						    	  int colNo = 1;
+						    	  try{
+						    		  
+						    		  JComboBox combo = (JComboBox)table.getModel().getValueAt(rowNo, colNo);
+						    		  selectedSellerName = (String)combo.getSelectedItem();
+						    	  }
+						    	  catch(ClassCastException e){
+						    		  selectedSellerName = (String)table.getModel().getValueAt(rowNo, colNo);
+						    	  }
+						    	  
+						    	  if(seller.getUsername().equals(selectedSellerName)){
+						    		  // we change status to OFFER MADE
+						    		  table.getModel().setValueAt("OFFER MADE", rowNo, 2);
+						    	  }
+						      }
+						    }
+					    }
+					}
+					
+					
+				}
+			});
+			
+			String text = "<html>This button simulates the action of receiving an offer from the sellers for each product in table."+
+			"<br> The offer is received from the first seller in list. <br>" +
+			" You have to launch at least an offer request before push this button</html>";
+			testOfferMade.setToolTipText(text);
+			bottom.add(testOfferMade);
+		}
+		else if(userType.equals(User.SELLER_TYPE)){
+			
+			// we add an button which simulates the fact that the buyers requested some offers
+			JButton simOfferRequest = new JButton("Simulate offer requests");
+			simOfferRequest.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+					// we have to take the buyers for every product we have 
+					for(int i=0; i<mainProducts.size();i++){
+						String productName = mainProducts.get(i).getName();
+						ArrayList<String> buyers = mediator.getBuyers(productName);
+						
+						// populate the proper comboBox with them
+						JComboBox combo = (JComboBox)table.getModel().getValueAt(i, 1);
+						for(int j =0; j<buyers.size();j++){
+							combo.addItem(buyers.get(j));
+						}
+						combo.setEnabled(true);
+						revalidate();
+						repaint();
+						
+						combo.setName("combo"+i);
+						combo.addComponentListener(new ComponentAdapter() {
+						      public void componentShown(ComponentEvent e) {
+						        final JComponent c = (JComponent) e.getSource();
+						        SwingUtilities.invokeLater(new Runnable() {
+						          public void run() {
+						            c.requestFocus();
+						            System.out.println(c);
+						            if (c instanceof JComboBox) {
+						              System.out.println("a");
+						            }
+						          }
+						        });
+						      }
+						    });
+						// action listener for changing item
+						combo.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								
+								// we take the name of the comboBox
+								// it's like "combo0" ,where 0 is the row number in table
+								String comboName = (String)((JComboBox)arg0.getSource()).getName();
+								int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
+								
+								String userName1 =(String)((JComboBox)arg0.getSource()).getSelectedItem();
+								String productName = mainProducts.get(rowNo).getName();
+								
+								// we search in hashtable the user with "userName" for key = "productName"
+								// we change the status
+								ArrayList<User> users = tableEntries.get(productName);
+								if(users != null){
+									User user = null;
+									for(int i=0; i<users.size();i++){
+										if(users.get(i).getUsername().equals(userName1)){
+											user = users.get(i);
+											break;
+										}
+									}
+									
+									// if we found that user (from the list)
+									if(user != null){
+										
+										// if the user who is logged in is a seller
+										// then the "user" from above is a buyer
+										if(userType.equals(User.SELLER_TYPE)){
+											Buyer buyer = (Buyer) user;
+											
+											// we search in his requests array for an request offer for this product
+											// if the requests array is null we change status to "NO OFFER"
+											if(buyer.getRequests() == null){
+												table.setValueAt("NO OFFER", rowNo, 2);
+											}
+											else{
+												ArrayList<Request> requests = buyer.getRequests();
+												for(int i=0 ; i<requests.size();i++){
+													Request request = requests.get(i);
+													// if this is an request for the proper product
+													// and we made an offer for it
+													// we change the status in OFFER MADE
+													if(request.getProductName().equals(productName) &&
+															request.getOffer() != null){
+														
+														// we change the status for this service
+														table.setValueAt("OFFER MADE", rowNo, 2);
+													}
+												}
+											}
+										}
+										
+									}
+								}
+							}
+						});
+						
+						// we create the list of buyers
+						ArrayList<User> buyersObject = new ArrayList<User>();
+						ArrayList<Request> requests = new ArrayList<Request>();
+						for(int k=0; k < buyers.size();k++){
+							Request r = new Request(productName, buyers.get(k));
+							requests.add(r);
+						}
+						for(int k=0; k < buyers.size();k++){
+							Buyer s = new Buyer(buyers.get(k),null,User.BUYER_TYPE);
+							s.setRequests(requests);
+							buyersObject.add(s);
+						}
+						
+						// we add an entry in hashtable
+						if(tableEntries == null){
+							tableEntries = new Hashtable<String,ArrayList<User>>();
+						}
+						tableEntries.put(productName, buyersObject);
+						
+						// we change the status to "NO OFFER" because he didn't make any offer
+						table.getModel().setValueAt("NO OFFER", i, 2);
+						// and change to active this product
+						productsStatus.put(productName, true);
+						
+					}
+				}
+			});
+			String text = "<html> This button simulates the event of receiving some offer requests <br> "+
+			" We add some offer requests for each product we can produce <br>"+
+			" After this button is pressed we can make an offer </html>";
+			simOfferRequest.setToolTipText(text);
+			
+			// we add an button which simulates the fact that one buyer accepted an offer
+			JButton simOfferAccepted = new JButton("simulate offers accepted");
+			simOfferAccepted.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+					// we parse every entry from the "tableEntries"
+					if(tableEntries != null){
+						Set set = tableEntries.entrySet();
+						if(set != null){
+							Iterator it = set.iterator();
+						    while (it.hasNext()) {
+						      Map.Entry entry = (Map.Entry) it.next();
+						      
+						      // we take the product name
+						      String productName = (String)entry.getKey();
+						      // and the list of buyers
+						      ArrayList<User> buyers = (ArrayList<User>)entry.getValue();
+						      
+						      // we iterate in the list of buyers, searching for that buyers who "accepted" the offer
+						      // for this productName
+						      for(int i=0; i<buyers.size() ;i++){
+						    	  Buyer buyer = (Buyer)buyers.get(i);
+						    	  ArrayList<Request> requests = buyer.getRequests();
+						    	  
+						    	  // we iterate the list of requests and see if we made an offer for one of them
+						    	  for(int j=0; j<requests.size();j++){
+						    		  Request request = (Request)requests.get(j);
+						    		  if(request.getProductName().equals(productName)){
+						    			  // once we found the offer we made , we start the transfer
+						    			  if(request.getOffer() != null){
+						    				  
+						    				  // we search the row in table , having the productName
+						    				  int rowNo = -1;
+						    				  for(int k=0; k < mainProducts.size() ;k++){
+						    					  if(mainProducts.get(k).getName().equals(productName)){
+						    						  rowNo = k;
+						    						  break;
+						    					  }
+						    				  }
+						    				  final int r = rowNo;
+						    				  
+						    				  // we change the status to OFFER ACCEPTED
+						    				  table.getModel().setValueAt("OFFER ACCEPTED", r, 2);
+						    				  
+						    				  // we start the transfer
+						    				  // we change the status again in transfer started
+											  table.getModel().setValueAt("TRANSFER STARTED", r, 2);
+												
+											  // we start the progress bar
+											  ExportTask task = new ExportTask();
+											  PropertyChangeListener listener = new PropertyChangeListener() {
+												@Override
+												public void propertyChange(PropertyChangeEvent evt) {
+													JProgressBar progressBar = 
+														(JProgressBar)table.getModel().getValueAt(r, 3);
+													if ("progress".equals(evt.getPropertyName())) {
+											        	Integer newValue = (Integer)evt.getNewValue();
+											        	
+											        	// if the transfer is on 2%, we change the status
+											        	if(newValue == 2){
+											        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
+											        	}
+											        	else if(newValue == progressBar.getMaximum()){
+											        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
+											        	}
+											        	progressBar.setValue((Integer)evt.getNewValue());
+											        	model.setValueAt(progressBar, r, 3);
+											        	table.setModel(model);
+													}
+												}
+											  };
+												task.addPropertyChangeListener(listener);
+											    task.execute();
+						    			  }
+						    		  }
+						    	  }
+						      }
+						    }
+						}
+					}
+					
+				}
+			});
+			
+			text = "<html> This button simulates the event of some buyers accepting your offers <br>"+
+			" After this button is pressed , the transfer is started </html>";
+			simOfferAccepted.setToolTipText(text);
+			
+			bottom.add(simOfferRequest);
+			bottom.add(simOfferAccepted);
+		}
 		
 		this.revalidate();
 		this.repaint();
@@ -654,6 +979,32 @@ public class Gui extends JPanel implements IGui{
 					Offer offer = offers.get(j);
 					if(offer.getProduct().equals(productName)){
 						if(offer.getIsAccepted()){
+							return true;
+						}
+						else{
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	// this method returns true if an offer for "productName" is refused
+	// or false otherwise
+	public boolean isRefused(String productName){
+		
+		ArrayList<User> users = tableEntries.get(productName);
+		for(int i=0; i <users.size() ; i++){
+			Seller seller = (Seller) users.get(i);
+			ArrayList<Offer> offers = seller.getOffers();
+			
+			if(offers != null){
+				for (int j=0 ; j<offers.size(); j++){
+					Offer offer = offers.get(j);
+					if(offer.getProduct().equals(productName)){
+						if(offer.isRefused()){
 							return true;
 						}
 						else{
@@ -734,6 +1085,42 @@ public class Gui extends JPanel implements IGui{
 								Offer offer = offers.get(j);
 								if(offer.getProduct().equals(productName)){
 									offer.setIsAccepted(true);
+									return;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	// this method will refuse the offer from the seller who made it
+	public void refuseOffer(String productName, int rowNo){
+		String selectedSellerName = "";
+		try{
+			JComboBox combo = (JComboBox)table.getModel().getValueAt(rowNo, 1);
+			selectedSellerName = (String)combo.getSelectedItem();
+		}
+		catch(java.lang.ClassCastException e){
+			selectedSellerName = (String)table.getModel().getValueAt(rowNo, 1);
+		}
+		
+			 
+		if(tableEntries != null){
+			ArrayList<User> sellers = tableEntries.get(productName);
+			if(sellers != null){
+				for(int i=0; i<sellers.size();i++){
+					Seller seller = (Seller)sellers.get(i);
+					if(seller.getUsername().equals(selectedSellerName)){
+						
+						// we check if this seller made an offer for the given product
+						ArrayList<Offer> offers = seller.getOffers();
+						if(offers != null){
+							for(int j=0 ; j<offers.size(); j++){
+								Offer offer = offers.get(j);
+								if(offer.getProduct().equals(productName)){
+									offer.setRefused(true);
 									return;
 								}
 							}

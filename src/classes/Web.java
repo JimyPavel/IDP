@@ -169,6 +169,16 @@ public class Web implements IWeb {
 		return sellers;
 		
 	}
+	
+	@Override
+	public ArrayList<String> getBuyers(String productName){
+		
+		// for first homework we return an array with known buyers
+		ArrayList<String> buyers = new ArrayList<String>();
+		buyers.add("jimy");
+		
+		return buyers;
+	}
 
 	@Override
 	public void startTransfer(String buyer, String seller, Offer offer) {
