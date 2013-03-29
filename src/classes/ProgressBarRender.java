@@ -5,6 +5,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+// class for rendering the progress bar
 public class ProgressBarRender implements TableCellRenderer {
 
 	JProgressBar progressBar;

@@ -1,13 +1,11 @@
 package classes;
-import java.io.*;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import interfaces.*;
 
 public class Mediator implements IMediator{
 	
+	@SuppressWarnings("unused")
 	private IGui gui;
 	private IWeb web;
 		
@@ -40,15 +38,13 @@ public class Mediator implements IMediator{
 
 	@Override
 	public boolean acceptOffer(String username, Offer offer) {
-		// TODO:  network.acceptOffer() => scriere in fisier
-		// anunta utilizatorii ca s-a acceptat o oferta
+		// TODO:  network.acceptOffer() 
 		return true;
 	}
 
 	@Override
 	public boolean refuseOffer(String username, Offer offer) {
-		// TODO:  network.acceptOffer() => scriere in fisier
-		// anunta utilizatorii ca s-a refuzat o oferta
+		// TODO:  network.acceptOffer() 
 		return true;
 	}
 

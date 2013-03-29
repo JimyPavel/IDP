@@ -12,7 +12,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -171,11 +170,11 @@ public class Gui extends JPanel implements IGui{
 		
 		this.removeAll();
 		// TODO: we create our custom Table Model
-		// this personalized model is read-only (we can't edit a cell on double-click)
+		// this personalized model should be read-only (we can't edit a cell on double-click)
 		model = new DefaultTableModel(0,4);
 		
 		// we save the comboboxes in order to add an editor for each row
-		ArrayList<JComboBox> al = new ArrayList<JComboBox>();
+		ArrayList<JComboBox<String>> al = new ArrayList<JComboBox<String>>();
 		// we take the products from the mediator
 		ArrayList<Product> products = mediator.loadProducts(userName, userType);
 		
@@ -196,11 +195,8 @@ public class Gui extends JPanel implements IGui{
 				// service name
 				String serviceName = products.get(i).getName();
 				
-				// sellers list (service is inactive)
-				Object[] sellers = null;
-				
 				String offerValue = "null";
-				JComboBox comboBox = new JComboBox();
+				JComboBox<String> comboBox = new JComboBox<String>();
 				al.add(comboBox);
 				
 				// service status
@@ -249,7 +245,7 @@ public class Gui extends JPanel implements IGui{
 		// we render the list of sellers
 		EachRowEditor rowEditor = new EachRowEditor(table);
 		for(int i =0; i < table.getRowCount();i++){
-			 JComboBox comboBox = al.get(i);
+			 JComboBox<String> comboBox = al.get(i);
 			 rowEditor.setEditorAt(i, new DefaultCellEditor(comboBox));
 			 table.getColumn(secondColumnName).setCellEditor(rowEditor);
 		}
@@ -294,7 +290,8 @@ public class Gui extends JPanel implements IGui{
 									
 									if(sellers != null){
 										// we populate the comboBox
-										JComboBox combo = (JComboBox)table.getModel().getValueAt(r, 1);
+										@SuppressWarnings("unchecked")
+										JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(r, 1);
 										for(int i =0; i<sellers.size();i++){
 											combo.addItem(sellers.get(i));
 										}
@@ -307,9 +304,7 @@ public class Gui extends JPanel implements IGui{
 										        SwingUtilities.invokeLater(new Runnable() {
 										          public void run() {
 										            c.requestFocus();
-										            System.out.println(c);
 										            if (c instanceof JComboBox) {
-										              System.out.println("a");
 										            }
 										          }
 										        });
@@ -324,10 +319,12 @@ public class Gui extends JPanel implements IGui{
 												
 												// we take the name of the comboBox
 												// it's like "combo0" ,where 0 is the row number in table
-												String comboName = (String)((JComboBox)arg0.getSource()).getName();
+												@SuppressWarnings("unchecked")
+												String comboName = (String)((JComboBox<String>)arg0.getSource()).getName();
 												int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
 												
-												String userName1 =(String)((JComboBox)arg0.getSource()).getSelectedItem();
+												@SuppressWarnings("unchecked")
+												String userName1 =(String)((JComboBox<String>)arg0.getSource()).getSelectedItem();
 												String productName = mainProducts.get(rowNo).getName();
 												
 												// we search in hashtable the user with "userName" for key = "productName"
@@ -416,7 +413,7 @@ public class Gui extends JPanel implements IGui{
 									productsStatus.put(productName, false);
 									
 									// we disable the combo box
-									JComboBox combo = new JComboBox();
+									JComboBox<String> combo = new JComboBox<String>();
 									combo.setEnabled(false);
 									table.setValueAt(combo, r, 1);
 									
@@ -562,7 +559,8 @@ public class Gui extends JPanel implements IGui{
 									
 									String buyerName = "";
 									try{
-										JComboBox com = (JComboBox)table.getModel().getValueAt(r, 1);
+										@SuppressWarnings("unchecked")
+										JComboBox<String> com = (JComboBox<String>)table.getModel().getValueAt(r, 1);
 										buyerName = (String)com.getSelectedItem();
 									}
 									catch(ClassCastException event){
@@ -596,7 +594,7 @@ public class Gui extends JPanel implements IGui{
 							});
 		            		makeOffer.setEnabled(false);
 		            		
-		            		// we enable this botton only if this offer request is active
+		            		// we enable this button only if this offer request is active
 		            		if(productsStatus.get(productName)){
 		            			makeOffer.setEnabled(true);
 		            		}
@@ -607,10 +605,23 @@ public class Gui extends JPanel implements IGui{
 								
 								@Override
 								public void actionPerformed(ActionEvent e) {
-									System.out.println("drop auction");
+									
+									// we make this product inactive
+									productsStatus.put(productName, false);
+									
+									table.getModel().setValueAt("INACTIVE", r, 2);
+									JComponent component = (JComponent)
+														table.getModel().getValueAt(r, 1);
+									component.setEnabled(false);
+									revalidate();
+									repaint();
+									
 								}
 							});
 		            		dropAuction.setEnabled(false);
+		            		if(productsStatus.get(productName)){
+		            			dropAuction.setEnabled(true);
+		            		}
 		            		
 		            		popup.add(makeOffer);
 		            		popup.add(dropAuction);
@@ -667,11 +678,14 @@ public class Gui extends JPanel implements IGui{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					if(tableEntries != null){
+						@SuppressWarnings("rawtypes")
 						Set set = tableEntries.entrySet();
 						if(set != null){
+							@SuppressWarnings("rawtypes")
 							Iterator it = set.iterator();
 						    while (it.hasNext()) {
-						      Map.Entry entry = (Map.Entry) it.next();
+						      @SuppressWarnings("unchecked")
+							  Map.Entry<String,ArrayList<User>> entry = (Map.Entry<String,ArrayList<User>>) it.next();
 						      ArrayList<User> users = (ArrayList<User>)entry.getValue();
 						      if(users != null){
 						    	  Seller seller = (Seller) users.get(0);
@@ -693,7 +707,8 @@ public class Gui extends JPanel implements IGui{
 						    	  int colNo = 1;
 						    	  try{
 						    		  
-						    		  JComboBox combo = (JComboBox)table.getModel().getValueAt(rowNo, colNo);
+						    		  @SuppressWarnings("unchecked")
+									  JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, colNo);
 						    		  selectedSellerName = (String)combo.getSelectedItem();
 						    	  }
 						    	  catch(ClassCastException e){
@@ -734,7 +749,8 @@ public class Gui extends JPanel implements IGui{
 						ArrayList<String> buyers = mediator.getBuyers(productName);
 						
 						// populate the proper comboBox with them
-						JComboBox combo = (JComboBox)table.getModel().getValueAt(i, 1);
+						@SuppressWarnings("unchecked")
+						JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(i, 1);
 						for(int j =0; j<buyers.size();j++){
 							combo.addItem(buyers.get(j));
 						}
@@ -749,9 +765,7 @@ public class Gui extends JPanel implements IGui{
 						        SwingUtilities.invokeLater(new Runnable() {
 						          public void run() {
 						            c.requestFocus();
-						            System.out.println(c);
 						            if (c instanceof JComboBox) {
-						              System.out.println("a");
 						            }
 						          }
 						        });
@@ -765,10 +779,12 @@ public class Gui extends JPanel implements IGui{
 								
 								// we take the name of the comboBox
 								// it's like "combo0" ,where 0 is the row number in table
-								String comboName = (String)((JComboBox)arg0.getSource()).getName();
+								@SuppressWarnings("unchecked" )
+								String comboName = (String)((JComboBox<String>)arg0.getSource()).getName();
 								int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
 								
-								String userName1 =(String)((JComboBox)arg0.getSource()).getSelectedItem();
+								@SuppressWarnings("unchecked")
+								String userName1 =(String)((JComboBox<String>)arg0.getSource()).getSelectedItem();
 								String productName = mainProducts.get(rowNo).getName();
 								
 								// we search in hashtable the user with "userName" for key = "productName"
@@ -859,11 +875,14 @@ public class Gui extends JPanel implements IGui{
 					
 					// we parse every entry from the "tableEntries"
 					if(tableEntries != null){
+						@SuppressWarnings("rawtypes")
 						Set set = tableEntries.entrySet();
 						if(set != null){
+							@SuppressWarnings("rawtypes")
 							Iterator it = set.iterator();
 						    while (it.hasNext()) {
-						      Map.Entry entry = (Map.Entry) it.next();
+						      @SuppressWarnings({ "rawtypes", "unchecked" })
+							  Map.Entry<String,ArrayList<User>> entry = (Map.Entry) it.next();
 						      
 						      // we take the product name
 						      String productName = (String)entry.getKey();
@@ -1023,7 +1042,8 @@ public class Gui extends JPanel implements IGui{
 		
 		String selectedSellerName = "";
 		try{
-			JComboBox combo = (JComboBox)table.getModel().getValueAt(rowNo, 1);
+			@SuppressWarnings("unchecked")
+			JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, 1);
 			selectedSellerName = (String)combo.getSelectedItem();
 		}
 		catch(java.lang.ClassCastException e){
@@ -1063,7 +1083,8 @@ public class Gui extends JPanel implements IGui{
 		
 		String selectedSellerName = "";
 		try{
-			JComboBox combo = (JComboBox)table.getModel().getValueAt(rowNo, 1);
+			@SuppressWarnings("unchecked")
+			JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, 1);
 			selectedSellerName = (String)combo.getSelectedItem();
 		}
 		catch(java.lang.ClassCastException e){
@@ -1099,7 +1120,8 @@ public class Gui extends JPanel implements IGui{
 	public void refuseOffer(String productName, int rowNo){
 		String selectedSellerName = "";
 		try{
-			JComboBox combo = (JComboBox)table.getModel().getValueAt(rowNo, 1);
+			@SuppressWarnings("unchecked")
+			JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, 1);
 			selectedSellerName = (String)combo.getSelectedItem();
 		}
 		catch(java.lang.ClassCastException e){
@@ -1136,7 +1158,8 @@ public class Gui extends JPanel implements IGui{
 		
 		String selectedSellerName = "";
 		try{
-			JComboBox combo = (JComboBox)table.getModel().getValueAt(rowNo, 1);
+			@SuppressWarnings("unchecked")
+			JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, 1);
 			selectedSellerName = (String)combo.getSelectedItem();
 		}
 		catch(java.lang.ClassCastException e){
@@ -1166,8 +1189,5 @@ public class Gui extends JPanel implements IGui{
 			}
 		}
 		return null;
-	}
-
-	
-	
+	}	
 }

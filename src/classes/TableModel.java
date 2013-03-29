@@ -1,11 +1,9 @@
 package classes;
 import javax.swing.table.DefaultTableModel;
 
+// class for a custom table model
 public class TableModel extends DefaultTableModel{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public TableModel(int row, int col){

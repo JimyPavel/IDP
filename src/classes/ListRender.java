@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-// TODO: fix this
 public class ListRender implements TableCellRenderer{
 
 	@SuppressWarnings("unchecked")
@@ -22,11 +21,6 @@ public class ListRender implements TableCellRenderer{
 			Object[] v = new Object[1];
 			v[0] = (String)value;
 			comp = new JComboBox<Object>(v);
-			
-			// adding tool tip text for this combobox
-			String productName = Gui.mainProducts.get(row).getName();
-		//	String tipText = "bau bau";
-		//	comp.setToolTipText(tipText);
 		}
 		
 		return comp;

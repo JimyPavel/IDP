@@ -5,15 +5,12 @@ import java.util.List;
 import javax.swing.SwingWorker;
 
 public class ExportTask extends SwingWorker<Integer, Integer> {
-	  private static final int DELAY = 1000;
-
 	  public ExportTask() {
 	  }
 
 	  @Override
 	  protected Integer doInBackground() throws Exception {
-		// TODO 3.2
-		 int DELAY = 1000;
+		int DELAY = 1000;
 		int count = 10;
 		int i     = 0;
 		try {
@@ -24,7 +21,6 @@ public class ExportTask extends SwingWorker<Integer, Integer> {
 			setProgress(i);
 		    }
 		} catch (InterruptedException e) {
-		    // TODO Auto-generated catch block
 		    e.printStackTrace();
 		}
 		return 0;
