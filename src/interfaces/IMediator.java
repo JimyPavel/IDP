@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
+
 import classes.*;
 
 // this interfaces the communication between GUI module and Mediator module
@@ -75,6 +76,9 @@ public interface IMediator {
 	// this method will register a web object
 	public void registerWeb(IWeb web);
 	
+	// this method will register a web object
+	public void registerNetwork(INetwork network);
+	
 	// this method will return a list of sellers who offer this product
 	public ArrayList<String> getSellers(String productName);
 	
@@ -83,4 +87,8 @@ public interface IMediator {
 	
 	public void startTransfer(String buyer, String seller, Offer offer);
 	
+	// this method will create a file for logging, different for each user
+	public void setLoggerFile(String name);
+	
+	public void setIpAndPort();
 }

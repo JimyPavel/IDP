@@ -1,8 +1,9 @@
 package interfaces;
+
 import classes.*;
 
 // this interfaces the communication between Network module and Mediator module
-public interface INetworkMediator {
+public interface INetwork {
 
 	// method for checking if exists an user with username and password
 	// registered in database
@@ -16,4 +17,10 @@ public interface INetworkMediator {
 	// method for notifying the user with "username" the "status" of the "offer"
 	// has been changed.
 	public boolean notifyStatusChanged(String username, Offer offer, String status);
+	
+	public void setIpAndPort();
+	
+	public void addFileLogging(String fileName);
+	
+	public void announceOtherUsers();
 }

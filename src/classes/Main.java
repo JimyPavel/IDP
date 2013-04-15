@@ -10,7 +10,7 @@ public class Main {
 		// we create a mediator
 		final Mediator m = new Mediator();
 		new Web(m);
-		
+		new Network(m);
 		// run on EDT (event-dispatching thread), not on main thread!
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

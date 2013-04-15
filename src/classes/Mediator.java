@@ -8,6 +8,7 @@ public class Mediator implements IMediator{
 	@SuppressWarnings("unused")
 	private IGui gui;
 	private IWeb web;
+	private INetwork network;
 		
 	public void registerGui(IGui gui){
 		this.gui = gui;
@@ -17,6 +18,9 @@ public class Mediator implements IMediator{
 		this.web = web;
 	}
 	
+	public void registerNetwork(INetwork network){
+		this.network = network;
+	}
 	
 	@Override
 	// we return the type of the user
@@ -94,5 +98,20 @@ public class Mediator implements IMediator{
 		web.startTransfer(buyer,seller,offer);
 		
 	}
+
+	@Override
+	public void setIpAndPort() {
+		// TODO Auto-generated method stub
+		network.setIpAndPort();
+		network.announceOtherUsers();
+	}
+
+	@Override
+	public void setLoggerFile(String name) {
+		// TODO Auto-generated method stub
+		network.addFileLogging(name+"Log.txt");
+	}
+	
+	
 
 }

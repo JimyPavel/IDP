@@ -100,6 +100,8 @@ public class Gui extends JPanel implements IGui{
 				if(userType != null){
 					userName = userText;
 					initContent();
+					mediator.setLoggerFile(userName);
+					mediator.setIpAndPort();
 				}
 				// else we change the message
 				else{
