@@ -93,4 +93,8 @@ public interface IMediator {
 	public void setIpAndPort(String userType);
 	
 	public void LaunchOfferRequest(String product);
+	
+	public String getUsername();
+	
+	public void OfferRequestReceived();
 }

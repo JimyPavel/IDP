@@ -33,7 +33,7 @@ public class Network implements INetwork {
 	private String IpServer;
 	private int PortServer;
 	public static ExecutorService pool = Executors.newFixedThreadPool(5);
-	static Logger logger = Logger.getLogger(Network.class);
+	public static Logger logger = Logger.getLogger(Network.class);
 	public static boolean running = true;
 	private static final String File = "setup.txt";
 	private String user;
@@ -249,8 +249,8 @@ public class Network implements INetwork {
 			buf.get(bytearr);
 			
 			String s = new String(bytearr);
-			logger.info("[Server] Message: "+s);
-			state.parseInformation();
+			logger.info("[Server] Message read: "+s);
+			state.parseInformation(s);
 			buf.clear();
 			
 			// check for EOF
@@ -370,22 +370,6 @@ public class Network implements INetwork {
 		key.interestOps(SelectionKey.OP_WRITE);
 	}
 	
-/*	@Override
-	public void announceOtherUsers() {
-		// TODO Auto-generated method stub
-		if(ipPort != null)
-		{
-			Iterator<Map.Entry<String, String>> it = ipPort.entrySet().iterator();
-
-			while (it.hasNext()) {
-			  Map.Entry<String, String> entry = it.next();
-			  
-			  String message = "[connect]"+Network.Ip+":"+Network.PORT;
-			  WriteToPort(message, entry.getValue(), entry.getKey());
-			}
-		}
-	}*/
-	
 	public String getIp()
 	{
 		return this.Ip;
@@ -431,4 +415,8 @@ public class Network implements INetwork {
 		state = newState;
 	}
 	
+	public IMediator getMediator()
+	{
+		return mediator;
+	}
 }

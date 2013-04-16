@@ -748,122 +748,7 @@ public class Gui extends JPanel implements IGui{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					
-					// we have to take the buyers for every product we have 
-					for(int i=0; i<mainProducts.size();i++){
-						String productName = mainProducts.get(i).getName();
-						ArrayList<String> buyers = mediator.getBuyers(productName);
-						
-						// populate the proper comboBox with them
-						@SuppressWarnings("unchecked")
-						JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(i, 1);
-						for(int j =0; j<buyers.size();j++){
-							combo.addItem(buyers.get(j));
-						}
-						combo.setEnabled(true);
-						revalidate();
-						repaint();
-						
-						combo.setName("combo"+i);
-						combo.addComponentListener(new ComponentAdapter() {
-						      public void componentShown(ComponentEvent e) {
-						        final JComponent c = (JComponent) e.getSource();
-						        SwingUtilities.invokeLater(new Runnable() {
-						          public void run() {
-						            c.requestFocus();
-						            if (c instanceof JComboBox) {
-						            }
-						          }
-						        });
-						      }
-						    });
-						// action listener for changing item
-						combo.addActionListener(new ActionListener() {
-							
-							@Override
-							public void actionPerformed(ActionEvent arg0) {
-								
-								// we take the name of the comboBox
-								// it's like "combo0" ,where 0 is the row number in table
-								@SuppressWarnings("unchecked" )
-								String comboName = (String)((JComboBox<String>)arg0.getSource()).getName();
-								int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
-								
-								@SuppressWarnings("unchecked")
-								String userName1 =(String)((JComboBox<String>)arg0.getSource()).getSelectedItem();
-								String productName = mainProducts.get(rowNo).getName();
-								
-								// we search in hashtable the user with "userName" for key = "productName"
-								// we change the status
-								ArrayList<User> users = tableEntries.get(productName);
-								if(users != null){
-									User user = null;
-									for(int i=0; i<users.size();i++){
-										if(users.get(i).getUsername().equals(userName1)){
-											user = users.get(i);
-											break;
-										}
-									}
-									
-									// if we found that user (from the list)
-									if(user != null){
-										
-										// if the user who is logged in is a seller
-										// then the "user" from above is a buyer
-										if(userType.equals(User.SELLER_TYPE)){
-											Buyer buyer = (Buyer) user;
-											
-											// we search in his requests array for an request offer for this product
-											// if the requests array is null we change status to "NO OFFER"
-											if(buyer.getRequests() == null){
-												table.setValueAt("NO OFFER", rowNo, 2);
-											}
-											else{
-												ArrayList<Request> requests = buyer.getRequests();
-												for(int i=0 ; i<requests.size();i++){
-													Request request = requests.get(i);
-													// if this is an request for the proper product
-													// and we made an offer for it
-													// we change the status in OFFER MADE
-													if(request.getProductName().equals(productName) &&
-															request.getOffer() != null){
-														
-														// we change the status for this service
-														table.setValueAt("OFFER MADE", rowNo, 2);
-													}
-												}
-											}
-										}
-										
-									}
-								}
-							}
-						});
-						
-						// we create the list of buyers
-						ArrayList<User> buyersObject = new ArrayList<User>();
-						ArrayList<Request> requests = new ArrayList<Request>();
-						for(int k=0; k < buyers.size();k++){
-							Request r = new Request(productName, buyers.get(k));
-							requests.add(r);
-						}
-						for(int k=0; k < buyers.size();k++){
-							Buyer s = new Buyer(buyers.get(k),null,User.BUYER_TYPE);
-							s.setRequests(requests);
-							buyersObject.add(s);
-						}
-						
-						// we add an entry in hashtable
-						if(tableEntries == null){
-							tableEntries = new Hashtable<String,ArrayList<User>>();
-						}
-						tableEntries.put(productName, buyersObject);
-						
-						// we change the status to "NO OFFER" because he didn't make any offer
-						table.getModel().setValueAt("NO OFFER", i, 2);
-						// and change to active this product
-						productsStatus.put(productName, true);
-						
-					}
+				
 				}
 			});
 			String text = "<html> This button simulates the event of receiving some offer requests <br> "+
@@ -972,6 +857,125 @@ public class Gui extends JPanel implements IGui{
 		this.repaint();
 	}
 	
+	public  void OfferRequestReceived()
+	{
+		// we have to take the buyers for every product we have 
+		for(int i=0; i<mainProducts.size();i++){
+			String productName = mainProducts.get(i).getName();
+			ArrayList<String> buyers = mediator.getBuyers(productName);
+			
+			// populate the proper comboBox with them
+			@SuppressWarnings("unchecked")
+			JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(i, 1);
+			for(int j =0; j<buyers.size();j++){
+				combo.addItem(buyers.get(j));
+			}
+			combo.setEnabled(true);
+			revalidate();
+			repaint();
+			
+			combo.setName("combo"+i);
+			combo.addComponentListener(new ComponentAdapter() {
+			      public void componentShown(ComponentEvent e) {
+			        final JComponent c = (JComponent) e.getSource();
+			        SwingUtilities.invokeLater(new Runnable() {
+			          public void run() {
+			            c.requestFocus();
+			            if (c instanceof JComboBox) {
+			            }
+			          }
+			        });
+			      }
+			    });
+			// action listener for changing item
+			combo.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+					// we take the name of the comboBox
+					// it's like "combo0" ,where 0 is the row number in table
+					@SuppressWarnings("unchecked" )
+					String comboName = (String)((JComboBox<String>)arg0.getSource()).getName();
+					int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
+					
+					@SuppressWarnings("unchecked")
+					String userName1 =(String)((JComboBox<String>)arg0.getSource()).getSelectedItem();
+					String productName = mainProducts.get(rowNo).getName();
+					
+					// we search in hashtable the user with "userName" for key = "productName"
+					// we change the status
+					ArrayList<User> users = tableEntries.get(productName);
+					if(users != null){
+						User user = null;
+						for(int i=0; i<users.size();i++){
+							if(users.get(i).getUsername().equals(userName1)){
+								user = users.get(i);
+								break;
+							}
+						}
+						
+						// if we found that user (from the list)
+						if(user != null){
+							
+							// if the user who is logged in is a seller
+							// then the "user" from above is a buyer
+							if(userType.equals(User.SELLER_TYPE)){
+								Buyer buyer = (Buyer) user;
+								
+								// we search in his requests array for an request offer for this product
+								// if the requests array is null we change status to "NO OFFER"
+								if(buyer.getRequests() == null){
+									table.setValueAt("NO OFFER", rowNo, 2);
+								}
+								else{
+									ArrayList<Request> requests = buyer.getRequests();
+									for(int i=0 ; i<requests.size();i++){
+										Request request = requests.get(i);
+										// if this is an request for the proper product
+										// and we made an offer for it
+										// we change the status in OFFER MADE
+										if(request.getProductName().equals(productName) &&
+												request.getOffer() != null){
+											
+											// we change the status for this service
+											table.setValueAt("OFFER MADE", rowNo, 2);
+										}
+									}
+								}
+							}
+							
+						}
+					}
+				}
+			});
+			
+			// we create the list of buyers
+			ArrayList<User> buyersObject = new ArrayList<User>();
+			ArrayList<Request> requests = new ArrayList<Request>();
+			for(int k=0; k < buyers.size();k++){
+				Request r = new Request(productName, buyers.get(k));
+				requests.add(r);
+			}
+			for(int k=0; k < buyers.size();k++){
+				Buyer s = new Buyer(buyers.get(k),null,User.BUYER_TYPE);
+				s.setRequests(requests);
+				buyersObject.add(s);
+			}
+			
+			// we add an entry in hashtable
+			if(tableEntries == null){
+				tableEntries = new Hashtable<String,ArrayList<User>>();
+			}
+			tableEntries.put(productName, buyersObject);
+			
+			// we change the status to "NO OFFER" because he didn't make any offer
+			table.getModel().setValueAt("NO OFFER", i, 2);
+			// and change to active this product
+			productsStatus.put(productName, true);
+			
+		}
+	}
 	
 	// returns the value of the offer made by sellerName
 	// for the productName
@@ -1194,5 +1198,11 @@ public class Gui extends JPanel implements IGui{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return userName;
 	}	
 }

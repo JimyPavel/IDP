@@ -116,6 +116,18 @@ public class Mediator implements IMediator{
 		// TODO Auto-generated method stub
 		network.LaunchOfferRequest(product);
 	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return gui.getUsername();
+	}
+
+	@Override
+	public void OfferRequestReceived() {
+		// TODO Auto-generated method stub
+		gui.OfferRequestReceived();
+	}
 	
 	
 

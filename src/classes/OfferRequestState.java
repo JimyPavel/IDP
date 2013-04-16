@@ -20,7 +20,7 @@ public class OfferRequestState implements IState{
 	}
 
 	@Override
-	public void parseInformation() {
+	public void parseInformation(String info) {
 		// TODO Auto-generated method stub
 		
 	}

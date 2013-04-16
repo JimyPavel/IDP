@@ -1,12 +1,60 @@
- 0    [main] INFO  classes.Server  - [Server] Accept 
- 4    [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:47929
- 4    [main] INFO  classes.Server  - [Server] READ: 
- 5    [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30004:Buyer
- 5    [main] INFO  classes.Server  - [Server] User of type Buyer connected with ip 127.0.0.1 and port 30004
- 6    [main] INFO  classes.Server  - [Server] Connection closed: EOF
- 6563 [main] INFO  classes.Server  - [Server] Accept 
- 6565 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:47950
- 6565 [main] INFO  classes.Server  - [Server] READ: 
- 6565 [main] INFO  classes.Server  - [Server] Message: [offerRequest]curatare toaleta
- 6565 [main] INFO  classes.Server  - [Server] Offer Request received
- 6566 [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 1    [main] INFO  classes.Server  - [Server] Accept 
+ 4    [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:54743
+ 5    [main] INFO  classes.Server  - [Server] READ: 
+ 5    [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30003:Buyer
+ 6    [main] INFO  classes.Server  - [Server] User of type Buyer connected with ip 127.0.0.1 and port 30003
+ 7    [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 19823 [main] INFO  classes.Server  - [Server] Accept 
+ 19823 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:54790
+ 19823 [main] INFO  classes.Server  - [Server] READ: 
+ 19824 [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30004:Seller
+ 19824 [main] INFO  classes.Server  - [Server] User of type Seller connected with ip 127.0.0.1 and port 30004
+ 19824 [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 26053 [main] INFO  classes.Server  - [Server] Accept 
+ 26053 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:54810
+ 26057 [main] INFO  classes.Server  - [Server] READ: 
+ 26057 [main] INFO  classes.Server  - [Server] Message: [offerRequest]reparat calculator
+ 26057 [main] INFO  classes.Server  - [Server] Offer Request received
+ 26058 [main] DEBUG classes.Server  - [Server] users
+ 26060 [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 26060 [pool-1-thread-1] INFO  classes.Server  - Connect to: 127.0.0.1:30004
+ 26060 [pool-1-thread-1] INFO  classes.Server  - Message: [offerRequest]reparat calculator
+ 26062 [pool-1-thread-1] INFO  classes.Server  - [Server] CONNECT: 
+ 26063 [pool-1-thread-1] INFO  classes.Server  - [Server] WRITE: 
+ 26063 [pool-1-thread-1] INFO  classes.Server  - [Client] Connection closed
+ 1690832 [main] INFO  classes.Server  - [Server] Accept 
+ 1690832 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:58977
+ 1690833 [main] INFO  classes.Server  - [Server] READ: 
+ 1690833 [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30005:Seller
+ 1690833 [main] INFO  classes.Server  - [Server] User of type Seller connected with ip 127.0.0.1 and port 30005
+ 1690834 [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 1778316 [main] INFO  classes.Server  - [Server] Accept 
+ 1778317 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:59224
+ 1778318 [main] INFO  classes.Server  - [Server] READ: 
+ 1778318 [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30006:Buyer
+ 1778319 [main] INFO  classes.Server  - [Server] User of type Buyer connected with ip 127.0.0.1 and port 30006
+ 1778319 [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 1794689 [main] INFO  classes.Server  - [Server] Accept 
+ 1794689 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:59269
+ 1794691 [main] INFO  classes.Server  - [Server] READ: 
+ 1794691 [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30007:Seller
+ 1794692 [main] INFO  classes.Server  - [Server] User of type Seller connected with ip 127.0.0.1 and port 30007
+ 1794692 [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 1798865 [main] INFO  classes.Server  - [Server] Accept 
+ 1798866 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:59282
+ 1798866 [main] INFO  classes.Server  - [Server] READ: 
+ 1798866 [main] INFO  classes.Server  - [Server] Message: [offerRequest]curatare toaleta
+ 1798866 [main] INFO  classes.Server  - [Server] Offer Request received
+ 1798866 [main] DEBUG classes.Server  - [Server] users
+ 1798867 [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 1798868 [pool-1-thread-2] INFO  classes.Server  - Connect to: 127.0.0.1:30007
+ 1798871 [pool-1-thread-4] INFO  classes.Server  - Connect to: 127.0.0.1:30004
+ 1798871 [pool-1-thread-3] INFO  classes.Server  - Connect to: 127.0.0.1:30005
+ 1798871 [pool-1-thread-2] INFO  classes.Server  - Message: [offerRequest]curatare toaleta
+ 1798873 [pool-1-thread-4] INFO  classes.Server  - Message: [offerRequest]curatare toaleta
+ 1798875 [pool-1-thread-3] INFO  classes.Server  - Message: [offerRequest]curatare toaleta
+ 1798878 [pool-1-thread-2] INFO  classes.Server  - [Server] CONNECT: 
+ 1798879 [pool-1-thread-2] INFO  classes.Server  - [Server] WRITE: 
+ 1798885 [pool-1-thread-2] INFO  classes.Server  - [Client] Connection closed
+ 1799870 [pool-1-thread-4] INFO  classes.Server  - [Server] CONNECT: 
+ 1799895 [pool-1-thread-3] INFO  classes.Server  - [Server] CONNECT: 

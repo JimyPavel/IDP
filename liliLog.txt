@@ -1,4 +1,19 @@
  0    [pool-1-thread-1] INFO  classes.Network  - Connect to: 127.0.0.1:30000
- 3    [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30002:Seller
- 1    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30002
- 1032 [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
+ 4    [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30007:Seller
+ 1    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30007
+ 42   [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
+ 43   [pool-1-thread-1] INFO  classes.Network  - [Client] WRITE: 
+ 43   [pool-1-thread-1] INFO  classes.Network  - [Client] Connection closed
+ 4230 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 4230 [pool-1-thread-2] INFO  classes.Network  - [Server] ACCEPT: 
+ 4231 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection from: /127.0.0.1:59288
+ 4232 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 4235 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
+ 4235 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: [offerRequest]curatare toaleta
+ 4235 [pool-1-thread-2] INFO  classes.Network  - [Seller] Offer request from one client[offerRequest]curatare toaleta
+ 4261 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 4261 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
+ 4262 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: 
+ 4262 [pool-1-thread-2] INFO  classes.Network  - [Seller] Offer request from one client
+ 4262 [pool-1-thread-2] WARN  classes.Network  - Wrong message received: 
+ 4262 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection closed: EOF

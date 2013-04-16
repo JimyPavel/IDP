@@ -1,11 +1,11 @@
- 0    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30004
- 3    [pool-1-thread-1] INFO  classes.Network  - Connect to: 127.0.0.1:30000
- 18   [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30004:Buyer
- 38   [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
- 38   [pool-1-thread-1] INFO  classes.Network  - [Client] WRITE: 
+ 0    [pool-1-thread-1] INFO  classes.Network  - Connect to: 127.0.0.1:30000
+ 3    [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30006:Buyer
+ 0    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30006
+ 39   [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
+ 39   [pool-1-thread-1] INFO  classes.Network  - [Client] WRITE: 
  39   [pool-1-thread-1] INFO  classes.Network  - [Client] Connection closed
- 6598 [pool-1-thread-3] INFO  classes.Network  - Connect to: 127.0.0.1:30000
- 6599 [pool-1-thread-3] INFO  classes.Network  - Message: [offerRequest]curatare toaleta
- 6600 [pool-1-thread-3] INFO  classes.Network  - [Client] CONNECT: 
- 6601 [pool-1-thread-3] INFO  classes.Network  - [Client] WRITE: 
- 6601 [pool-1-thread-3] INFO  classes.Network  - [Client] Connection closed
+ 20567 [pool-1-thread-3] INFO  classes.Network  - Connect to: 127.0.0.1:30000
+ 20581 [pool-1-thread-3] INFO  classes.Network  - Message: [offerRequest]curatare toaleta
+ 20583 [pool-1-thread-3] INFO  classes.Network  - [Client] CONNECT: 
+ 20584 [pool-1-thread-3] INFO  classes.Network  - [Client] WRITE: 
+ 20587 [pool-1-thread-3] INFO  classes.Network  - [Client] Connection closed

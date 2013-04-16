@@ -5,6 +5,8 @@ import java.nio.*;
 import java.nio.channels.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -20,6 +22,8 @@ public class Server {
 	private static final String File = "setup.txt";
 	static Logger logger = Logger.getLogger(Server.class);
 	private static Hashtable<Integer, String> users;
+	public static ExecutorService pool = Executors.newFixedThreadPool(5);
+	public static boolean running = true;
 	
 	public static void main(String[] args) {
 		
@@ -223,7 +227,100 @@ public class Server {
 			logger.info("[Server] Offer Request received");
 			String product = pieces[1];
 			
+			Iterator<Map.Entry<Integer, String>> it = users.entrySet().iterator();
+			while (it.hasNext()) {
+			  Map.Entry<Integer, String> entry = it.next();
+
+			  if (entry.getValue().equals("Seller"))
+			  {
+				  SendMessage(info, entry.getKey());
+			  }
+			}
 		}
+
+	}
+	
+	private static void SendMessage(final String message, final int port)
+	{
+		pool.execute(new Runnable() {
+			public void run() {
+				logger.info("Connect to: " + IP + ":" + port);
+				logger.info("Message: " + message);
+				
+				Selector selector			= null;
+				SocketChannel socketChannel	= null;
+				
+				try {
+					selector = Selector.open();
+					
+					socketChannel = SocketChannel.open();
+					socketChannel.configureBlocking(false);
+					socketChannel.connect(new InetSocketAddress(IP, port));
+					
+					ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+					buf.put(message.getBytes());
+					buf.flip();
+					socketChannel.register(selector, SelectionKey.OP_CONNECT, buf);
+					
+					while (running){
+						selector.select();
+						
+						for (Iterator<SelectionKey> it = selector.selectedKeys().iterator(); it.hasNext(); ) {
+							SelectionKey key = it.next();
+							it.remove();
+							
+							if (key.isConnectable())
+								connect(key);
+							else if (key.isWritable())
+								writeClient(key);
+						}
+					}
+					logger.info("[Client] Connection closed");
+					running = true;
+				} catch (IOException e) {
+					e.printStackTrace();
+					
+				} finally {
+					if (selector != null)
+						try {
+							selector.close();
+						} catch (IOException e) {}
+					
+					if (socketChannel != null)
+						try {
+							socketChannel.close();
+						} catch (IOException e) {}
+				}
+			}
+		});
+	}
+
+	public static  void writeClient(SelectionKey key) throws IOException {
+		
+		logger.info("[Server] WRITE: ");
+		
+		ByteBuffer buf = (ByteBuffer)key.attachment();		
+		SocketChannel socketChannel = (SocketChannel)key.channel();
+		
+		while (socketChannel.write(buf) > 0);
+		
+		if (! buf.hasRemaining()) {
+			socketChannel.close();
+			running = false;
+		}
+	}
+	
+	public static void connect(SelectionKey key) throws IOException {
+		logger.info("[Server] CONNECT: ");
+		
+		SocketChannel socketChannel = (SocketChannel)key.channel();
+		if (! socketChannel.finishConnect()) {
+			System.err.println("Eroare finishConnect");
+			running = false;
+		}
+		
+		//socketChannel.close();
+		key.interestOps(SelectionKey.OP_WRITE);
 	}
 	
 
