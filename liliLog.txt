@@ -1,0 +1,4 @@
+ 0    [pool-1-thread-1] INFO  classes.Network  - Connect to: 127.0.0.1:30000
+ 3    [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30002:Seller
+ 1    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30002
+ 1032 [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 

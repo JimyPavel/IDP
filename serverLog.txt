@@ -1,0 +1,12 @@
+ 0    [main] INFO  classes.Server  - [Server] Accept 
+ 4    [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:47929
+ 4    [main] INFO  classes.Server  - [Server] READ: 
+ 5    [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30004:Buyer
+ 5    [main] INFO  classes.Server  - [Server] User of type Buyer connected with ip 127.0.0.1 and port 30004
+ 6    [main] INFO  classes.Server  - [Server] Connection closed: EOF
+ 6563 [main] INFO  classes.Server  - [Server] Accept 
+ 6565 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:47950
+ 6565 [main] INFO  classes.Server  - [Server] READ: 
+ 6565 [main] INFO  classes.Server  - [Server] Message: [offerRequest]curatare toaleta
+ 6565 [main] INFO  classes.Server  - [Server] Offer Request received
+ 6566 [main] INFO  classes.Server  - [Server] Connection closed: EOF

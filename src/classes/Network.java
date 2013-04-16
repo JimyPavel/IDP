@@ -10,39 +10,52 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.apache.log4j.*;
 
 import interfaces.IMediator;
 import interfaces.INetwork;
+import interfaces.IState;
 
 public class Network implements INetwork {
 
 	private IMediator mediator;
-	private static int PORT = 31000;
-	private static String Ip = "127.0.0.1";
-	private static final String File = "setup.txt";
-	private Hashtable<String,String> ipPort = new Hashtable<String,String>();
+	private int PORT = 31000;
+	private String Ip = "127.0.0.1";
+	private String IpServer;
+	private int PortServer;
 	public static ExecutorService pool = Executors.newFixedThreadPool(5);
 	static Logger logger = Logger.getLogger(Network.class);
 	public static boolean running = true;
+	private static final String File = "setup.txt";
+	private String user;
+	
+	// starea curenta
+	private IState state;
+	
+	// stari posibile
+	private IState connectState;
+	private IState offerRequestState;
+	private IState makeOfferState;
 	
 	public Network (IMediator mediator)
 	{
 		this.mediator = mediator;
 		this.mediator.registerNetwork(this);
 		
+		connectState = new ConnectState(this);
+		offerRequestState = new OfferRequestState(this);
+		makeOfferState = new MakeOfferState(this);
+		
+		state = connectState;
 		BasicConfigurator.configure();
 		
 	}
@@ -66,11 +79,20 @@ public class Network implements INetwork {
 	}
 	
 	@Override
-	public void setIpAndPort() {
+	public void LaunchOfferRequest(String product) {
+		// TODO Auto-generated method stub
+		state.addDetails(product);
+		state.sendMessage();
+	}
+	
+	@Override
+	public void setIpAndPort(String userType) {
 		// TODO Auto-generated method stub
 		
 		try{
-			Boolean emptyFile = true;
+			this.user = userType;
+			
+			int lines = 0;
 			FileInputStream fstream = new FileInputStream(Network.File);
 			// Get the object of DataInputStream
 			DataInputStream in = new DataInputStream(fstream);
@@ -79,29 +101,34 @@ public class Network implements INetwork {
 			String lastIp = "";
 			int lastPort = 0;
 			
-			// read ip-port for each user
+			// citeste adresa serverului 
 			strLine = br.readLine();
 			while(strLine!=null && strLine != System.getProperty("line.separator") && strLine != " "){
+				
 				System.out.println(strLine);
 				String pieces[] = strLine.split(" ");
-				if(pieces.length == 2)
+				
+				if(pieces.length == 3)
 				{
-					ipPort.put(pieces[1], pieces[0]);
-					emptyFile = false;
+					if (lines == 0)
+					{
+						PortServer = Integer.parseInt(pieces[1]);
+						IpServer = pieces[0];
+					}
+					lines++;
+					
 					lastPort = Integer.parseInt(pieces[1]);
 					lastIp = pieces[0];
 				}
 				strLine = br.readLine();
 			}
 			br.close();
-			if(emptyFile)
-			{
-				WriteIpPort(Network.Ip, Network.PORT);
-			}
-			else
-			{
-				WriteIpPort(lastIp, lastPort);
-			}
+			
+			PORT = lastPort + 1;
+			Ip = lastIp;
+			
+			// anunta serverul ca s-a logat (state e connect)
+			state.sendMessage();
 			
 			ListenToPort();
 			
@@ -140,33 +167,6 @@ public class Network implements INetwork {
 		}
 	}
 	
-	private void ParseInformation(String info){
-		
-	}
-	
-	private void WriteIpPort(String ip, int port){
-		try{
-			FileOutputStream fs = new FileOutputStream(Network.File, true);
-			DataOutputStream out = new DataOutputStream(fs);
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
-			
-			port++;
-			writer.write(ip + " " + port);
-			writer.newLine();
-			writer.close();
-			Network.PORT = port;
-			logger.info("New user connected to ip "+ip+" and port "+port);
-		} catch(IOException ex)
-		{
-			logger.error("Exception when trying to write ip and port for user");
-			ex.printStackTrace();
-		} catch(Exception ex)
-		{
-			ex.printStackTrace();
-		}
-
-	}
-	
 	// this method will create a thread that will listen to port, expecting for information
 	private void ListenToPort()
 	{
@@ -174,14 +174,14 @@ public class Network implements INetwork {
 		public void run() {
 			ServerSocketChannel serverSocketChannel	= null;
 			Selector selector						= null;
-			logger.info("[Server] Listen to the port: " + Network.PORT);
+			logger.info("[Server] Listen to the port: " + PORT);
 			
 			try {
 				selector = Selector.open();
 				
 				serverSocketChannel = ServerSocketChannel.open();
 				serverSocketChannel.configureBlocking(false);
-				serverSocketChannel.socket().bind(new InetSocketAddress(Network.Ip, Network.PORT));
+				serverSocketChannel.socket().bind(new InetSocketAddress(Ip, PORT));
 				serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 				
 				while (true) {
@@ -218,7 +218,6 @@ public class Network implements INetwork {
 			}
 		});
 	}
-	
 
 	public void accept(SelectionKey key) throws IOException {
 		
@@ -243,21 +242,20 @@ public class Network implements INetwork {
 		System.out.println(buf);
 		try {
 			while ((bytes = socketChannel.read(buf)) > 0);
-				System.out.println(bytes);
-				System.out.println(buf);
-				
-				buf.flip();
-				byte[] bytearr = new byte[buf.remaining()];
-				buf.get(bytearr);
-				
-				String s = new String(bytearr);
-				logger.info("[Server] Message: "+s);
-				ParseInformation(s);
-				buf.clear();
-				
-				// check for EOF
-				if (bytes == -1)
-					throw new IOException("EOF");
+			
+			
+			buf.flip();
+			byte[] bytearr = new byte[buf.remaining()];
+			buf.get(bytearr);
+			
+			String s = new String(bytearr);
+			logger.info("[Server] Message: "+s);
+			state.parseInformation();
+			buf.clear();
+			
+			// check for EOF
+			if (bytes == -1)
+				throw new IOException("EOF");
 				
 			
 		} catch (IOException e) {
@@ -288,11 +286,10 @@ public class Network implements INetwork {
 		}
 	}
 	
-	
-	private void WriteToPort(final String message, final String ip, final String port){
+	public void WriteToServer(final String message){
 		pool.execute(new Runnable() {
 			public void run() {
-				logger.info("Connect to: " + ip + ":" + port);
+				logger.info("Connect to: " + IpServer + ":" + PortServer);
 				logger.info("Message: " + message);
 				
 				Selector selector			= null;
@@ -303,7 +300,7 @@ public class Network implements INetwork {
 					
 					socketChannel = SocketChannel.open();
 					socketChannel.configureBlocking(false);
-					socketChannel.connect(new InetSocketAddress(ip, Integer.parseInt(port)));
+					socketChannel.connect(new InetSocketAddress(IpServer, PortServer));
 					
 					ByteBuffer buf = ByteBuffer.allocateDirect(1024);
 					buf.put(message.getBytes());
@@ -324,6 +321,7 @@ public class Network implements INetwork {
 						}
 					}
 					logger.info("[Client] Connection closed");
+					running = true;
 				} catch (IOException e) {
 					e.printStackTrace();
 					
@@ -372,7 +370,7 @@ public class Network implements INetwork {
 		key.interestOps(SelectionKey.OP_WRITE);
 	}
 	
-	@Override
+/*	@Override
 	public void announceOtherUsers() {
 		// TODO Auto-generated method stub
 		if(ipPort != null)
@@ -386,7 +384,51 @@ public class Network implements INetwork {
 			  WriteToPort(message, entry.getValue(), entry.getKey());
 			}
 		}
+	}*/
+	
+	public String getIp()
+	{
+		return this.Ip;
 	}
 	
+	public int getPort()
+	{
+		return this.PORT;
+	}
+	
+	public String getServerIp()
+	{
+		return this.IpServer;
+	}
+	
+	public int getServerPort()
+	{
+		return this.PortServer;
+	}
 
+	public String getUserType()
+	{
+		return user;
+	}
+	
+	public IState getConnectState()
+	{
+		return connectState;
+	}
+	
+	public IState getOfferRequestState()
+	{
+		return offerRequestState;
+	}
+	
+	public IState getMakeOfferState()
+	{
+		return makeOfferState;
+	}
+	
+	public void setState(IState newState)
+	{
+		state = newState;
+	}
+	
 }

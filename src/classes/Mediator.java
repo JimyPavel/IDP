@@ -100,16 +100,21 @@ public class Mediator implements IMediator{
 	}
 
 	@Override
-	public void setIpAndPort() {
+	public void setIpAndPort(String userType) {
 		// TODO Auto-generated method stub
-		network.setIpAndPort();
-		network.announceOtherUsers();
+		network.setIpAndPort(userType);
 	}
 
 	@Override
 	public void setLoggerFile(String name) {
 		// TODO Auto-generated method stub
 		network.addFileLogging(name+"Log.txt");
+	}
+
+	@Override
+	public void LaunchOfferRequest(String product) {
+		// TODO Auto-generated method stub
+		network.LaunchOfferRequest(product);
 	}
 	
 	

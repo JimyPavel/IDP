@@ -18,9 +18,9 @@ public interface INetwork {
 	// has been changed.
 	public boolean notifyStatusChanged(String username, Offer offer, String status);
 	
-	public void setIpAndPort();
+	public void setIpAndPort(String userType);
 	
 	public void addFileLogging(String fileName);
 	
-	public void announceOtherUsers();
+	public void LaunchOfferRequest(String product);
 }

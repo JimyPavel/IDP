@@ -101,7 +101,7 @@ public class Gui extends JPanel implements IGui{
 					userName = userText;
 					initContent();
 					mediator.setLoggerFile(userName);
-					mediator.setIpAndPort();
+					mediator.setIpAndPort(userType);
 				}
 				// else we change the message
 				else{
@@ -282,6 +282,9 @@ public class Gui extends JPanel implements IGui{
 								@Override
 								public void actionPerformed(ActionEvent arg0) {
 									String productName = (String)table.getValueAt(r, c);
+									
+									// launch request in network
+									mediator.LaunchOfferRequest(productName);
 									
 									// we change the status in ACTIVE->NO OFFER
 									table.setValueAt("NO OFFER", r, 2);

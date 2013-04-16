@@ -90,5 +90,7 @@ public interface IMediator {
 	// this method will create a file for logging, different for each user
 	public void setLoggerFile(String name);
 	
-	public void setIpAndPort();
+	public void setIpAndPort(String userType);
+	
+	public void LaunchOfferRequest(String product);
 }
