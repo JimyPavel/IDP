@@ -30,5 +30,4 @@ public interface IWeb {
 	// this method will return a list of buyers who wants an offer for this product
 	public ArrayList<String> getBuyers (String productName);
 	
-	public void startTransfer(String buyer, String seller, Offer offer);
 }

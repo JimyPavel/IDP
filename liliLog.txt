@@ -1,19 +1,37 @@
  0    [pool-1-thread-1] INFO  classes.Network  - Connect to: 127.0.0.1:30000
- 4    [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30007:Seller
- 1    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30007
- 42   [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
- 43   [pool-1-thread-1] INFO  classes.Network  - [Client] WRITE: 
- 43   [pool-1-thread-1] INFO  classes.Network  - [Client] Connection closed
- 4230 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
- 4230 [pool-1-thread-2] INFO  classes.Network  - [Server] ACCEPT: 
- 4231 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection from: /127.0.0.1:59288
- 4232 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
- 4235 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
- 4235 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: [offerRequest]curatare toaleta
- 4235 [pool-1-thread-2] INFO  classes.Network  - [Seller] Offer request from one client[offerRequest]curatare toaleta
- 4261 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
- 4261 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
- 4262 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: 
- 4262 [pool-1-thread-2] INFO  classes.Network  - [Seller] Offer request from one client
- 4262 [pool-1-thread-2] WARN  classes.Network  - Wrong message received: 
- 4262 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection closed: EOF
+ 3    [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30006:lili:Seller
+ 1    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30006
+ 38   [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
+ 38   [pool-1-thread-1] INFO  classes.Network  - [Client] WRITE: 
+ 39   [pool-1-thread-1] INFO  classes.Network  - [Client] Connection closed
+ 3282 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 3282 [pool-1-thread-2] INFO  classes.Network  - [Server] ACCEPT: 
+ 3283 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection from: /127.0.0.1:52190
+ 3284 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 3284 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
+ 3285 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: [offerRequest]spalat geamuri:jimy
+ 3285 [pool-1-thread-2] INFO  classes.Network  - [Seller] Offer request from one client [offerRequest]spalat geamuri:jimy
+ 3305 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 3306 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
+ 3306 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: 
+ 3306 [pool-1-thread-2] INFO  classes.Network  - [Seller] Offer request from one client 
+ 3306 [pool-1-thread-2] WARN  classes.Network  - Wrong message received: 
+ 3306 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection closed: EOF
+ 9808 [pool-1-thread-3] INFO  classes.Network  - Connect to: 127.0.0.1:30000
+ 9809 [pool-1-thread-3] INFO  classes.Network  - Message: [offerMade]jimy:spalat geamuri:30:lili
+ 9811 [pool-1-thread-3] INFO  classes.Network  - [Client] CONNECT: 
+ 9812 [pool-1-thread-3] INFO  classes.Network  - [Client] WRITE: 
+ 9812 [pool-1-thread-3] INFO  classes.Network  - [Client] Connection closed
+ 13885 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 13885 [pool-1-thread-2] INFO  classes.Network  - [Server] ACCEPT: 
+ 13885 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection from: /127.0.0.1:52228
+ 13885 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 13885 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
+ 13886 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: [offerAccepted]jimy:lili:spalat geamuri:30
+ 13886 [pool-1-thread-2] INFO  classes.Network  - [Client] [offerAccepted]jimy:lili:spalat geamuri:30
+ 13894 [pool-1-thread-2] INFO  classes.Network  - [Server] waitting
+ 13894 [pool-1-thread-2] INFO  classes.Network  - [Server] READ: 
+ 13895 [pool-1-thread-2] INFO  classes.Network  - [Server] Message read: 
+ 13895 [pool-1-thread-2] INFO  classes.Network  - [Client] 
+ 13895 [pool-1-thread-2] WARN  classes.Network  - Wrong message received: 
+ 13895 [pool-1-thread-2] INFO  classes.Network  - [Server] Connection closed: EOF

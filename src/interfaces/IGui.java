@@ -4,5 +4,9 @@ public interface IGui {
 	
 	public String getUsername();
 	
-	public void OfferRequestReceived();
+	public void OfferRequestReceived(String product, String buyer);
+	
+	public void OfferReceived(String product, String value, String seller);
+	
+	public void OfferAccepted(String buyer, String product, String value);
 }

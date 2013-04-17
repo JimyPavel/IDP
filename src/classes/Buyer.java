@@ -7,6 +7,7 @@ public class Buyer extends User {
 
 	public Buyer(String username, String password, String userType) {
 		super(username, password, userType);
+		requests = new ArrayList<Request>();
 	}
 
 	// field for all offers he has made
@@ -21,4 +22,6 @@ public class Buyer extends User {
 	public void setRequests(ArrayList<Request> requests) {
 		this.requests = requests;
 	}
+	
+	
 }

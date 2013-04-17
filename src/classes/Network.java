@@ -45,6 +45,8 @@ public class Network implements INetwork {
 	private IState connectState;
 	private IState offerRequestState;
 	private IState makeOfferState;
+	private IState waittingAcceptState;
+	private IState waittingOfferSate;
 	
 	public Network (IMediator mediator)
 	{
@@ -54,7 +56,8 @@ public class Network implements INetwork {
 		connectState = new ConnectState(this);
 		offerRequestState = new OfferRequestState(this);
 		makeOfferState = new MakeOfferState(this);
-		
+		waittingAcceptState = new WaittingAccept(this);
+		waittingOfferSate = new WaittingOffer(this);
 		state = connectState;
 		BasicConfigurator.configure();
 		
@@ -77,14 +80,33 @@ public class Network implements INetwork {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	@Override
-	public void LaunchOfferRequest(String product) {
+	public void addFileLogging(String fileName) {
 		// TODO Auto-generated method stub
-		state.addDetails(product);
-		state.sendMessage();
+		try{
+			// delete previous log file
+			File f = new File(fileName);
+			if(f.exists()){
+				f.delete();
+			}
+			
+			// add appender to file
+			RollingFileAppender roll = new RollingFileAppender(new PatternLayout(" %-4r [%t] %-5p %c %x - %m%n"), fileName, true);
+			
+			roll.setImmediateFlush( true );
+			roll.setBufferedIO( false );
+			roll.setBufferSize( 1024 );
+			roll.activateOptions();
+			logger.addAppender(roll);
+		
+		} catch (Exception ex)
+		{
+			
+		}
 	}
 	
+	// connect
 	@Override
 	public void setIpAndPort(String userType) {
 		// TODO Auto-generated method stub
@@ -108,7 +130,7 @@ public class Network implements INetwork {
 				System.out.println(strLine);
 				String pieces[] = strLine.split(" ");
 				
-				if(pieces.length == 3)
+				if(pieces.length == 4)
 				{
 					if (lines == 0)
 					{
@@ -141,30 +163,30 @@ public class Network implements INetwork {
 		}
 	
 	}
-	
+
+	// client -> launch offer request
 	@Override
-	public void addFileLogging(String fileName) {
+	public void LaunchOfferRequest(String product) {
 		// TODO Auto-generated method stub
-		try{
-			// delete previous log file
-			File f = new File(fileName);
-			if(f.exists()){
-				f.delete();
-			}
-			
-			// add appender to file
-			RollingFileAppender roll = new RollingFileAppender(new PatternLayout(" %-4r [%t] %-5p %c %x - %m%n"), fileName, true);
-			
-			roll.setImmediateFlush( true );
-			roll.setBufferedIO( false );
-			roll.setBufferSize( 1024 );
-			roll.activateOptions();
-			logger.addAppender(roll);
-		
-		} catch (Exception ex)
-		{
-			
-		}
+		state.addDetails(product);
+		state.sendMessage();
+	}
+	
+	// seller -> make offer
+	@Override
+	public void makeOffer(String username, Offer offer, String product){
+		String details = username + ":" + offer.getProduct() + ":" + offer.getValue() + ":" + offer.getSeller();
+		state.addDetails(details);
+		state.sendMessage();
+	}
+	
+	//client -> accept offer
+	@Override
+	public void startTransfer(String buyer, String seller, String product, String value) 
+	{
+		String details = buyer+":"+seller+":"+product+":"+value;
+		state.addDetails(details);
+		state.sendMessage();
 	}
 	
 	// this method will create a thread that will listen to port, expecting for information
@@ -239,7 +261,7 @@ public class Network implements INetwork {
 		int bytes = 0;
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
-		System.out.println(buf);
+		
 		try {
 			while ((bytes = socketChannel.read(buf)) > 0);
 			
@@ -410,6 +432,15 @@ public class Network implements INetwork {
 		return makeOfferState;
 	}
 	
+	public IState getWaittingOfferState()
+	{
+		return waittingOfferSate;
+	}
+	
+	public IState getWaittingAcceptState()
+	{
+		return waittingAcceptState;
+	}
 	public void setState(IState newState)
 	{
 		state = newState;

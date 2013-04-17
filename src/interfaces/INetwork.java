@@ -23,4 +23,8 @@ public interface INetwork {
 	public void addFileLogging(String fileName);
 	
 	public void LaunchOfferRequest(String product);
+	
+	public void makeOffer(String username, Offer offer, String product);
+	
+	public void startTransfer(String buyer, String seller, String product, String value);
 }

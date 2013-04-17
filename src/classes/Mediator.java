@@ -53,9 +53,13 @@ public class Mediator implements IMediator{
 	}
 
 	@Override
-	public boolean makeOffer(String username, Offer offer, String product) {
+	public void makeOffer(String username, Offer offer, String product) {
 		// TODO Auto-generated method stub
-		return false;
+		network.makeOffer(username, offer, product);
+	}
+	
+	public void OfferReceived(String product, String value, String seller){
+		gui.OfferReceived(product, value, seller);
 	}
 
 	@Override
@@ -94,9 +98,8 @@ public class Mediator implements IMediator{
 	}
 
 	@Override
-	public void startTransfer(String buyer, String seller, Offer offer) {
-		web.startTransfer(buyer,seller,offer);
-		
+	public void startTransfer(String buyer, String seller, String product, String value) {
+		network.startTransfer(buyer,seller, product, value);
 	}
 
 	@Override
@@ -124,9 +127,15 @@ public class Mediator implements IMediator{
 	}
 
 	@Override
-	public void OfferRequestReceived() {
+	public void OfferRequestReceived(String product, String buyer) {
 		// TODO Auto-generated method stub
-		gui.OfferRequestReceived();
+		gui.OfferRequestReceived(product, buyer);
+	}
+
+	@Override
+	public void OfferAccepted(String buyer, String product, String value) {
+		// TODO Auto-generated method stub
+		gui.OfferAccepted(buyer, product, value);
 	}
 	
 	

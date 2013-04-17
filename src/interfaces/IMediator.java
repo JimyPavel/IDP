@@ -39,7 +39,7 @@ public interface IMediator {
 	// method for making an offer for a specific product
 	// this method will be called by a Seller identified by "username"
 	// returns true if the offer was successfully made, or false otherwise
-	public boolean makeOffer(String username, Offer offer, String product);
+	public void makeOffer(String username, Offer offer, String product);
 	
 	// method for canceling the request for a specific product/service
 	// this method will be called by a Buyer who requested a product/service
@@ -85,7 +85,7 @@ public interface IMediator {
 	// this method will return a list of buyers who wants an offer for this product
 	public ArrayList<String> getBuyers (String productName);
 	
-	public void startTransfer(String buyer, String seller, Offer offer);
+	public void startTransfer(String buyer, String seller, String product, String value);
 	
 	// this method will create a file for logging, different for each user
 	public void setLoggerFile(String name);
@@ -96,5 +96,9 @@ public interface IMediator {
 	
 	public String getUsername();
 	
-	public void OfferRequestReceived();
+	public void OfferRequestReceived(String product, String buyer);
+	
+	public void OfferReceived(String product, String value, String seller);
+	
+	public void OfferAccepted(String buyer, String product, String value);
 }

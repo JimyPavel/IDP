@@ -38,6 +38,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+
 import interfaces.IMediator;
 import interfaces.IGui;
 
@@ -461,14 +462,18 @@ public class Gui extends JPanel implements IGui{
 									
 									// we announce the mediator that we accepted the offer
 									Offer offer = getOffer(productName, r);
-									mediator.acceptOffer(userName, offer);
 									
+									//mediator.acceptOffer(userName, offer);
+									//System.out.println("Offer: " +offer.getProduct()+" "+ offer.getValue());
 									
 									// we change the status again in transfer started
-									table.getModel().setValueAt("TRANSFER STARTED", r, 2);
+									table.getModel().setValueAt("TRANSFER STARTED", r, 2);								
 									
+									 // we tell to mediator to start transfer
+								    mediator.startTransfer(userName, offer.getSeller(), offer.getProduct(), offer.getValue());
+								    
 									// we start the progress bar
-									ExportTask task = new ExportTask();
+									ExportTask task = new ExportTask(Integer.parseInt(offer.getValue()));
 									PropertyChangeListener listener = new PropertyChangeListener() {
 										@Override
 										public void propertyChange(PropertyChangeEvent evt) {
@@ -493,8 +498,7 @@ public class Gui extends JPanel implements IGui{
 									task.addPropertyChangeListener(listener);
 								    task.execute();
 								    
-								    // we tell to mediator to start transfer
-								    mediator.startTransfer(userName, offer.getSeller(), offer);
+								   
 								}
 							});
 		            		acceptOfferB.setEnabled(false);
@@ -586,7 +590,8 @@ public class Gui extends JPanel implements IGui{
 													if(request.getProductName().equals(productName)){
 														Offer offer = new Offer(productName,userName,offerValue);
 														request.setOffer(offer);
-														
+														// nume buyer, oferta, produs
+														mediator.makeOffer(buyer.getUsername(), offer, productName);
 														// and we change the status
 														table.getModel().setValueAt("OFFER MADE", r, 2);
 													}
@@ -638,8 +643,6 @@ public class Gui extends JPanel implements IGui{
 			}
 		});
 		
-		
-		
 		// top, bottom, center
 		JPanel top = new JPanel(new FlowLayout());			// a welcome message	
 		JPanel center = new JPanel(new FlowLayout());		// the table
@@ -671,312 +674,222 @@ public class Gui extends JPanel implements IGui{
 		});
 		bottom.add(signOutB);
 		
-		// if the user is a buyer we add the button for test
-		if(userType == User.BUYER_TYPE){	
-			// only for test
-			// remove when you are done
-			// he adds an offer for every service in list which is active
-			// from the first seller
-			JButton testOfferMade = new JButton("test Offer Made");
-			testOfferMade.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					if(tableEntries != null){
-						@SuppressWarnings("rawtypes")
-						Set set = tableEntries.entrySet();
-						if(set != null){
-							@SuppressWarnings("rawtypes")
-							Iterator it = set.iterator();
-						    while (it.hasNext()) {
-						      @SuppressWarnings("unchecked")
-							  Map.Entry<String,ArrayList<User>> entry = (Map.Entry<String,ArrayList<User>>) it.next();
-						      ArrayList<User> users = (ArrayList<User>)entry.getValue();
-						      if(users != null){
-						    	  Seller seller = (Seller) users.get(0);
-						    	  Offer offer = new Offer((String)entry.getKey(),seller.getUsername(),"255");
-						    	  ArrayList<Offer> offers = new ArrayList<Offer>();
-						    	  offers.add(offer);
-						    	  seller.setOffers(offers);
-						    	  
-						    	  // we change the status if the selected item in comboBox is the name
-						    	  // of the seller
-						    	  String selectedSellerName = "";
-						    	  int rowNo = -1;
-						    	  for(int i=0; i < mainProducts.size();i++){
-						    		  if(mainProducts.get(i).getName().equals(entry.getKey())){
-						    			  rowNo = i;
-						    			  break;
-						    		  }
-						    	  }
-						    	  int colNo = 1;
-						    	  try{
-						    		  
-						    		  @SuppressWarnings("unchecked")
-									  JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, colNo);
-						    		  selectedSellerName = (String)combo.getSelectedItem();
-						    	  }
-						    	  catch(ClassCastException e){
-						    		  selectedSellerName = (String)table.getModel().getValueAt(rowNo, colNo);
-						    	  }
-						    	  
-						    	  if(seller.getUsername().equals(selectedSellerName)){
-						    		  // we change status to OFFER MADE
-						    		  table.getModel().setValueAt("OFFER MADE", rowNo, 2);
-						    	  }
-						      }
-						    }
-					    }
-					}
-					
-					
-				}
-			});
-			
-			String text = "<html>This button simulates the action of receiving an offer from the sellers for each product in table."+
-			"<br> The offer is received from the first seller in list. <br>" +
-			" You have to launch at least an offer request before push this button</html>";
-			testOfferMade.setToolTipText(text);
-			bottom.add(testOfferMade);
-		}
-		else if(userType.equals(User.SELLER_TYPE)){
-			
-			// we add an button which simulates the fact that the buyers requested some offers
-			JButton simOfferRequest = new JButton("Simulate offer requests");
-			simOfferRequest.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					
-				
-				}
-			});
-			String text = "<html> This button simulates the event of receiving some offer requests <br> "+
-			" We add some offer requests for each product we can produce <br>"+
-			" After this button is pressed we can make an offer </html>";
-			simOfferRequest.setToolTipText(text);
-			
-			// we add an button which simulates the fact that one buyer accepted an offer
-			JButton simOfferAccepted = new JButton("simulate offers accepted");
-			simOfferAccepted.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					
-					// we parse every entry from the "tableEntries"
-					if(tableEntries != null){
-						@SuppressWarnings("rawtypes")
-						Set set = tableEntries.entrySet();
-						if(set != null){
-							@SuppressWarnings("rawtypes")
-							Iterator it = set.iterator();
-						    while (it.hasNext()) {
-						      @SuppressWarnings({ "rawtypes", "unchecked" })
-							  Map.Entry<String,ArrayList<User>> entry = (Map.Entry) it.next();
-						      
-						      // we take the product name
-						      String productName = (String)entry.getKey();
-						      // and the list of buyers
-						      ArrayList<User> buyers = (ArrayList<User>)entry.getValue();
-						      
-						      // we iterate in the list of buyers, searching for that buyers who "accepted" the offer
-						      // for this productName
-						      for(int i=0; i<buyers.size() ;i++){
-						    	  Buyer buyer = (Buyer)buyers.get(i);
-						    	  ArrayList<Request> requests = buyer.getRequests();
-						    	  
-						    	  // we iterate the list of requests and see if we made an offer for one of them
-						    	  for(int j=0; j<requests.size();j++){
-						    		  Request request = (Request)requests.get(j);
-						    		  if(request.getProductName().equals(productName)){
-						    			  // once we found the offer we made , we start the transfer
-						    			  if(request.getOffer() != null){
-						    				  
-						    				  // we search the row in table , having the productName
-						    				  int rowNo = -1;
-						    				  for(int k=0; k < mainProducts.size() ;k++){
-						    					  if(mainProducts.get(k).getName().equals(productName)){
-						    						  rowNo = k;
-						    						  break;
-						    					  }
-						    				  }
-						    				  final int r = rowNo;
-						    				  
-						    				  // we change the status to OFFER ACCEPTED
-						    				  table.getModel().setValueAt("OFFER ACCEPTED", r, 2);
-						    				  
-						    				  // we start the transfer
-						    				  // we change the status again in transfer started
-											  table.getModel().setValueAt("TRANSFER STARTED", r, 2);
-												
-											  // we start the progress bar
-											  ExportTask task = new ExportTask();
-											  PropertyChangeListener listener = new PropertyChangeListener() {
-												@Override
-												public void propertyChange(PropertyChangeEvent evt) {
-													JProgressBar progressBar = 
-														(JProgressBar)table.getModel().getValueAt(r, 3);
-													if ("progress".equals(evt.getPropertyName())) {
-											        	Integer newValue = (Integer)evt.getNewValue();
-											        	
-											        	// if the transfer is on 2%, we change the status
-											        	if(newValue == 2){
-											        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
-											        	}
-											        	else if(newValue == progressBar.getMaximum()){
-											        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
-											        	}
-											        	progressBar.setValue((Integer)evt.getNewValue());
-											        	model.setValueAt(progressBar, r, 3);
-											        	table.setModel(model);
-													}
-												}
-											  };
-												task.addPropertyChangeListener(listener);
-											    task.execute();
-						    			  }
-						    		  }
-						    	  }
-						      }
-						    }
-						}
-					}
-					
-				}
-			});
-			
-			text = "<html> This button simulates the event of some buyers accepting your offers <br>"+
-			" After this button is pressed , the transfer is started </html>";
-			simOfferAccepted.setToolTipText(text);
-			
-			bottom.add(simOfferRequest);
-			bottom.add(simOfferAccepted);
-		}
-		
 		this.revalidate();
 		this.repaint();
 	}
 	
-	public  void OfferRequestReceived()
+	// metoda pt seller, in care se populeaza gui-ul cu acel cumparator care vrea un produs
+	public  void OfferRequestReceived(String productName, String buyer)
 	{
-		// we have to take the buyers for every product we have 
+		System.out.println("Lista de produse: "+mainProducts.size());
 		for(int i=0; i<mainProducts.size();i++){
-			String productName = mainProducts.get(i).getName();
-			ArrayList<String> buyers = mediator.getBuyers(productName);
 			
-			// populate the proper comboBox with them
-			@SuppressWarnings("unchecked")
-			JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(i, 1);
-			for(int j =0; j<buyers.size();j++){
-				combo.addItem(buyers.get(j));
-			}
-			combo.setEnabled(true);
-			revalidate();
-			repaint();
+			if(mainProducts.get(i).getName().equals(productName)){
+				System.out.println("Produs dorit: "+ mainProducts.get(i).getName());
+				// populate the proper comboBox with the buyer
+				@SuppressWarnings("unchecked")
+				JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(i, 1);
 			
-			combo.setName("combo"+i);
-			combo.addComponentListener(new ComponentAdapter() {
-			      public void componentShown(ComponentEvent e) {
-			        final JComponent c = (JComponent) e.getSource();
-			        SwingUtilities.invokeLater(new Runnable() {
-			          public void run() {
-			            c.requestFocus();
-			            if (c instanceof JComboBox) {
-			            }
-			          }
-			        });
-			      }
-			    });
-			// action listener for changing item
-			combo.addActionListener(new ActionListener() {
+				combo.addItem(buyer);
+			
+				if (!combo.isEnabled()){
+					combo.setEnabled(true);
+					
+					combo.setName("combo"+i);
+					combo.addComponentListener(new ComponentAdapter() {
+				      public void componentShown(ComponentEvent e) {
+				        final JComponent c = (JComponent) e.getSource();
+				        SwingUtilities.invokeLater(new Runnable() {
+				          public void run() {
+				            c.requestFocus();
+				            if (c instanceof JComboBox) {
+				            }
+				          }
+				        });
+				      }
+				    });
 				
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
+				// action listener for changing item
+					combo.addActionListener(new ActionListener() {
 					
-					// we take the name of the comboBox
-					// it's like "combo0" ,where 0 is the row number in table
-					@SuppressWarnings("unchecked" )
-					String comboName = (String)((JComboBox<String>)arg0.getSource()).getName();
-					int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
-					
-					@SuppressWarnings("unchecked")
-					String userName1 =(String)((JComboBox<String>)arg0.getSource()).getSelectedItem();
-					String productName = mainProducts.get(rowNo).getName();
-					
-					// we search in hashtable the user with "userName" for key = "productName"
-					// we change the status
-					ArrayList<User> users = tableEntries.get(productName);
-					if(users != null){
-						User user = null;
-						for(int i=0; i<users.size();i++){
-							if(users.get(i).getUsername().equals(userName1)){
-								user = users.get(i);
-								break;
-							}
-						}
-						
-						// if we found that user (from the list)
-						if(user != null){
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
 							
-							// if the user who is logged in is a seller
-							// then the "user" from above is a buyer
-							if(userType.equals(User.SELLER_TYPE)){
-								Buyer buyer = (Buyer) user;
-								
-								// we search in his requests array for an request offer for this product
-								// if the requests array is null we change status to "NO OFFER"
-								if(buyer.getRequests() == null){
-									table.setValueAt("NO OFFER", rowNo, 2);
-								}
-								else{
-									ArrayList<Request> requests = buyer.getRequests();
-									for(int i=0 ; i<requests.size();i++){
-										Request request = requests.get(i);
-										// if this is an request for the proper product
-										// and we made an offer for it
-										// we change the status in OFFER MADE
-										if(request.getProductName().equals(productName) &&
-												request.getOffer() != null){
-											
-											// we change the status for this service
-											table.setValueAt("OFFER MADE", rowNo, 2);
-										}
+							// we take the name of the comboBox
+							// it's like "combo0" ,where 0 is the row number in table
+							@SuppressWarnings("unchecked" )
+							String comboName = (String)((JComboBox<String>)arg0.getSource()).getName();
+							int rowNo = Integer.parseInt(comboName.charAt(comboName.length()-1) +"");
+							
+							@SuppressWarnings("unchecked")
+							String userName1 =(String)((JComboBox<String>)arg0.getSource()).getSelectedItem();
+							String productName = mainProducts.get(rowNo).getName();
+							
+							// we search in hashtable the user with "userName" for key = "productName"
+							// we change the status
+							ArrayList<User> users = tableEntries.get(productName);
+							if(users != null){
+								User user = null;
+								for(int i=0; i<users.size();i++){
+									if(users.get(i).getUsername().equals(userName1)){
+										user = users.get(i);
+										break;
 									}
 								}
+								
+								// if we found that user (from the list)
+								if(user != null){
+									
+									// if the user who is logged in is a seller
+									// then the "user" from above is a buyer
+									if(userType.equals(User.SELLER_TYPE)){
+										Buyer buyer = (Buyer) user;
+										
+										// we search in his requests array for an request offer for this product
+										// if the requests array is null we change status to "NO OFFER"
+										if(buyer.getRequests() == null){
+											table.setValueAt("NO OFFER", rowNo, 2);
+										}
+										else{
+											ArrayList<Request> requests = buyer.getRequests();
+											for(int i=0 ; i<requests.size();i++){
+												Request request = requests.get(i);
+												// if this is an request for the proper product
+												// and we made an offer for it
+												// we change the status in OFFER MADE
+												if(request.getProductName().equals(productName) &&
+														request.getOffer() != null){
+													
+													// we change the status for this service
+													table.setValueAt("OFFER MADE", rowNo, 2);
+												}
+											}
+										}
+									}
+									
+								}
 							}
-							
 						}
-					}
+					
+					});
 				}
-			});
-			
-			// we create the list of buyers
-			ArrayList<User> buyersObject = new ArrayList<User>();
-			ArrayList<Request> requests = new ArrayList<Request>();
-			for(int k=0; k < buyers.size();k++){
-				Request r = new Request(productName, buyers.get(k));
-				requests.add(r);
+				
+				Buyer s = new Buyer(buyer,null,User.BUYER_TYPE);
+				Request r = new Request(productName, buyer);
+				s.getRequests().add(r);
+					
+				// we add an entry in hashtable				
+				if(tableEntries == null){
+					tableEntries = new Hashtable<String,ArrayList<User>>();
+				}
+				if(tableEntries.get(productName) == null){
+					ArrayList<User> arr = new ArrayList<User>();
+					arr.add(s);
+					tableEntries.put(productName, arr);
+				}
+				else{
+					tableEntries.get(productName).add(s);
+				}
+				System.out.println("Lista de buyer: "+tableEntries.get(productName).size());
+				
+				// we change the status to "NO OFFER" because he didn't make any offer
+				table.getModel().setValueAt("NO OFFER", i, 2);
+				// and change to active this product
+				productsStatus.put(productName, true);
+				revalidate();
+				repaint();
 			}
-			for(int k=0; k < buyers.size();k++){
-				Buyer s = new Buyer(buyers.get(k),null,User.BUYER_TYPE);
-				s.setRequests(requests);
-				buyersObject.add(s);
-			}
-			
-			// we add an entry in hashtable
-			if(tableEntries == null){
-				tableEntries = new Hashtable<String,ArrayList<User>>();
-			}
-			tableEntries.put(productName, buyersObject);
-			
-			// we change the status to "NO OFFER" because he didn't make any offer
-			table.getModel().setValueAt("NO OFFER", i, 2);
-			// and change to active this product
-			productsStatus.put(productName, true);
-			
 		}
 	}
 	
+	// metoda pt seller, in care incepe transferul
+	public void OfferAccepted(String buyer, String product, String value)
+	{
+		// we parse every entry from the "tableEntries"
+		if(tableEntries != null){
+			@SuppressWarnings("rawtypes")
+			Set set = tableEntries.entrySet();
+			if(set != null){
+				@SuppressWarnings("rawtypes")
+				Iterator it = set.iterator();
+			    while (it.hasNext()) {
+			      @SuppressWarnings({ "rawtypes", "unchecked" })
+				  Map.Entry<String,ArrayList<User>> entry = (Map.Entry) it.next();
+			      
+			      // we take the product name
+			      String productName = product;
+			      // and the list of buyers
+			      ArrayList<User> buyers = (ArrayList<User>)entry.getValue();
+			      
+			      // we iterate in the list of buyers, searching for that buyers who "accepted" the offer
+			      // for this productName
+				  for(int i=0; i<buyers.size() ;i++){
+					  if(((Buyer)buyers.get(i)).getUsername().equals(buyer))
+					  {
+				    	  ArrayList<Request> requests = ((Buyer)buyers.get(i)).getRequests();
+				    	  
+				    	  // we iterate the list of requests and see if we made an offer for one of them
+				    	  for(int j=0; j<requests.size();j++){
+				    		  Request request = (Request)requests.get(j);
+				    		  if(request.getProductName().equals(productName)){
+				    			  // once we found the offer we made , we start the transfer
+				    			  if(request.getOffer() != null){
+				    				  // we search the row in table , having the productName
+				    				  int rowNo = -1;
+				    				  for(int k=0; k < mainProducts.size() ;k++){
+				    					  if(mainProducts.get(k).getName().equals(productName)){
+				    						  rowNo = k;
+				    						  break;
+				    					  }
+				    				  }
+				    				  final int r = rowNo;
+				    				  
+				    				  // we change the status to OFFER ACCEPTED
+				    				  table.getModel().setValueAt("OFFER ACCEPTED", r, 2);
+				    				  
+				    				  // we start the transfer
+				    				  // we change the status again in transfer started
+									  table.getModel().setValueAt("TRANSFER STARTED", r, 2);
+										
+									  // we start the progress bar
+									  ExportTask task = new ExportTask(Integer.parseInt(request.getOffer().getValue()));
+									  PropertyChangeListener listener = new PropertyChangeListener() {
+										@Override
+										public void propertyChange(PropertyChangeEvent evt) {
+											JProgressBar progressBar = 
+												(JProgressBar)table.getModel().getValueAt(r, 3);
+											if ("progress".equals(evt.getPropertyName())) {
+									        	Integer newValue = (Integer)evt.getNewValue();
+									        	
+									        	// if the transfer is on 2%, we change the status
+									        	if(newValue == 2){
+									        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
+									        	}
+									        	else if(newValue == progressBar.getMaximum()){
+									        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
+									        	}
+									        	int x = (Integer)evt.getNewValue();
+									        	System.out.println(x);
+									        	progressBar.setValue(x);
+									        	model.setValueAt(progressBar, r, 3);
+									        	table.setModel(model);
+											}
+										}
+									  };
+										task.addPropertyChangeListener(listener);
+									    task.execute();
+				    			  }
+				    		  }
+				    	  }
+				      }
+				    }
+			    }
+			}
+		}
+		
+	
+		
+	}
 	// returns the value of the offer made by sellerName
 	// for the productName
 	public static String getValue(ArrayList<Offer> offers , String sellerName , String productName){
@@ -1204,5 +1117,62 @@ public class Gui extends JPanel implements IGui{
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return userName;
+	}
+
+	
+	//metoda pentru buyers unde primesc ofertele
+	@Override
+	public void OfferReceived(String product, String value, String seller) {
+		// TODO Auto-generated method stub
+	
+		if(tableEntries != null){
+			
+			@SuppressWarnings("rawtypes")
+			Set set = tableEntries.entrySet();
+			if(set != null){
+				@SuppressWarnings("rawtypes")
+				Iterator it = set.iterator();
+				
+			    while (it.hasNext()) {
+			      @SuppressWarnings("unchecked")
+				  Map.Entry<String,ArrayList<User>> entry = (Map.Entry<String,ArrayList<User>>) it.next();
+			      ArrayList<User> users = (ArrayList<User>)entry.getValue();
+			      if(users != null){
+			    	  Seller s = (Seller) users.get(0);
+			    	  Offer offer = new Offer(product,seller,value);
+			    	  ArrayList<Offer> offers = new ArrayList<Offer>();
+			    	  offers.add(offer);
+			    	  s.setOffers(offers);
+			    	  
+			    	  // we change the status if the selected item in comboBox is the name
+			    	  // of the seller
+			    	  String selectedSellerName = "";
+			    	  int rowNo = -1;
+			    	  for(int i=0; i < mainProducts.size();i++){
+			    		  if(mainProducts.get(i).getName().equals(entry.getKey())){
+			    			  rowNo = i;
+			    			  break;
+			    		  }
+			    	  }
+			    	  int colNo = 1;
+			    	  try{
+			    		  
+			    		  @SuppressWarnings("unchecked")
+						  JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, colNo);
+			    		  selectedSellerName = (String)combo.getSelectedItem();
+			    	  }
+			    	  catch(ClassCastException e){
+			    		  selectedSellerName = (String)table.getModel().getValueAt(rowNo, colNo);
+			    	  }
+			    	  
+			    	  if(seller.equals(selectedSellerName)){
+			    		  // we change status to OFFER MADE
+			    		  table.getModel().setValueAt("OFFER MADE", rowNo, 2);
+			    	  }
+			      }
+			    }
+		    }
+		}
+	
 	}	
 }

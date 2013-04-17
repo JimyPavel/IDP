@@ -1,0 +1,16 @@
+ 0    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30003
+ 0    [pool-1-thread-1] INFO  classes.Network  - Connect to: 127.0.0.1:30000
+ 25   [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30003:Buyer
+ 36   [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
+ 37   [pool-1-thread-1] INFO  classes.Network  - [Client] WRITE: 
+ 38   [pool-1-thread-1] INFO  classes.Network  - [Client] Connection closed
+ 18958 [pool-1-thread-3] INFO  classes.Network  - Connect to: 127.0.0.1:30000
+ 18959 [pool-1-thread-3] INFO  classes.Network  - Message: [offerRequest]spalat geamuri:maria
+ 18960 [pool-1-thread-3] INFO  classes.Network  - [Client] CONNECT: 
+ 18961 [pool-1-thread-3] INFO  classes.Network  - [Client] WRITE: 
+ 18964 [pool-1-thread-3] INFO  classes.Network  - [Client] Connection closed
+ 27692 [pool-1-thread-4] INFO  classes.Network  - Connect to: 127.0.0.1:30000
+ 27692 [pool-1-thread-4] INFO  classes.Network  - Message: [offerRequest]reparat calculator:maria
+ 27695 [pool-1-thread-4] INFO  classes.Network  - [Client] CONNECT: 
+ 27695 [pool-1-thread-4] INFO  classes.Network  - [Client] WRITE: 
+ 27696 [pool-1-thread-4] INFO  classes.Network  - [Client] Connection closed

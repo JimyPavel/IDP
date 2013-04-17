@@ -21,7 +21,8 @@ public class Server {
 	public static final int PORT		= 30000;
 	private static final String File = "setup.txt";
 	static Logger logger = Logger.getLogger(Server.class);
-	private static Hashtable<Integer, String> users;
+	private static Hashtable<Integer, String> usersAddress;
+	private static Hashtable<Integer, String> usersName;
 	public static ExecutorService pool = Executors.newFixedThreadPool(5);
 	public static boolean running = true;
 	
@@ -33,7 +34,8 @@ public class Server {
 		ServerSocketChannel serverSocketChannel	= null;
 		Selector selector						= null;
 		
-		users = new Hashtable<Integer, String>();
+		usersAddress = new Hashtable<Integer, String>();
+		usersName = new Hashtable<Integer, String>();
 		
 		try {
 			selector = Selector.open();
@@ -126,17 +128,11 @@ public class Server {
 		
 		logger.info("[Server] WRITE: ");
 		
-		int bytes;
-		//String ceva = "ceva";
-		//ByteBuffer buf = null;
-		//buf.put(ceva.getBytes());
-		//SocketChannel socketChannel = (SocketChannel)key.channel();
-		
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
 		
 		try {
-			while ((bytes = socketChannel.write(buf)) > 0);
+			while (socketChannel.write(buf) > 0);
 			
 			if (! buf.hasRemaining()) {
 				buf.clear();
@@ -149,17 +145,17 @@ public class Server {
 		}
 	}
 
-	private static void WriteIpPort(String ip, int port, String userType){
+	private static void WriteIpPort(String ip, int port, String userName, String userType){
 		
 		try{
 			FileOutputStream fs = new FileOutputStream(Server.File, true);
 			DataOutputStream out = new DataOutputStream(fs);
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
 			
-			writer.write(ip + " " + port + " " + userType);
+			writer.write(ip + " " + port + " "  + userName + " " + userType);
 			writer.newLine();
 			writer.close();
-			logger.info("[Server] User of type " + userType + " connected with ip "+ip+" and port "+port);
+			logger.info("[Server] User "+userName+ " of type " + userType + " connected with ip "+ip+" and port "+port);
 			
 		} catch(IOException ex)
 		{
@@ -209,25 +205,27 @@ public class Server {
 		if (typeOfMessage.equals("connect"))
 		{
 			String []address = pieces[1].split(":");
-			if(address.length < 3)
+			if(address.length < 4)
 			{
 				logger.warn("Wrong address received: "+pieces[1]);
 				return;
 			}
 			String ip = address[0];
 			int port = Integer.parseInt(address[1]);
-			String userType = address[2];
+			String userName = address[2];
+			String userType = address[3];
 			
-			WriteIpPort(ip, port, userType);
+			WriteIpPort(ip, port, userName, userType);
 			
-			users.put(port, userType);
+			usersAddress.put(port, userType);
+			usersName.put(port, userName);
 		}
 		else if(typeOfMessage.equals("offerRequest"))
 		{
+			// trimite cererea tuturor seller-ilor
 			logger.info("[Server] Offer Request received");
-			String product = pieces[1];
 			
-			Iterator<Map.Entry<Integer, String>> it = users.entrySet().iterator();
+			Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
 			while (it.hasNext()) {
 			  Map.Entry<Integer, String> entry = it.next();
 
@@ -237,7 +235,52 @@ public class Server {
 			  }
 			}
 		}
+		else if(typeOfMessage.equals("offerMade"))
+		{
+			logger.info("[Server] Offer received");
+			// buyer, product, value, seller
+			String []infos = pieces[1].split(":");
+			
+			if(infos.length < 4)
+			{
+				logger.warn("Wrong message received: " + pieces[1]);
+				return;
+			}
+			String buyer = infos[0];
+			
+			Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
+			while (it.hasNext()) {
+			  Map.Entry<Integer, String> entry = it.next();
 
+			  if (entry.getValue().equals(buyer))
+			  {
+				  SendMessage(info, entry.getKey());
+			  }
+			}
+		}
+		else if(typeOfMessage.equals("offerAccepted"))
+		{
+			logger.info("[Server] Offer accepted");
+			String []infos = pieces[1].split(":");
+			// buyer, seller, product, value
+			if(infos.length < 4)
+			{
+				logger.warn("Wrong message received: " + pieces[1]);
+				return;
+			}
+			
+			String seller = infos[1];
+			
+			Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
+			while (it.hasNext()) {
+			  Map.Entry<Integer, String> entry = it.next();
+
+			  if (entry.getValue().equals(seller))
+			  {
+				  SendMessage(info, entry.getKey());
+			  }
+			}
+		}
 	}
 	
 	private static void SendMessage(final String message, final int port)

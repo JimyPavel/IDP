@@ -13,7 +13,8 @@ public class ConnectState implements IState{
 	@Override
 	public void sendMessage() {
 		// TODO Auto-generated method stub
-		String message = "[connect]" + network.getIp()+":"+ network.getPort()+":"+network.getUserType();
+		String message = "[connect]" + network.getIp()+":"+ network.getPort()+":"+
+						  network.getMediator().getUsername()+":"+network.getUserType();
 		network.WriteToServer(message);
 		if(network.getUserType().equals("Buyer"))
 		{

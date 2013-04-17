@@ -15,8 +15,9 @@ public class OfferRequestState implements IState{
 	@Override
 	public void sendMessage() {
 		// TODO Auto-generated method stub
-		String message = "[offerRequest]" + details;
+		String message = "[offerRequest]" + details+":"+network.getMediator().getUsername();
 		network.WriteToServer(message);
+		network.setState(network.getWaittingOfferState());
 	}
 
 	@Override

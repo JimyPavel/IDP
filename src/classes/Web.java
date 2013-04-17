@@ -180,10 +180,5 @@ public class Web implements IWeb {
 		return buyers;
 	}
 
-	@Override
-	public void startTransfer(String buyer, String seller, Offer offer) {
-		
-		
-	}
 
 }

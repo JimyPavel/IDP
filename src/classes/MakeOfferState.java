@@ -7,6 +7,7 @@ import interfaces.IState;
 public class MakeOfferState implements IState{
 
 	private Network network;
+	String details;
 	
 	public MakeOfferState(Network network)
 	{
@@ -17,12 +18,16 @@ public class MakeOfferState implements IState{
 	public void sendMessage() {
 		// TODO Auto-generated method stub
 		
+		// buyer, product, value, seller
+		String message = "[offerMade]" + details;
+		network.WriteToServer(message);
+		network.setState(network.getWaittingAcceptState());
 	}
 
 	@Override
 	public void parseInformation(String info) {
 		// TODO Auto-generated method stub
-		Network.logger.info("[Seller] Offer request from one client" + info);
+		Network.logger.info("[Seller] Offer request from one client " + info);
 		ArrayList<Product> products = network.getMediator().loadProducts(network.getMediator().getUsername(), "Seller");
 		String []pieces = info.split("]");
 		
@@ -32,12 +37,22 @@ public class MakeOfferState implements IState{
 			return;
 		}
 		
+		String []details = pieces[1].split(":");
+		
+		if(details.length < 2)
+		{
+			Network.logger.warn("Wrong message received: " + info);
+			return;
+		}
+		
 		for (int i=0; i<products.size(); i++)
 		{
+			//Network.logger.debug("Product: " + products.get(i).getName());
 			// ofer produsul cerut
-			if (products.get(i).getName().equals(pieces[1]))
+			if (products.get(i).getName().equals(details[0]))
 			{
-				network.getMediator().OfferRequestReceived();
+				//Network.logger.debug("Am gasit produs "+details[0]+ " buyer "+ details[1]);
+				network.getMediator().OfferRequestReceived(details[0], details[1]);
 			}
 		}
 	}
@@ -45,7 +60,7 @@ public class MakeOfferState implements IState{
 	@Override
 	public void addDetails(String details) {
 		// TODO Auto-generated method stub
-		
+		this.details = details;
 	}
 
 }
