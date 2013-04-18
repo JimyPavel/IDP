@@ -16,7 +16,7 @@ public class WaittingOffer implements IState{
 	@Override
 	public void sendMessage() {
 		// TODO Auto-generated method stub
-		Network.logger.info("[Client] "+ details);
+		Network.logger.info("[WaittingOfferState] "+ details);
 		String message = "[offerAccepted]" + details;
 		network.WriteToServer(message);
 	}
@@ -24,12 +24,12 @@ public class WaittingOffer implements IState{
 	@Override
 	public void parseInformation(String info) {
 		// TODO Auto-generated method stub
-		Network.logger.info("[Client] "+ info);
+		Network.logger.info("[WaittingOfferState] Message received: "+ info);
 		String []infos = info.split(":");
 		
 		if(infos.length < 4)
 		{
-			Network.logger.warn("Wrong message received: " + info);
+			Network.logger.warn("[WaittingOfferState] Wrong message received: " + info);
 			return;
 		}
 		

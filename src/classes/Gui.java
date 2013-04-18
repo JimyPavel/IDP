@@ -461,7 +461,7 @@ public class Gui extends JPanel implements IGui{
 									acceptOffer(productName, r);
 									
 									// we announce the mediator that we accepted the offer
-									Offer offer = getOffer(productName, r);
+									final Offer offer = getOffer(productName, r);
 									
 									//mediator.acceptOffer(userName, offer);
 									//System.out.println("Offer: " +offer.getProduct()+" "+ offer.getValue());
@@ -479,6 +479,7 @@ public class Gui extends JPanel implements IGui{
 										public void propertyChange(PropertyChangeEvent evt) {
 											JProgressBar progressBar = 
 												(JProgressBar)table.getModel().getValueAt(r, 3);
+											progressBar.setMaximum(Integer.parseInt(offer.getValue()));
 											if ("progress".equals(evt.getPropertyName())) {
 									        	Integer newValue = (Integer)evt.getNewValue();
 									        	
@@ -605,7 +606,8 @@ public class Gui extends JPanel implements IGui{
 		            		makeOffer.setEnabled(false);
 		            		
 		            		// we enable this button only if this offer request is active
-		            		if(productsStatus.get(productName)){
+		            		if(productsStatus.get(productName) &&
+		            				!offerMade(productName,r)){
 		            			makeOffer.setEnabled(true);
 		            		}
 		            		
@@ -620,8 +622,18 @@ public class Gui extends JPanel implements IGui{
 									productsStatus.put(productName, false);
 									
 									table.getModel().setValueAt("INACTIVE", r, 2);
-									JComponent component = (JComponent)
+									JComponent component = null;
+									try{
+										component = (JComponent)
 														table.getModel().getValueAt(r, 1);
+									}
+									catch(java.lang.ClassCastException ex){
+										String why = (String)table.getModel().getValueAt(r, 1);
+										Object[] v = new Object[1];
+										v[0] = why;
+										component = new JComboBox<Object>(v);
+									}
+									
 									component.setEnabled(false);
 									revalidate();
 									repaint();
@@ -830,7 +842,7 @@ public class Gui extends JPanel implements IGui{
 				    	  
 				    	  // we iterate the list of requests and see if we made an offer for one of them
 				    	  for(int j=0; j<requests.size();j++){
-				    		  Request request = (Request)requests.get(j);
+				    		 final Request request = (Request)requests.get(j);
 				    		  if(request.getProductName().equals(productName)){
 				    			  // once we found the offer we made , we start the transfer
 				    			  if(request.getOffer() != null){
@@ -858,6 +870,7 @@ public class Gui extends JPanel implements IGui{
 										public void propertyChange(PropertyChangeEvent evt) {
 											JProgressBar progressBar = 
 												(JProgressBar)table.getModel().getValueAt(r, 3);
+											progressBar.setMaximum(Integer.parseInt(request.getOffer().getValue()));
 											if ("progress".equals(evt.getPropertyName())) {
 									        	Integer newValue = (Integer)evt.getNewValue();
 									        	
@@ -869,7 +882,7 @@ public class Gui extends JPanel implements IGui{
 									        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
 									        	}
 									        	int x = (Integer)evt.getNewValue();
-									        	System.out.println(x);
+									        	
 									        	progressBar.setValue(x);
 									        	model.setValueAt(progressBar, r, 3);
 									        	table.setModel(model);
@@ -962,31 +975,50 @@ public class Gui extends JPanel implements IGui{
 	// who is selected in the comboBox from the rowNo, for productName
 	public boolean offerMade(String productName, int rowNo){
 		
-		String selectedSellerName = "";
+		String selectedUserName = "";
 		try{
 			@SuppressWarnings("unchecked")
 			JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, 1);
-			selectedSellerName = (String)combo.getSelectedItem();
+			selectedUserName = (String)combo.getSelectedItem();
 		}
 		catch(java.lang.ClassCastException e){
-			selectedSellerName = (String)table.getModel().getValueAt(rowNo, 1);
+			selectedUserName = (String)table.getModel().getValueAt(rowNo, 1);
 		}
 		
 			 
 		if(tableEntries != null){
-			ArrayList<User> sellers = tableEntries.get(productName);
-			if(sellers != null){
-				for(int i=0; i<sellers.size();i++){
-					Seller seller = (Seller)sellers.get(i);
-					if(seller.getUsername().equals(selectedSellerName)){
-						
-						// we check if this seller made an offer for the given product
-						ArrayList<Offer> offers = seller.getOffers();
-						if(offers != null){
-							for(int j=0 ; j<offers.size(); j++){
-								Offer offer = offers.get(j);
-								if(offer.getProduct().equals(productName)){
-									return true;
+			ArrayList<User> users = tableEntries.get(productName);
+			if(users != null){
+				for(int i=0; i<users.size();i++){
+					if(userType.equals(User.BUYER_TYPE)){
+						Seller seller = (Seller)users.get(i);
+						if(seller.getUsername().equals(selectedUserName)){
+							
+							// we check if this seller made an offer for the given product
+							ArrayList<Offer> offers = seller.getOffers();
+							if(offers != null){
+								for(int j=0 ; j<offers.size(); j++){
+									Offer offer = offers.get(j);
+									if(offer.getProduct().equals(productName)){
+										return true;
+									}
+								}
+							}
+						}
+					}
+					else{
+						Buyer buyer = (Buyer)users.get(i);
+						if(buyer.getUsername().equals(selectedUserName)){
+							ArrayList<Request> requests = buyer.getRequests();
+							for(int j=0; j <requests.size();j++){
+								Request curr = requests.get(j);
+								if(curr.getProductName().equals(productName)){
+									if(curr.getOffer() != null){
+										return true;
+									}
+									else{
+										return false;
+									}
 								}
 							}
 						}
@@ -1127,51 +1159,46 @@ public class Gui extends JPanel implements IGui{
 	
 		if(tableEntries != null){
 			
-			@SuppressWarnings("rawtypes")
-			Set set = tableEntries.entrySet();
-			if(set != null){
-				@SuppressWarnings("rawtypes")
-				Iterator it = set.iterator();
-				
-			    while (it.hasNext()) {
-			      @SuppressWarnings("unchecked")
-				  Map.Entry<String,ArrayList<User>> entry = (Map.Entry<String,ArrayList<User>>) it.next();
-			      ArrayList<User> users = (ArrayList<User>)entry.getValue();
-			      if(users != null){
-			    	  Seller s = (Seller) users.get(0);
-			    	  Offer offer = new Offer(product,seller,value);
-			    	  ArrayList<Offer> offers = new ArrayList<Offer>();
-			    	  offers.add(offer);
-			    	  s.setOffers(offers);
+			ArrayList<User> users = tableEntries.get(product);
+			
+			for(int i=0; i< users.size() ; i++){
+				Seller s = (Seller)users.get(i);
+				if(s.getUsername().equals(seller)){
+					Offer offer = new Offer(product,seller,value);
+			    	ArrayList<Offer> offers = new ArrayList<Offer>();
+			    	offers.add(offer);
+			    	s.setOffers(offers);
+			    	
+			    	// we change the status if the selected item in comboBox is the name
+		    	  // of the seller
+		    	  String selectedSellerName = "";
+		    	  int rowNo = -1;
+		    	  for(int j=0; j < mainProducts.size();j++){
+		    		  if(mainProducts.get(j).getName().equals(product)){
+		    			  rowNo = j;
+		    			  break;
+		    		  }
+		    	  }
+		    	  int colNo = 1;
+		    	  try{
+		    		  
+		    		  @SuppressWarnings("unchecked")
+					  JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, colNo);
+		    		  selectedSellerName = (String)combo.getSelectedItem();
+		    	  }
+		    	  catch(ClassCastException e){
+		    		  selectedSellerName = (String)table.getModel().getValueAt(rowNo, colNo);
+		    	  }
+		    	  
+		    	  if(seller.equals(selectedSellerName)){
+		    		  // we change status to OFFER MADE
+		    		  table.getModel().setValueAt("OFFER MADE", rowNo, 2);
+		    	  }
+					break;
 			    	  
-			    	  // we change the status if the selected item in comboBox is the name
-			    	  // of the seller
-			    	  String selectedSellerName = "";
-			    	  int rowNo = -1;
-			    	  for(int i=0; i < mainProducts.size();i++){
-			    		  if(mainProducts.get(i).getName().equals(entry.getKey())){
-			    			  rowNo = i;
-			    			  break;
-			    		  }
-			    	  }
-			    	  int colNo = 1;
-			    	  try{
-			    		  
-			    		  @SuppressWarnings("unchecked")
-						  JComboBox<String> combo = (JComboBox<String>)table.getModel().getValueAt(rowNo, colNo);
-			    		  selectedSellerName = (String)combo.getSelectedItem();
-			    	  }
-			    	  catch(ClassCastException e){
-			    		  selectedSellerName = (String)table.getModel().getValueAt(rowNo, colNo);
-			    	  }
-			    	  
-			    	  if(seller.equals(selectedSellerName)){
-			    		  // we change status to OFFER MADE
-			    		  table.getModel().setValueAt("OFFER MADE", rowNo, 2);
-			    	  }
-			      }
-			    }
-		    }
+				}
+			}
+			
 		}
 	
 	}	

@@ -1,0 +1,14 @@
+ 0    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 17   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30002:ion:Seller
+ 1    [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] Listen to the port: 30002
+ 57   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
+ 58   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
+ 58   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
+ 17343 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waitting
+ 17344 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 17345 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:25519
+ 17345 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waitting
+ 17346 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 17346 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [offerRequest]spalat geamuri:jimy
+ 17346 [pool-1-thread-2] INFO  classes.Network  - [MakeOfferState] Offer request from one client [offerRequest]spalat geamuri:jimy
+ 17360 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF

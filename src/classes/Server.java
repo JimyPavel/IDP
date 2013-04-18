@@ -79,7 +79,7 @@ public class Server {
 	
 	public static void accept(SelectionKey key) throws IOException {
 		
-		logger.info("[Server] Accept ");
+		logger.info("[Accept] Accept ");
 		
 		ServerSocketChannel serverSocketChannel = (ServerSocketChannel)key.channel();
 		SocketChannel socketChannel = serverSocketChannel.accept();
@@ -87,13 +87,13 @@ public class Server {
 		ByteBuffer buf = ByteBuffer.allocateDirect(BUF_SIZE);
 		socketChannel.register(key.selector(), SelectionKey.OP_READ, buf);
 		
-		logger.info("[Server] Connection from: " + socketChannel.socket().getRemoteSocketAddress());
+		logger.info("[Accept] Connection from: " + socketChannel.socket().getRemoteSocketAddress());
 		//key.interestOps(SelectionKey.OP_WRITE);
 	}
 	
 	public static void read(SelectionKey key) throws IOException {
 		
-		logger.info("[Server] READ: ");
+		logger.info("[Read] READ: ");
 		
 		int bytes = 0;
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
@@ -108,7 +108,7 @@ public class Server {
 			buf.get(bytearr);
 			
 			String s = new String(bytearr);
-			logger.info("[Server] Message: "+s);
+			logger.info("[Read] Message: "+s);
 			ParseInformation(s);
 			buf.clear();
 	
@@ -118,7 +118,7 @@ public class Server {
 				
 			
 		} catch (IOException e) {
-			logger.info("[Server] Connection closed: " + e.getMessage());
+			logger.info("[Read] Connection closed: " + e.getMessage());
 			socketChannel.close();
 			
 		}
@@ -126,7 +126,7 @@ public class Server {
 	
 	public static void write(SelectionKey key) throws IOException {
 		
-		logger.info("[Server] WRITE: ");
+		logger.info("[Write] WRITE: ");
 		
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
@@ -140,7 +140,7 @@ public class Server {
 			}
 			
 		} catch (IOException e) {
-			logger.info("[Server] Connection closed: " + e.getMessage());
+			logger.info("[Write] Connection closed: " + e.getMessage());
 			socketChannel.close();
 		}
 	}
@@ -155,7 +155,7 @@ public class Server {
 			writer.write(ip + " " + port + " "  + userName + " " + userType);
 			writer.newLine();
 			writer.close();
-			logger.info("[Server] User "+userName+ " of type " + userType + " connected with ip "+ip+" and port "+port);
+			logger.info("[WriteIpPort] User "+userName+ " of type " + userType + " connected with ip "+ip+" and port "+port);
 			
 		} catch(IOException ex)
 		{
@@ -196,7 +196,7 @@ public class Server {
 		String []pieces = info.split("]");
 		if(pieces.length < 2)
 		{
-			logger.warn("Wrong message received: " + info);
+			logger.warn("[ParseInformation] Wrong message received: " + info);
 			return;
 		}
 		
@@ -207,7 +207,7 @@ public class Server {
 			String []address = pieces[1].split(":");
 			if(address.length < 4)
 			{
-				logger.warn("Wrong address received: "+pieces[1]);
+				logger.warn("[ParseInformation] Wrong address received: "+pieces[1]);
 				return;
 			}
 			String ip = address[0];
@@ -223,7 +223,7 @@ public class Server {
 		else if(typeOfMessage.equals("offerRequest"))
 		{
 			// trimite cererea tuturor seller-ilor
-			logger.info("[Server] Offer Request received");
+			logger.info("[ParseInformation] Offer Request received");
 			
 			Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
 			while (it.hasNext()) {
@@ -237,13 +237,13 @@ public class Server {
 		}
 		else if(typeOfMessage.equals("offerMade"))
 		{
-			logger.info("[Server] Offer received");
+			logger.info("[ParseInformation] Offer Made");
 			// buyer, product, value, seller
 			String []infos = pieces[1].split(":");
 			
 			if(infos.length < 4)
 			{
-				logger.warn("Wrong message received: " + pieces[1]);
+				logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
 				return;
 			}
 			String buyer = infos[0];
@@ -260,12 +260,12 @@ public class Server {
 		}
 		else if(typeOfMessage.equals("offerAccepted"))
 		{
-			logger.info("[Server] Offer accepted");
+			logger.info("[ParseInformation] Offer accepted");
 			String []infos = pieces[1].split(":");
 			// buyer, seller, product, value
 			if(infos.length < 4)
 			{
-				logger.warn("Wrong message received: " + pieces[1]);
+				logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
 				return;
 			}
 			
@@ -287,8 +287,8 @@ public class Server {
 	{
 		pool.execute(new Runnable() {
 			public void run() {
-				logger.info("Connect to: " + IP + ":" + port);
-				logger.info("Message: " + message);
+				logger.info("[SendMessage] Connect to: " + IP + ":" + port);
+				logger.info("[SendMessage] Message: " + message);
 				
 				Selector selector			= null;
 				SocketChannel socketChannel	= null;
@@ -318,7 +318,7 @@ public class Server {
 								writeClient(key);
 						}
 					}
-					logger.info("[Client] Connection closed");
+					logger.info("[SendMessage] Connection closed");
 					running = true;
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -340,7 +340,7 @@ public class Server {
 
 	public static  void writeClient(SelectionKey key) throws IOException {
 		
-		logger.info("[Server] WRITE: ");
+		logger.info("[WriteClient] WRITE: ");
 		
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
@@ -354,7 +354,7 @@ public class Server {
 	}
 	
 	public static void connect(SelectionKey key) throws IOException {
-		logger.info("[Server] CONNECT: ");
+		logger.info("[Connect] CONNECT: ");
 		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
 		if (! socketChannel.finishConnect()) {

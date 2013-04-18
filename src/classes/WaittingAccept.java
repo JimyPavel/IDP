@@ -21,13 +21,13 @@ public class WaittingAccept implements IState{
 	@Override
 	public void parseInformation(String info) {
 		// TODO Auto-generated method stub
-		Network.logger.info("[Client] "+ info);
+		Network.logger.info("[WaittingAcceptState] Message received: "+ info);
 		
 		String []pieces = info.split("]");
 		
 		if(pieces.length < 2)
 		{
-			Network.logger.warn("Wrong message received: " + info);
+			Network.logger.warn("[WaittingAcceptState] Wrong message received: " + info);
 			return;
 		}
 		
@@ -36,7 +36,7 @@ public class WaittingAccept implements IState{
 		
 		if(infos.length < 4)
 		{
-			Network.logger.warn("Wrong message received: " + info);
+			Network.logger.warn("[WaittingAcceptState] Wrong message received: " + info);
 			return;
 		}
 		

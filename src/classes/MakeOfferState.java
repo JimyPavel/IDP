@@ -27,13 +27,13 @@ public class MakeOfferState implements IState{
 	@Override
 	public void parseInformation(String info) {
 		// TODO Auto-generated method stub
-		Network.logger.info("[Seller] Offer request from one client " + info);
+		Network.logger.info("[MakeOfferState] Offer request from one client " + info);
 		ArrayList<Product> products = network.getMediator().loadProducts(network.getMediator().getUsername(), "Seller");
 		String []pieces = info.split("]");
 		
 		if(pieces.length < 2)
 		{
-			Network.logger.warn("Wrong message received: " + info);
+			Network.logger.warn("[MakeOfferState] Wrong message received: " + info);
 			return;
 		}
 		
@@ -41,7 +41,7 @@ public class MakeOfferState implements IState{
 		
 		if(details.length < 2)
 		{
-			Network.logger.warn("Wrong message received: " + info);
+			Network.logger.warn("[MakeOfferState] Wrong message received: " + info);
 			return;
 		}
 		

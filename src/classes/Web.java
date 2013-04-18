@@ -3,6 +3,7 @@ package classes;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -124,19 +125,51 @@ public class Web implements IWeb {
 		
 		ArrayList<String> sellers = null;
 		ArrayList<String> sellersFiles = new ArrayList<String>();
-		sellersFiles.add("lili.txt");
-		sellersFiles.add("ion.txt");
 		
+		// search in setup.txt for sellers
+		FileInputStream fstream ;
+		DataInputStream in;
+		BufferedReader br;
+		String strLine;
+		
+		try{
+			fstream = new FileInputStream("setup.txt");
+			// Get the object of DataInputStream
+			in = new DataInputStream(fstream);
+			br = new BufferedReader(new InputStreamReader(in));
+			
+			// citeste adresa serverului 
+			strLine = br.readLine();
+			while(strLine!=null && strLine != System.getProperty("line.separator") && strLine != " "){
+				
+				String pieces[] = strLine.split(" ");
+				
+				if(pieces.length == 4)
+				{
+					if(pieces[3].equals("Seller")){
+						String sellerFile = pieces[2] + ".txt";
+						sellersFiles.add(sellerFile);
+					}
+				}
+				strLine = br.readLine();
+			}
+			br.close();
+		}
+		catch(IOException e){
+			
+		}
+		
+		
+		// parse the sellers files 
 		for(int i=0 ; i< sellersFiles.size() ; i++){
 			try{
 			  String path = sellersFiles.get(i);
 			  // Open the file that is the first 
 			  // command line parameter
-			  FileInputStream fstream = new FileInputStream(path);
+			  fstream = new FileInputStream(path);
 			  // Get the object of DataInputStream
-			  DataInputStream in = new DataInputStream(fstream);
-			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			  String strLine;
+			  in = new DataInputStream(fstream);
+			  br = new BufferedReader(new InputStreamReader(in));
 			  
 			  
 			  // we read the products 

@@ -5,7 +5,6 @@ import interfaces.*;
 
 public class Mediator implements IMediator{
 	
-	@SuppressWarnings("unused")
 	private IGui gui;
 	private IWeb web;
 	private INetwork network;
@@ -121,6 +120,11 @@ public class Mediator implements IMediator{
 	}
 
 	@Override
+	public void DropOfferRequest(String productName){
+		network.DropOfferRequest(productName);
+	}
+	
+	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return gui.getUsername();
@@ -137,6 +141,7 @@ public class Mediator implements IMediator{
 		// TODO Auto-generated method stub
 		gui.OfferAccepted(buyer, product, value);
 	}
+	
 	
 	
 

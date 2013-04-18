@@ -2,12 +2,9 @@ package classes;
 
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
@@ -47,6 +44,7 @@ public class Network implements INetwork {
 	private IState makeOfferState;
 	private IState waittingAcceptState;
 	private IState waittingOfferSate;
+	private IState dropOfferState;
 	
 	public Network (IMediator mediator)
 	{
@@ -58,6 +56,8 @@ public class Network implements INetwork {
 		makeOfferState = new MakeOfferState(this);
 		waittingAcceptState = new WaittingAccept(this);
 		waittingOfferSate = new WaittingOffer(this);
+		dropOfferState = new DropOfferState(this);
+		
 		state = connectState;
 		BasicConfigurator.configure();
 		
@@ -112,6 +112,7 @@ public class Network implements INetwork {
 		// TODO Auto-generated method stub
 		
 		try{
+			this.setState(getConnectState());
 			this.user = userType;
 			
 			int lines = 0;
@@ -168,6 +169,7 @@ public class Network implements INetwork {
 	@Override
 	public void LaunchOfferRequest(String product) {
 		// TODO Auto-generated method stub
+		this.setState(getOfferRequestState());
 		state.addDetails(product);
 		state.sendMessage();
 	}
@@ -175,6 +177,7 @@ public class Network implements INetwork {
 	// seller -> make offer
 	@Override
 	public void makeOffer(String username, Offer offer, String product){
+		this.setState(getMakeOfferState());
 		String details = username + ":" + offer.getProduct() + ":" + offer.getValue() + ":" + offer.getSeller();
 		state.addDetails(details);
 		state.sendMessage();
@@ -184,8 +187,17 @@ public class Network implements INetwork {
 	@Override
 	public void startTransfer(String buyer, String seller, String product, String value) 
 	{
+		this.setState(getWaittingOfferState());
 		String details = buyer+":"+seller+":"+product+":"+value;
 		state.addDetails(details);
+		state.sendMessage();
+	}
+	
+	// client -> drop offer request
+	@Override
+	public void DropOfferRequest(String productName){
+		this.setState(getDropOfferState());
+		state.addDetails(productName);
 		state.sendMessage();
 	}
 	
@@ -196,7 +208,7 @@ public class Network implements INetwork {
 		public void run() {
 			ServerSocketChannel serverSocketChannel	= null;
 			Selector selector						= null;
-			logger.info("[Server] Listen to the port: " + PORT);
+			logger.info("[ListenToPort] Listen to the port: " + PORT);
 			
 			try {
 				selector = Selector.open();
@@ -208,7 +220,7 @@ public class Network implements INetwork {
 				
 				while (true) {
 					selector.select();
-					logger.info("[Server] waitting");
+					logger.info("[ListenToPort] waitting");
 					for (Iterator<SelectionKey> it = selector.selectedKeys().iterator(); it.hasNext(); ) {
 						SelectionKey key = it.next();
 						it.remove();
@@ -243,7 +255,7 @@ public class Network implements INetwork {
 
 	public void accept(SelectionKey key) throws IOException {
 		
-		logger.info("[Server] ACCEPT: ");
+		logger.info("[Accept] ACCEPT: ");
 		
 		ServerSocketChannel serverSocketChannel = (ServerSocketChannel)key.channel();
 		SocketChannel socketChannel = serverSocketChannel.accept();
@@ -251,12 +263,12 @@ public class Network implements INetwork {
 		ByteBuffer buf = ByteBuffer.allocateDirect(1024);
 		socketChannel.register(key.selector(), SelectionKey.OP_READ, buf);
 		
-		logger.info("[Server] Connection from: " + socketChannel.socket().getRemoteSocketAddress());
+		logger.info("[Accept] Connection from: " + socketChannel.socket().getRemoteSocketAddress());
 	}
 	
 	public void read(SelectionKey key) throws IOException {
 		
-		logger.info("[Server] READ: ");
+		logger.info("[Read] READ: ");
 		
 		int bytes = 0;
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
@@ -271,7 +283,7 @@ public class Network implements INetwork {
 			buf.get(bytearr);
 			
 			String s = new String(bytearr);
-			logger.info("[Server] Message read: "+s);
+			logger.info("[Read] Message read: "+s);
 			state.parseInformation(s);
 			buf.clear();
 			
@@ -281,14 +293,14 @@ public class Network implements INetwork {
 				
 			
 		} catch (IOException e) {
-			logger.info("[Server] Connection closed: " + e.getMessage());
+			logger.info("[Read] Connection closed: " + e.getMessage());
 			socketChannel.close();
 		}
 	}
 	
 	public void write(SelectionKey key) throws IOException {
 		
-		logger.info("[Server] WRITE: ");
+		logger.info("[Write] WRITE: ");
 		
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
@@ -302,7 +314,7 @@ public class Network implements INetwork {
 			}
 			
 		} catch (IOException e) {
-			logger.info("[Server] Connection closed: " + e.getMessage());
+			logger.info("[Write] Connection closed: " + e.getMessage());
 			socketChannel.close();
 			
 		}
@@ -311,8 +323,8 @@ public class Network implements INetwork {
 	public void WriteToServer(final String message){
 		pool.execute(new Runnable() {
 			public void run() {
-				logger.info("Connect to: " + IpServer + ":" + PortServer);
-				logger.info("Message: " + message);
+				logger.info("[WriteToServer] Connect to: " + IpServer + ":" + PortServer);
+				logger.info("[WriteToServer] Message: " + message);
 				
 				Selector selector			= null;
 				SocketChannel socketChannel	= null;
@@ -342,7 +354,7 @@ public class Network implements INetwork {
 								writeClient(key);
 						}
 					}
-					logger.info("[Client] Connection closed");
+					logger.info("[WriteToServer] Connection closed");
 					running = true;
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -365,7 +377,7 @@ public class Network implements INetwork {
 	
 	public  void writeClient(SelectionKey key) throws IOException {
 		
-		logger.info("[Client] WRITE: ");
+		logger.info("[WriteClient] WRITE: ");
 		
 		ByteBuffer buf = (ByteBuffer)key.attachment();		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
@@ -380,7 +392,7 @@ public class Network implements INetwork {
 	
 	public static void connect(SelectionKey key) throws IOException {
 		
-		logger.info("[Client] CONNECT: ");
+		logger.info("[Connect] CONNECT: ");
 		
 		SocketChannel socketChannel = (SocketChannel)key.channel();
 		if (! socketChannel.finishConnect()) {
@@ -441,6 +453,12 @@ public class Network implements INetwork {
 	{
 		return waittingAcceptState;
 	}
+	
+	public IState getDropOfferState()
+	{
+		return dropOfferState;
+	}
+	
 	public void setState(IState newState)
 	{
 		state = newState;

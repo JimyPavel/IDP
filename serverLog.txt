@@ -1,45 +1,34 @@
- 0    [main] INFO  classes.Server  - [Server] Accept 
- 3    [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:52138
- 3    [main] INFO  classes.Server  - [Server] READ: 
- 4    [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30005:jimy:Buyer
- 4    [main] INFO  classes.Server  - [Server] User jimy of type Buyer connected with ip 127.0.0.1 and port 30005
- 5    [main] INFO  classes.Server  - [Server] Connection closed: EOF
- 11952 [main] INFO  classes.Server  - [Server] Accept 
- 11952 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:52176
- 11954 [main] INFO  classes.Server  - [Server] READ: 
- 11955 [main] INFO  classes.Server  - [Server] Message: [connect]127.0.0.1:30006:lili:Seller
- 11955 [main] INFO  classes.Server  - [Server] User lili of type Seller connected with ip 127.0.0.1 and port 30006
- 11955 [main] INFO  classes.Server  - [Server] Connection closed: EOF
- 15191 [main] INFO  classes.Server  - [Server] Accept 
- 15192 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:52187
- 15192 [main] INFO  classes.Server  - [Server] READ: 
- 15192 [main] INFO  classes.Server  - [Server] Message: [offerRequest]spalat geamuri:jimy
- 15193 [main] INFO  classes.Server  - [Server] Offer Request received
- 15194 [main] INFO  classes.Server  - [Server] Connection closed: EOF
- 15195 [pool-1-thread-1] INFO  classes.Server  - Connect to: 127.0.0.1:30006
- 15195 [pool-1-thread-1] INFO  classes.Server  - Message: [offerRequest]spalat geamuri:jimy
- 15199 [pool-1-thread-1] INFO  classes.Server  - [Server] CONNECT: 
- 15199 [pool-1-thread-1] INFO  classes.Server  - [Server] WRITE: 
- 15219 [pool-1-thread-1] INFO  classes.Server  - [Client] Connection closed
- 21727 [main] INFO  classes.Server  - [Server] Accept 
- 21728 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:52208
- 21728 [main] INFO  classes.Server  - [Server] READ: 
- 21728 [main] INFO  classes.Server  - [Server] Message: [offerMade]jimy:spalat geamuri:30:lili
- 21728 [main] INFO  classes.Server  - [Server] Offer received
- 21729 [main] INFO  classes.Server  - [Server] Connection closed: EOF
- 21733 [pool-1-thread-2] INFO  classes.Server  - Connect to: 127.0.0.1:30005
- 21733 [pool-1-thread-2] INFO  classes.Server  - Message: [offerMade]jimy:spalat geamuri:30:lili
- 21736 [pool-1-thread-2] INFO  classes.Server  - [Server] CONNECT: 
- 21736 [pool-1-thread-2] INFO  classes.Server  - [Server] WRITE: 
- 21736 [pool-1-thread-2] INFO  classes.Server  - [Client] Connection closed
- 25795 [main] INFO  classes.Server  - [Server] Accept 
- 25795 [main] INFO  classes.Server  - [Server] Connection from: /127.0.0.1:52225
- 25796 [main] INFO  classes.Server  - [Server] READ: 
- 25796 [main] INFO  classes.Server  - [Server] Message: [offerAccepted]jimy:lili:spalat geamuri:30
- 25796 [main] INFO  classes.Server  - [Server] Offer accepted
- 25796 [main] INFO  classes.Server  - [Server] Connection closed: EOF
- 25797 [pool-1-thread-3] INFO  classes.Server  - Connect to: 127.0.0.1:30006
- 25797 [pool-1-thread-3] INFO  classes.Server  - Message: [offerAccepted]jimy:lili:spalat geamuri:30
- 25799 [pool-1-thread-3] INFO  classes.Server  - [Server] CONNECT: 
- 25799 [pool-1-thread-3] INFO  classes.Server  - [Server] WRITE: 
- 25809 [pool-1-thread-3] INFO  classes.Server  - [Client] Connection closed
+ 0    [main] INFO  classes.Server  - [Accept] Accept 
+ 5    [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:28649
+ 5    [main] INFO  classes.Server  - [Read] READ: 
+ 5    [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:Buyer
+ 6    [main] INFO  classes.Server  - [WriteIpPort] User jimy of type Buyer connected with ip 127.0.0.1 and port 30001
+ 9    [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 11699 [main] INFO  classes.Server  - [Accept] Accept 
+ 11700 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:28689
+ 11700 [main] INFO  classes.Server  - [Read] READ: 
+ 11700 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:Seller
+ 11701 [main] INFO  classes.Server  - [WriteIpPort] User lili of type Seller connected with ip 127.0.0.1 and port 30002
+ 11701 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 21569 [main] INFO  classes.Server  - [Accept] Accept 
+ 21571 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:28717
+ 21571 [main] INFO  classes.Server  - [Read] READ: 
+ 21571 [main] INFO  classes.Server  - [Read] Message: [offerRequest]curatare toaleta:jimy
+ 21571 [main] INFO  classes.Server  - [ParseInformation] Offer Request received
+ 21576 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 21577 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
+ 21577 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [offerRequest]curatare toaleta:jimy
+ 21583 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
+ 21584 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
+ 21584 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
+ 26450 [main] INFO  classes.Server  - [Accept] Accept 
+ 26450 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:28741
+ 26450 [main] INFO  classes.Server  - [Read] READ: 
+ 26451 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:curatare toaleta:1:lili
+ 26451 [main] INFO  classes.Server  - [ParseInformation] Offer Made
+ 26452 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 26452 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 26453 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:curatare toaleta:1:lili
+ 26454 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
+ 26455 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
+ 26468 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
