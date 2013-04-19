@@ -7,6 +7,10 @@
     <path id="IDP.classpath">
         <pathelement location="bin"/>
     </path>
+	
+	<path id="mypath">
+		<pathelement location="log4j-1.2.17.jar" />
+	</path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -45,9 +49,36 @@
         <antcall target="build"/>
     </target>
     
+	
+	
     <target name="run">
-        <java classname="classes.Main" failonerror="true" fork="yes">
-            <classpath refid="IDP.classpath"/>
-        </java>
+    	<parallel>
+    		<java classname="classes.Server" failonerror="true" fork="yes">
+	            <classpath>
+	            	<path refid="IDP.classpath" />
+	            	<path refid="mypath"/>
+	        	</classpath>
+	        </java>
+    		<java classname="classes.Main" failonerror="true" fork="yes">
+	            <classpath>
+	            	<path refid="IDP.classpath" />
+	            	<path refid="mypath"/>
+	        	</classpath>
+	        </java>
+	    	<java classname="classes.Main" failonerror="true" fork="yes">
+	            <classpath>
+	            	<path refid="IDP.classpath" />
+	            	<path refid="mypath"/>
+	        	</classpath>
+	        </java>
+	    	<java classname="classes.Main" failonerror="true" fork="yes">
+	            <classpath>
+	            	<path refid="IDP.classpath" />
+	            	<path refid="mypath"/>
+	        	</classpath>
+	        </java>
+    	</parallel>
+    	
+        
     </target>
 </project>

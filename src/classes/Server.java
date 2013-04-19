@@ -18,7 +18,7 @@ public class Server {
 	
 	public static final int BUF_SIZE	= 1024;
 	public static final String IP		= "127.0.0.1";
-	public static final int PORT		= 30000;
+	public static final int PORT		= 3000;
 	private static final String File = "setup.txt";
 	static Logger logger = Logger.getLogger(Server.class);
 	private static Hashtable<Integer, String> usersAddress;
@@ -281,6 +281,28 @@ public class Server {
 			  }
 			}
 		}
+		else if(typeOfMessage.equals("dropOffer")){
+			logger.info("[ParseInformation] Drop Offer");
+			
+			String []infos = pieces[1].split(":");
+			// buyer, seller, product, value
+			if(infos.length < 2)
+			{
+				logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
+				return;
+			}
+			
+			Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
+			while (it.hasNext()) {
+			  Map.Entry<Integer, String> entry = it.next();
+
+			  if (entry.getValue().equals("Seller"))
+			  {
+				  SendMessage(info, entry.getKey());
+			  }
+			}
+		}
+		
 	}
 	
 	private static void SendMessage(final String message, final int port)

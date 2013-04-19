@@ -142,7 +142,9 @@ public class Mediator implements IMediator{
 		gui.OfferAccepted(buyer, product, value);
 	}
 	
-	
-	
+	@Override
+	public void DropOffer(String productName, String buyer){
+		gui.DropOffer(productName, buyer);
+	}
 
 }

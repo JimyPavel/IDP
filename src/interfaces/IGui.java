@@ -9,4 +9,6 @@ public interface IGui {
 	public void OfferReceived(String product, String value, String seller);
 	
 	public void OfferAccepted(String buyer, String product, String value);
+	
+	public void DropOffer(String productName, String buyer);
 }

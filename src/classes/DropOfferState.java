@@ -15,7 +15,9 @@ public class DropOfferState implements IState{
 	@Override
 	public void sendMessage() {
 		// TODO Auto-generated method stub
-		
+		String message = "[dropOffer]"+details+":"+network.getMediator().getUsername();
+		network.WriteToServer(message);
+		network.setState(network.getOfferRequestState());
 	}
 
 	@Override

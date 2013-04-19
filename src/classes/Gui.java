@@ -414,17 +414,22 @@ public class Gui extends JPanel implements IGui{
 								public void actionPerformed(ActionEvent e) {
 									String productName = (String)table.getValueAt(r, c);
 									
+									mediator.DropOfferRequest(productName);
 									// we set inactive this product
 									// in productsStatus hashtable
 									productsStatus.put(productName, false);
 									
 									// we disable the combo box
-									JComboBox<String> combo = new JComboBox<String>();
+									@SuppressWarnings("unchecked")
+									JComboBox<String> combo = (JComboBox<String>)
+													table.getModel().getValueAt(r, 1);
+									combo.removeAllItems();
+									combo.removeAll();
 									combo.setEnabled(false);
-									table.setValueAt(combo, r, 1);
+									table.getModel().setValueAt(combo, r, 1);
 									
 									// we set the text "INACTIVE" on status column
-									table.setValueAt("INACTIVE", r, 2);
+									table.getModel().setValueAt("INACTIVE", r, 2);
 								}
 							});
 		            		
@@ -1201,5 +1206,49 @@ public class Gui extends JPanel implements IGui{
 			
 		}
 	
+	}
+
+	@Override
+	public void DropOffer(String productName, String buyer) {
+		// TODO Auto-generated method stub
+		
+		Set<Map.Entry<String,ArrayList<User>>> entries = tableEntries.entrySet();
+		Iterator<Map.Entry<String,ArrayList<User>>> it =  entries.iterator();
+		
+		int count = 0;
+		while(it.hasNext()){
+			Map.Entry<String,ArrayList<User>> entry = it.next();
+			String pName = entry.getKey();
+			
+			if(pName.equals(productName)){
+				
+				// we remove the user from the list corresponding to the product name
+				ArrayList<User> u = entry.getValue();
+				for(int i=0; i < u.size();i++){
+					if(u.get(i).getUsername().equals(buyer)){
+						u.remove(i);
+						break;
+					}
+				}
+				
+				// we remove the item from the combobox
+				@SuppressWarnings("unchecked")
+				JComboBox<Object> c = (JComboBox<Object>)table.getModel().getValueAt(count, 1);
+				for(int i=0; i < c.getItemCount() ; i++){
+					String s = (String)c.getItemAt(i);
+					if(s.equals(buyer)){
+						c.removeItemAt(i);
+						break;
+					}
+				}
+				table.getModel().setValueAt(c, count, 1);
+				revalidate();
+				repaint();
+				
+				break;
+			}
+			
+			count++;
+		}
 	}	
 }
