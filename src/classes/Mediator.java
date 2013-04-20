@@ -124,6 +124,11 @@ public class Mediator implements IMediator{
 	}
 	
 	@Override
+	public void signOutAnnounce(String username){
+		network.signOutAnnounce(username);
+	}
+	
+	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return gui.getUsername();

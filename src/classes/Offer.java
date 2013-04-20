@@ -8,6 +8,9 @@ public class Offer {
 		this.seller = seller;
 		this.value = value;
 		this.isAccepted = false;
+		this.transferFail = false;
+		this.transferMade = false;
+		this.transferInProgress = false;
 	}
 
 	// the product/service the offer is available for
@@ -24,7 +27,41 @@ public class Offer {
 	
 	// the flag for a refused offer
 	private boolean isRefused;
+	
+	private boolean transferMade;
+	
+	private boolean transferFail;
+	
+	private boolean transferInProgress;
 
+	public boolean isTransferMade(){
+		return transferMade;
+	}
+	
+	public void setTransferMade(boolean made){
+		transferMade = made;
+	}
+	
+	public boolean isTransferFailed()
+	{
+		return transferFail;
+	}
+	
+	public void setTransferFailed(boolean fail)
+	{
+		transferFail = fail;
+	}
+	
+	public boolean isTransferInProgress()
+	{
+		return transferInProgress;
+	}
+	
+	public void setTransferInProgress(boolean progress)
+	{
+		transferInProgress = progress;
+	}
+	
 	public boolean isRefused() {
 		return isRefused;
 	}

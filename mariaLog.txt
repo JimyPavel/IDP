@@ -1,11 +1,24 @@
- 0    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 3    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30004:maria:Buyer
- 1    [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] Listen to the port: 30004
- 37   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
- 38   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
- 38   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
- 9163 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 9163 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]curatare toaleta:maria
- 9165 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
- 9166 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
- 9166 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed
+ 1    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 4    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30003:maria:Buyer
+ 1    [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] Listen to the port: 30003
+ 45   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
+ 46   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
+ 46   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
+ 6268 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 6269 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]curatare toaleta:maria
+ 6271 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
+ 6274 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
+ 6274 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed
+ 150295 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 150296 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 150296 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:47170
+ 150297 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 150297 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 150297 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [offerMade]maria:curatare toaleta:null:ion
+ 150297 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: [offerMade]maria:curatare toaleta:null:ion
+ 150299 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 1995403 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 1995406 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Message: [signOut]maria
+ 1995408 [pool-1-thread-4] INFO  classes.Network  - [Connect] CONNECT: 
+ 1995409 [pool-1-thread-4] INFO  classes.Network  - [WriteClient] WRITE: 
+ 1995409 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connection closed

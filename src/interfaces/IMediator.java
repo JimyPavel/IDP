@@ -106,4 +106,6 @@ public interface IMediator {
 	public void DropOffer(String productName, String buyer);
 	
 	public void OfferRefused(String buyer, String product, String value);
+	
+	public void signOutAnnounce(String username);
 }

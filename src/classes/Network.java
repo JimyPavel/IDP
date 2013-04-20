@@ -128,7 +128,6 @@ public class Network implements INetwork {
 			strLine = br.readLine();
 			while(strLine!=null && strLine != System.getProperty("line.separator") && strLine != " "){
 				
-				System.out.println(strLine);
 				String pieces[] = strLine.split(" ");
 				
 				if(pieces.length == 4)
@@ -209,6 +208,12 @@ public class Network implements INetwork {
 		String details = buyer+":"+seller+":"+productName+":"+value+":"+"false";
 		state.addDetails(details);
 		state.sendMessage();
+	}
+	
+	public void signOutAnnounce(String username)
+	{
+		String message = "[signOut]" + username;
+		WriteToServer(message);
 	}
 	
 	// this method will create a thread that will listen to port, expecting for information

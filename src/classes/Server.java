@@ -323,7 +323,59 @@ public class Server {
 			  }
 			}
 		}
-		
+		else if(typeOfMessage.equals("signOut")){
+			logger.info("[ParseInformation] Sign out");
+				try{
+				String s= new String();
+				Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
+				while (it.hasNext()) {
+				    Map.Entry<Integer, String> entry = it.next();
+	
+				    if (entry.getValue().equals(pieces[1]))
+				    {
+					    int port = entry.getKey();
+					    usersAddress.remove(port);
+					    usersName.remove(port);
+					  
+						FileInputStream fstream = new FileInputStream(File);
+						// Get the object of DataInputStream
+						DataInputStream in = new DataInputStream(fstream);
+						BufferedReader br = new BufferedReader(new InputStreamReader(in));
+						String strLine;
+						
+						strLine = br.readLine();
+						while(strLine!=null && strLine != System.getProperty("line.separator") && strLine != " "){
+							
+							System.out.println(strLine);
+							String date[] = strLine.split(" ");
+							
+							if(date.length == 4)
+							{
+								if(Integer.parseInt(date[1]) != port){
+									s = s + strLine + System.getProperty("line.separator");
+								}
+							}
+							strLine = br.readLine();
+						}
+						br.close();
+						
+						FileOutputStream fs = new FileOutputStream(Server.File, false);
+						DataOutputStream out = new DataOutputStream(fs);
+						BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
+						
+						writer.write(s);
+						writer.close();
+						logger.info("[ParseInformation] User " + pieces[1] + " is gonne");
+						
+					    break;
+				    }
+				}
+			}
+			catch(IOException ex)
+			{
+				
+			}
+		}
 	}
 	
 	private static void SendMessage(final String message, final int port)

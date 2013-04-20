@@ -106,7 +106,7 @@ public class Gui extends JPanel implements IGui{
 				}
 				// else we change the message
 				else{
-					welcomeMessage.setText("username or password are wrong");
+					welcomeMessage.setText("username or password is wrong");
 				}
 				
 			}
@@ -167,12 +167,10 @@ public class Gui extends JPanel implements IGui{
 		this.repaint();
 	}
 	
-	
 	// method for loading the content panel
 	public void initContent() {
 		
 		this.removeAll();
-		// TODO: we create our custom Table Model
 		// this personalized model should be read-only (we can't edit a cell on double-click)
 		model = new DefaultTableModel(0,4);
 		
@@ -365,8 +363,21 @@ public class Gui extends JPanel implements IGui{
 																	if(offer.getProduct().equals(productName)){
 																		
 																		// we change the status for this service
+																		if(offer.isTransferMade()){
+																			table.setValueAt("TRANSFER COMPLETED", rowNo, 2);
+																		}
+																		else if(offer.isTransferFailed()){
+																			table.setValueAt("TRANSFER FAILED", rowNo, 2);
+																		}
+																		else if(offer.isTransferInProgress()){
+																			table.setValueAt("TRANSFER IN PROGRESS", rowNo, 2);
+																		}
+																		else if(offer.isRefused()){
+																			table.setValueAt("OFFER REFUSED", rowNo, 2);
+																			break;
+																		}
 																		table.setValueAt("OFFER MADE", rowNo, 2);
-																		
+																			
 																	}
 																}
 															}
@@ -410,6 +421,7 @@ public class Gui extends JPanel implements IGui{
 		            		// action listener for drop offer request
 		            		drop.addActionListener(new ActionListener() {
 								
+								@SuppressWarnings("unchecked")
 								@Override
 								public void actionPerformed(ActionEvent e) {
 									String productName = (String)table.getValueAt(r, c);
@@ -420,16 +432,28 @@ public class Gui extends JPanel implements IGui{
 									productsStatus.put(productName, false);
 									
 									// we disable the combo box
-									@SuppressWarnings("unchecked")
-									JComboBox<String> combo = (JComboBox<String>)
-													table.getModel().getValueAt(r, 1);
-									combo.removeAllItems();
-									combo.removeAll();
-									combo.setEnabled(false);
-									table.getModel().setValueAt(combo, r, 1);
+									JComboBox<String> combo = null;
+									try{
+										 combo = (JComboBox<String>)
+														table.getModel().getValueAt(r, 1);
+										combo.removeAllItems();
+										combo.removeAll();
+										combo.setEnabled(false);
+										table.getModel().setValueAt(combo, r, 1);
+									}catch(ClassCastException ex){
+										JComboBox<Object> c = new JComboBox<Object>();
+										c.setEnabled(false);
+										table.getModel().setValueAt(c, r, 1);
+									}
+									final Offer offer = getOffer(productName, r);
+									if(offer != null)
+										offer.setRefused(true);
 									
 									// we set the text "INACTIVE" on status column
 									table.getModel().setValueAt("INACTIVE", r, 2);
+									
+									revalidate();
+									repaint();
 								}
 							});
 		            		
@@ -467,13 +491,13 @@ public class Gui extends JPanel implements IGui{
 									
 									// we announce the mediator that we accepted the offer
 									final Offer offer = getOffer(productName, r);
-									
+									offer.setIsAccepted(true);
 									//mediator.acceptOffer(userName, offer);
 									//System.out.println("Offer: " +offer.getProduct()+" "+ offer.getValue());
 									
 									// we change the status again in transfer started
 									table.getModel().setValueAt("TRANSFER STARTED", r, 2);								
-									
+									offer.setTransferInProgress(true);
 									 // we tell to mediator to start transfer
 								    mediator.startTransfer(userName, offer.getSeller(), offer.getProduct(), offer.getValue());
 								    
@@ -494,6 +518,7 @@ public class Gui extends JPanel implements IGui{
 									        	}
 									        	else if(newValue == progressBar.getMaximum()){
 									        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
+									        		offer.setTransferMade(true);
 									        	}
 									        	progressBar.setValue((Integer)evt.getNewValue());
 									        	model.setValueAt(progressBar, r, 3);
@@ -534,8 +559,20 @@ public class Gui extends JPanel implements IGui{
 									// and change the status to "OFFER REFUSED"
 									table.getModel().setValueAt("OFFER REFUSED", r, 2);
 									
-									// TODO : Remove the offer from the list
-					
+									ArrayList<User> users = tableEntries.get(productName);
+									for(int i=0; i <users.size() ; i++){
+										Seller seller = (Seller) users.get(i);
+										ArrayList<Offer> offers = seller.getOffers();
+										
+										if(offers != null){
+											for (int j=0 ; j<offers.size(); j++){
+												Offer offer = offers.get(j);
+												if(offer.getProduct().equals(productName)){
+													offer.setRefused(true);
+												}
+											}
+										}
+									}
 									
 									// we announce the mediator that the offer has been refused
 									Offer o = getOffer(productName, r);
@@ -600,6 +637,7 @@ public class Gui extends JPanel implements IGui{
 													if(request.getProductName().equals(productName)){
 														Offer offer = new Offer(productName,userName,offerValue);
 														request.setOffer(offer);
+														offer.setIsAccepted(true);
 														// nume buyer, oferta, produs
 														mediator.makeOffer(buyer.getUsername(), offer, productName);
 														// and we change the status
@@ -642,7 +680,7 @@ public class Gui extends JPanel implements IGui{
 										v[0] = why;
 										component = new JComboBox<Object>(v);
 									}
-									
+									component.removeAll();
 									component.setEnabled(false);
 									revalidate();
 									repaint();
@@ -650,7 +688,9 @@ public class Gui extends JPanel implements IGui{
 								}
 							});
 		            		dropAuction.setEnabled(false);
-		            		if(productsStatus.get(productName)){
+		            		if(productsStatus.get(productName) && 
+		            				!offerMade(productName, r) &&
+		            				!isRefused(productName)){
 		            			dropAuction.setEnabled(true);
 		            		}
 		            		
@@ -689,6 +729,8 @@ public class Gui extends JPanel implements IGui{
 				
 				// if the sign out action went well, we load the sign in form
 				if(mediator.signOut(userName)){
+					mediator.signOutAnnounce(userName);
+					userName = null;
 					initSignIn();
 				}
 			}
@@ -811,7 +853,6 @@ public class Gui extends JPanel implements IGui{
 				else{
 					tableEntries.get(productName).add(s);
 				}
-				System.out.println("Lista de buyer: "+tableEntries.get(productName).size());
 				
 				// we change the status to "NO OFFER" because he didn't make any offer
 				table.getModel().setValueAt("NO OFFER", i, 2);
@@ -864,12 +905,13 @@ public class Gui extends JPanel implements IGui{
 				    					  }
 				    				  }
 				    				  final int r = rowNo;
-				    				  
+				    				  request.getOffer().setIsAccepted(true);
 				    				  // we change the status to OFFER ACCEPTED
 				    				  table.getModel().setValueAt("OFFER ACCEPTED", r, 2);
 				    				  
 				    				  // we start the transfer
 				    				  // we change the status again in transfer started
+				    				  request.getOffer().setTransferInProgress(true);
 									  table.getModel().setValueAt("TRANSFER STARTED", r, 2);
 										
 									  // we start the progress bar
@@ -888,6 +930,7 @@ public class Gui extends JPanel implements IGui{
 									        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
 									        	}
 									        	else if(newValue == progressBar.getMaximum()){
+									        		request.getOffer().setTransferMade(true);
 									        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
 									        	}
 									        	int x = (Integer)evt.getNewValue();
@@ -908,9 +951,6 @@ public class Gui extends JPanel implements IGui{
 			    }
 			}
 		}
-		
-	
-		
 	}
 
 	// metoda pt seller, in care este refuzata oferta sa
@@ -993,6 +1033,7 @@ public class Gui extends JPanel implements IGui{
 	public boolean isAccepted(String productName){
 		
 		ArrayList<User> users = tableEntries.get(productName);
+		
 		for(int i=0; i <users.size() ; i++){
 			Seller seller = (Seller) users.get(i);
 			ArrayList<Offer> offers = seller.getOffers();
@@ -1019,19 +1060,41 @@ public class Gui extends JPanel implements IGui{
 	public boolean isRefused(String productName){
 		
 		ArrayList<User> users = tableEntries.get(productName);
+		
 		for(int i=0; i <users.size() ; i++){
-			Seller seller = (Seller) users.get(i);
-			ArrayList<Offer> offers = seller.getOffers();
-			
-			if(offers != null){
-				for (int j=0 ; j<offers.size(); j++){
-					Offer offer = offers.get(j);
-					if(offer.getProduct().equals(productName)){
-						if(offer.isRefused()){
-							return true;
+			if(userType.equals(User.BUYER_TYPE)){
+				Seller seller = (Seller) users.get(i);
+				ArrayList<Offer> offers = seller.getOffers();
+				
+				if(offers != null){
+					for (int j=0 ; j<offers.size(); j++){
+						Offer offer = offers.get(j);
+						if(offer.getProduct().equals(productName)){
+							if(offer.isRefused()){
+								return true;
+							}
+							else{
+								return false;
+							}
 						}
-						else{
-							return false;
+					}
+				}
+			}
+			else
+			{
+				Buyer buyer = (Buyer) users.get(i);
+				ArrayList<Request> offers = buyer.getRequests();
+				
+				if(offers != null){
+					for (int j=0 ; j<offers.size(); j++){
+						Offer offer = offers.get(j).getOffer();
+						if(offer != null && offer.getProduct().equals(productName)){
+							if(offer.isRefused()){
+								return true;
+							}
+							else{
+								return false;
+							}
 						}
 					}
 				}
@@ -1216,15 +1279,12 @@ public class Gui extends JPanel implements IGui{
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return userName;
 	}
-
 	
 	//metoda pentru buyers unde primesc ofertele
 	@Override
 	public void OfferReceived(String product, String value, String seller) {
-		// TODO Auto-generated method stub
 	
 		if(tableEntries != null){
 			
@@ -1272,14 +1332,11 @@ public class Gui extends JPanel implements IGui{
 	
 	}
 
-	@Override
 	public void DropOffer(String productName, String buyer) {
-		// TODO Auto-generated method stub
 		
 		Set<Map.Entry<String,ArrayList<User>>> entries = tableEntries.entrySet();
 		Iterator<Map.Entry<String,ArrayList<User>>> it =  entries.iterator();
 		
-		int count = 0;
 		while(it.hasNext()){
 			Map.Entry<String,ArrayList<User>> entry = it.next();
 			String pName = entry.getKey();
@@ -1288,31 +1345,53 @@ public class Gui extends JPanel implements IGui{
 				
 				// we remove the user from the list corresponding to the product name
 				ArrayList<User> u = entry.getValue();
+			
 				for(int i=0; i < u.size();i++){
 					if(u.get(i).getUsername().equals(buyer)){
 						u.remove(i);
 						break;
 					}
 				}
-				
-				// we remove the item from the combobox
-				@SuppressWarnings("unchecked")
-				JComboBox<Object> c = (JComboBox<Object>)table.getModel().getValueAt(count, 1);
-				for(int i=0; i < c.getItemCount() ; i++){
-					String s = (String)c.getItemAt(i);
-					if(s.equals(buyer)){
-						c.removeItemAt(i);
-						break;
-					}
-				}
-				table.getModel().setValueAt(c, count, 1);
-				revalidate();
-				repaint();
-				
 				break;
 			}
-			
-			count++;
+		}
+		
+		for(int i=0; i<tableEntries.size();i++){
+			String pName = (String)table.getModel().getValueAt(i, 0);
+			if(pName.equals(productName)){
+				@SuppressWarnings("unchecked")
+				JComboBox<Object> c = (JComboBox<Object>)table.getModel().getValueAt(i, 1);
+				for(int j=0; j < c.getItemCount() ; j++){
+					String s = (String)c.getItemAt(j);
+					if(s.equals(buyer)){
+						c.removeItemAt(j);
+						
+						table.getModel().setValueAt(c, i, 1);
+						revalidate();
+						repaint();
+					}
+				}
+				
+				if(c.getItemCount() == 0){
+					table.getModel().setValueAt("INACTIVE", i, 2);
+					try{
+						@SuppressWarnings("unchecked")
+						JComboBox<Object> combo = (JComboBox<Object>)table.getModel().getValueAt(i, 1);
+						combo.setEnabled(false);
+						table.getModel().setValueAt(combo, i, 1);
+					}
+					catch(java.lang.ClassCastException ex){
+						JComboBox<Object> combo = new JComboBox<Object>();
+						combo.setEnabled(false);
+						table.getModel().setValueAt(combo, i, 1);
+					}
+					
+					revalidate();
+					repaint();
+				}
+				break;
+			}
 		}
 	}	
+
 }

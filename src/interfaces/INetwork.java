@@ -31,4 +31,6 @@ public interface INetwork {
 	public void DropOfferRequest(String productName);
 	
 	public void refuseOffer(String buyer, String seller, String productName, String value);
+	
+	public void signOutAnnounce(String username);
 }
