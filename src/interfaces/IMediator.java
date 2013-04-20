@@ -33,8 +33,7 @@ public interface IMediator {
 	// method for refusing an offer
 	// this method will be called by the Buyer with user name = "username"
 	// he will refuse the offer made by a Seller
-	// returns true if the offer was successfully rejected, or false otherwise
-	public boolean refuseOffer(String username, Offer offer);
+	public void refuseOffer(String buyer, String seller, String productName, String value);
 	
 	// method for making an offer for a specific product
 	// this method will be called by a Seller identified by "username"
@@ -105,4 +104,6 @@ public interface IMediator {
 	public void DropOfferRequest(String productName);
 	
 	public void DropOffer(String productName, String buyer);
+	
+	public void OfferRefused(String buyer, String product, String value);
 }

@@ -42,8 +42,8 @@ public class Network implements INetwork {
 	private IState connectState;
 	private IState offerRequestState;
 	private IState makeOfferState;
-	private IState waittingAcceptState;
-	private IState waittingOfferSate;
+	private IState waitingAcceptState;
+	private IState waitingOfferSate;
 	private IState dropOfferState;
 	
 	public Network (IMediator mediator)
@@ -54,8 +54,8 @@ public class Network implements INetwork {
 		connectState = new ConnectState(this);
 		offerRequestState = new OfferRequestState(this);
 		makeOfferState = new MakeOfferState(this);
-		waittingAcceptState = new WaittingAccept(this);
-		waittingOfferSate = new WaittingOffer(this);
+		waitingAcceptState = new WaitingAccept(this);
+		waitingOfferSate = new WaitingOffer(this);
 		dropOfferState = new DropOfferState(this);
 		
 		state = connectState;
@@ -187,8 +187,8 @@ public class Network implements INetwork {
 	@Override
 	public void startTransfer(String buyer, String seller, String product, String value) 
 	{
-		this.setState(getWaittingOfferState());
-		String details = buyer+":"+seller+":"+product+":"+value;
+		this.setState(getWaitingOfferState());
+		String details = buyer+":"+seller+":"+product+":"+value+":"+"true";
 		state.addDetails(details);
 		state.sendMessage();
 	}
@@ -198,6 +198,16 @@ public class Network implements INetwork {
 	public void DropOfferRequest(String productName){
 		this.setState(getDropOfferState());
 		state.addDetails(productName);
+		state.sendMessage();
+	}
+	
+	// client -> refuse offer
+	@Override
+	public void refuseOffer(String buyer, String seller, String productName, String value)
+	{
+		this.setState(getWaitingOfferState());
+		String details = buyer+":"+seller+":"+productName+":"+value+":"+"false";
+		state.addDetails(details);
 		state.sendMessage();
 	}
 	
@@ -220,7 +230,7 @@ public class Network implements INetwork {
 				
 				while (true) {
 					selector.select();
-					logger.info("[ListenToPort] waitting");
+					logger.info("[ListenToPort] waiting");
 					for (Iterator<SelectionKey> it = selector.selectedKeys().iterator(); it.hasNext(); ) {
 						SelectionKey key = it.next();
 						it.remove();
@@ -284,6 +294,8 @@ public class Network implements INetwork {
 			
 			String s = new String(bytearr);
 			logger.info("[Read] Message read: "+s);
+			
+			FindState(s);
 			state.parseInformation(s);
 			buf.clear();
 			
@@ -296,6 +308,22 @@ public class Network implements INetwork {
 			logger.info("[Read] Connection closed: " + e.getMessage());
 			socketChannel.close();
 		}
+	}
+	
+	private void FindState(String message){
+		String []info = message.split("]");
+		
+		if (info.length<2)
+		{
+			return;
+		}
+		
+		if(info[0].equals("[offerRequest"))
+			this.setState(getMakeOfferState());
+		else if(info[0].equals("[refusedOffer") || 
+				info[0].equals("[offerAccepted")||
+				info[0].equals("[dropOffer"))
+			this.setState(getWaitingAcceptState());
 	}
 	
 	public void write(SelectionKey key) throws IOException {
@@ -444,14 +472,14 @@ public class Network implements INetwork {
 		return makeOfferState;
 	}
 	
-	public IState getWaittingOfferState()
+	public IState getWaitingOfferState()
 	{
-		return waittingOfferSate;
+		return waitingOfferSate;
 	}
 	
-	public IState getWaittingAcceptState()
+	public IState getWaitingAcceptState()
 	{
-		return waittingAcceptState;
+		return waitingAcceptState;
 	}
 	
 	public IState getDropOfferState()

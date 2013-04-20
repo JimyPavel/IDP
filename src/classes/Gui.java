@@ -534,8 +534,12 @@ public class Gui extends JPanel implements IGui{
 									// and change the status to "OFFER REFUSED"
 									table.getModel().setValueAt("OFFER REFUSED", r, 2);
 									
+									// TODO : Remove the offer from the list
+					
+									
 									// we announce the mediator that the offer has been refused
-									mediator.refuseOffer(userName, getOffer(productName, r));
+									Offer o = getOffer(productName, r);
+									mediator.refuseOffer(userName, o.getSeller(), o.getProduct(), o.getValue());
 								}
 							});
 		            		refuseOfferB.setEnabled(false);
@@ -908,6 +912,66 @@ public class Gui extends JPanel implements IGui{
 	
 		
 	}
+
+	// metoda pt seller, in care este refuzata oferta sa
+	public void OfferRefused(String buyer, String product, String value){
+		
+		if(tableEntries != null){
+			@SuppressWarnings("rawtypes")
+			Set set = tableEntries.entrySet();
+			if(set != null){
+				@SuppressWarnings("rawtypes")
+				Iterator it = set.iterator();
+			    while (it.hasNext()) {
+			      @SuppressWarnings({ "rawtypes", "unchecked" })
+				  Map.Entry<String,ArrayList<User>> entry = (Map.Entry) it.next();
+			      
+			      // we take the product name
+			      String productName = product;
+			      // and the list of buyers
+			      ArrayList<User> buyers = (ArrayList<User>)entry.getValue();
+			      
+			      // we iterate in the list of buyers, searching for that buyers who "accepted" the offer
+			      // for this productName
+				  for(int i=0; i<buyers.size() ;i++){
+					  if(((Buyer)buyers.get(i)).getUsername().equals(buyer))
+					  {
+				    	  ArrayList<Request> requests = ((Buyer)buyers.get(i)).getRequests();
+				    	  
+				    	  // we iterate the list of requests and see if we made an offer for one of them
+				    	  for(int j=0; j<requests.size();j++){
+				    		 final Request request = (Request)requests.get(j);
+				    		  if(request.getProductName().equals(productName)){
+				    			  // once we found the offer we made , we start the transfer
+				    			  if(request.getOffer() != null){
+				    				  
+				    				  // we search the row in table , having the productName
+				    				  int rowNo = -1;
+				    				  for(int k=0; k < mainProducts.size() ;k++){
+				    					  if(mainProducts.get(k).getName().equals(productName)){
+				    						  rowNo = k;
+				    						  break;
+				    					  }
+				    				  }
+				    				  final int r = rowNo;
+				    				  
+				    				  // we delete the offer made from the list
+				    				  requests.remove(j);
+				    				  // we change the status to OFFER REFUSED
+				    				  table.getModel().setValueAt("OFFER REFUSED", r, 2);		
+				    				  break;
+				    			  }
+				    		  }
+				    	  }
+				      }
+				    }
+			    }
+			}
+		}
+		
+	
+	}
+	
 	// returns the value of the offer made by sellerName
 	// for the productName
 	public static String getValue(ArrayList<Offer> offers , String sellerName , String productName){

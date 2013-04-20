@@ -1,16 +1,11 @@
- 0    [pool-1-thread-2] INFO  classes.Network  - [Server] Listen to the port: 30003
- 0    [pool-1-thread-1] INFO  classes.Network  - Connect to: 127.0.0.1:30000
- 25   [pool-1-thread-1] INFO  classes.Network  - Message: [connect]127.0.0.1:30003:Buyer
- 36   [pool-1-thread-1] INFO  classes.Network  - [Client] CONNECT: 
- 37   [pool-1-thread-1] INFO  classes.Network  - [Client] WRITE: 
- 38   [pool-1-thread-1] INFO  classes.Network  - [Client] Connection closed
- 18958 [pool-1-thread-3] INFO  classes.Network  - Connect to: 127.0.0.1:30000
- 18959 [pool-1-thread-3] INFO  classes.Network  - Message: [offerRequest]spalat geamuri:maria
- 18960 [pool-1-thread-3] INFO  classes.Network  - [Client] CONNECT: 
- 18961 [pool-1-thread-3] INFO  classes.Network  - [Client] WRITE: 
- 18964 [pool-1-thread-3] INFO  classes.Network  - [Client] Connection closed
- 27692 [pool-1-thread-4] INFO  classes.Network  - Connect to: 127.0.0.1:30000
- 27692 [pool-1-thread-4] INFO  classes.Network  - Message: [offerRequest]reparat calculator:maria
- 27695 [pool-1-thread-4] INFO  classes.Network  - [Client] CONNECT: 
- 27695 [pool-1-thread-4] INFO  classes.Network  - [Client] WRITE: 
- 27696 [pool-1-thread-4] INFO  classes.Network  - [Client] Connection closed
+ 0    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 3    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30004:maria:Buyer
+ 1    [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] Listen to the port: 30004
+ 37   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
+ 38   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
+ 38   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
+ 9163 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 9163 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]curatare toaleta:maria
+ 9165 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
+ 9166 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
+ 9166 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed

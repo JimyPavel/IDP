@@ -46,9 +46,8 @@ public class Mediator implements IMediator{
 	}
 
 	@Override
-	public boolean refuseOffer(String username, Offer offer) {
-		// TODO:  network.acceptOffer() 
-		return true;
+	public void refuseOffer(String buyer, String seller, String productName, String value) {
+		network.refuseOffer(buyer, seller, productName, value);
 	}
 
 	@Override
@@ -145,6 +144,12 @@ public class Mediator implements IMediator{
 	@Override
 	public void DropOffer(String productName, String buyer){
 		gui.DropOffer(productName, buyer);
+	}
+	
+	@Override
+	public void OfferRefused(String buyer, String product, String value)
+	{
+		gui.OfferRefused(buyer, product, value);
 	}
 
 }

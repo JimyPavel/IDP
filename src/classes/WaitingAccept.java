@@ -2,12 +2,12 @@ package classes;
 
 import interfaces.IState;
 
-public class WaittingAccept implements IState{
+public class WaitingAccept implements IState{
 
 	private Network network;
 	String details;
 	
-	public WaittingAccept(Network network)
+	public WaitingAccept(Network network)
 	{
 		this.network = network;
 	}
@@ -32,7 +32,7 @@ public class WaittingAccept implements IState{
 		}
 		
 		// drop offer
-		if(pieces[0].equals("[dropOffer]")){
+		if(pieces[0].equals("[dropOffer")){
 			String []infos = pieces[1].split(":");
 			if(infos.length < 2)
 			{
@@ -42,8 +42,32 @@ public class WaittingAccept implements IState{
 			// produc, buyer
 			network.getMediator().DropOffer(infos[0], infos[1]);
 		}
-		else{
+		else if(pieces[0].equals("[offerAccepted")){
 			
+			String []infos = pieces[1].split(":");
+			
+			if(infos.length < 4)
+			{
+				Network.logger.warn("[WaitingAcceptState] Wrong message received: " + info);
+				return;
+			}
+			
+			// buyer, seller, product, value
+			// oferta acceptata
+			if(network.getMediator().getUsername().equals(infos[1]))
+			{
+				network.getMediator().OfferAccepted(infos[0], infos[2], infos[3]);
+			}
+			// oferta neacceptata
+			else
+			{
+				network.getMediator().OfferRefused(infos[0], infos[2], infos[3]);
+			}
+			
+			
+		}
+		else if(pieces[0].equals("[refusedOffer"))
+		{
 			String []infos = pieces[1].split(":");
 			
 			if(infos.length < 4)
@@ -52,8 +76,7 @@ public class WaittingAccept implements IState{
 				return;
 			}
 			
-			// buyer, seller, product, value
-			network.getMediator().OfferAccepted(infos[0], infos[2], infos[3]);
+			network.getMediator().OfferRefused(infos[0], infos[2], infos[3]);
 		}
 	}
 

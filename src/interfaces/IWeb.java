@@ -2,7 +2,6 @@ package interfaces;
 
 import java.util.ArrayList;
 
-import classes.Offer;
 import classes.Product;
 
 public interface IWeb {

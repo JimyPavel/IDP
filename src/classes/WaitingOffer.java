@@ -2,12 +2,12 @@ package classes;
 
 import interfaces.IState;
 
-public class WaittingOffer implements IState{
+public class WaitingOffer implements IState{
 
 	private Network network;
 	String details;
 	
-	public WaittingOffer(Network network)
+	public WaitingOffer(Network network)
 	{
 		this.network = network;
 	}
@@ -16,20 +16,34 @@ public class WaittingOffer implements IState{
 	@Override
 	public void sendMessage() {
 		// TODO Auto-generated method stub
-		Network.logger.info("[WaittingOfferState] "+ details);
-		String message = "[offerAccepted]" + details;
+		Network.logger.info("[WaitingOfferState] "+ details);
+		String []info = details.split(":");
+		if(info.length < 5)
+		{
+			return;
+		}
+		
+		String message;
+		if(info[4].equals("true"))
+		{
+			message = "[offerAccepted]" + info[0]+":"+info[1]+":"+info[2]+":"+info[3];
+		}
+		else
+		{
+			message = "[refusedOffer]" + info[0]+":"+info[1]+":"+info[2]+":"+info[3];
+		}
 		network.WriteToServer(message);
 	}
 
 	@Override
 	public void parseInformation(String info) {
 		// TODO Auto-generated method stub
-		Network.logger.info("[WaittingOfferState] Message received: "+ info);
+		Network.logger.info("[WaitingOfferState] Message received: "+ info);
 		String []infos = info.split(":");
 		
 		if(infos.length < 4)
 		{
-			Network.logger.warn("[WaittingOfferState] Wrong message received: " + info);
+			Network.logger.warn("[WaitingOfferState] Wrong message received: " + info);
 			return;
 		}
 		

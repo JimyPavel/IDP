@@ -29,4 +29,6 @@ public interface INetwork {
 	public void startTransfer(String buyer, String seller, String product, String value);
 	
 	public void DropOfferRequest(String productName);
+	
+	public void refuseOffer(String buyer, String seller, String productName, String value);
 }

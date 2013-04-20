@@ -21,7 +21,7 @@ public class MakeOfferState implements IState{
 		// buyer, product, value, seller
 		String message = "[offerMade]" + details;
 		network.WriteToServer(message);
-		network.setState(network.getWaittingAcceptState());
+		network.setState(network.getWaitingAcceptState());
 	}
 
 	@Override

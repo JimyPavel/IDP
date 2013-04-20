@@ -1,16 +1,62 @@
  0    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 6    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30001:jimy:Buyer
- 0    [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] Listen to the port: 30001
- 49   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
- 49   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
- 49   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
- 29857 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 29859 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]curatare toaleta:jimy
- 29861 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
- 29861 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
- 29862 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed
- 31901 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 31902 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Message: [dropOffer]curatare toaleta:jimy
- 31905 [pool-1-thread-4] INFO  classes.Network  - [Connect] CONNECT: 
- 31905 [pool-1-thread-4] INFO  classes.Network  - [WriteClient] WRITE: 
- 31905 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connection closed
+ 0    [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] Listen to the port: 30005
+ 32   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30005:jimy:Buyer
+ 38   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
+ 38   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
+ 38   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
+ 15758 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 15759 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]curatare toaleta:jimy
+ 15761 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
+ 15761 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
+ 15761 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed
+ 24585 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 24585 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 24586 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:24184
+ 24586 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 24586 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 24587 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [offerMade]jimy:curatare toaleta:12:lili
+ 24587 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: [offerMade]jimy:curatare toaleta:12:lili
+ 24588 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 31399 [AWT-EventQueue-0] INFO  classes.Network  - [WaitingOfferState] jimy:lili:curatare toaleta:12:true
+ 31404 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 31405 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Message: [offerAccepted]jimy:lili:curatare toaleta:12
+ 31407 [pool-1-thread-4] INFO  classes.Network  - [Connect] CONNECT: 
+ 31407 [pool-1-thread-4] INFO  classes.Network  - [WriteClient] WRITE: 
+ 31408 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connection closed
+ 37109 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 37109 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]spalat geamuri:jimy
+ 37111 [pool-1-thread-5] INFO  classes.Network  - [Connect] CONNECT: 
+ 37111 [pool-1-thread-5] INFO  classes.Network  - [WriteClient] WRITE: 
+ 37111 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Connection closed
+ 62081 [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 62082 [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]reparat calculator:jimy
+ 62084 [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
+ 62084 [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
+ 62084 [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
+ 73874 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 73874 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 73875 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:24362
+ 73875 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 73875 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 73875 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [offerMade]jimy:spalat geamuri:1:lili
+ 73876 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: [offerMade]jimy:spalat geamuri:1:lili
+ 73884 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 73884 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 73884 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
+ 73884 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: 
+ 73884 [pool-1-thread-2] WARN  classes.Network  - [WaitingOfferState] Wrong message received: 
+ 73884 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 81056 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 81056 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 81056 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:24381
+ 81057 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 81057 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 81057 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [offerMade]jimy:spalat geamuri:2:ion
+ 81057 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: [offerMade]jimy:spalat geamuri:2:ion
+ 81057 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 91260 [AWT-EventQueue-0] INFO  classes.Network  - [WaitingOfferState] jimy:ion:spalat geamuri:2:true
+ 91261 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 91261 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerAccepted]jimy:ion:spalat geamuri:2
+ 91263 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
+ 91263 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
+ 91263 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed
