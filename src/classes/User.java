@@ -29,6 +29,6 @@ public class User {
 	}
 	
 	// public static fields which represents the type of the user
-	public static String BUYER_TYPE = "Buyer";
-	public static String SELLER_TYPE = "Seller";
+	public static String BUYER_TYPE = "buyer";
+	public static String SELLER_TYPE = "seller";
 }

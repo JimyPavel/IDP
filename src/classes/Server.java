@@ -229,7 +229,7 @@ public class Server {
 			while (it.hasNext()) {
 			  Map.Entry<Integer, String> entry = it.next();
 
-			  if (entry.getValue().equals("Seller"))
+			  if (entry.getValue().equals(User.SELLER_TYPE))
 			  {
 				  SendMessage(info, entry.getKey());
 			  }
@@ -273,7 +273,7 @@ public class Server {
 			
 			while (it.hasNext()) {
 			  Map.Entry<Integer, String> entry = it.next();
-			  if (entry.getValue().equals("Seller"))
+			  if (entry.getValue().equals(User.SELLER_TYPE))
 			  {
 				  SendMessage(info, entry.getKey());
 			  }
@@ -317,7 +317,7 @@ public class Server {
 			while (it.hasNext()) {
 			  Map.Entry<Integer, String> entry = it.next();
 
-			  if (entry.getValue().equals("Seller"))
+			  if (entry.getValue().equals(User.SELLER_TYPE))
 			  {
 				  SendMessage(info, entry.getKey());
 			  }

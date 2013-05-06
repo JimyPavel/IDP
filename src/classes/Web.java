@@ -5,7 +5,12 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import classes.Constants;
+import classes.Database;
 
 import interfaces.IMediator;
 import interfaces.IWeb;
@@ -13,6 +18,7 @@ import interfaces.IWeb;
 public class Web implements IWeb {
 	
 	private IMediator mediator;
+	private Database db;
 	
 	public Web(IMediator mediator)
 	{
@@ -20,10 +26,57 @@ public class Web implements IWeb {
 		this.mediator.registerWeb(this);
 	}
 
+	@SuppressWarnings("finally")
 	@Override
 	public String signIn(String username, String password) {
 		// we search in database for username and password
-		try{
+		try 
+		{
+			String query = "SELECT * from user"; /*where username=\""+ username + "\"" + 
+			"AND password=\"" + password + "\"";*/
+			db = new Database(Constants.url, Constants.USER, Constants.PASS);
+			db.setCommand(query);
+			ResultSet rs = db.execute();
+			
+			while(rs.next()){
+				String us = rs.getString(2);
+				String pass = rs.getString(3);
+				String type = rs.getString(4);
+				if(us.equals(username) && pass.equals(password)){
+					// making this user active
+					rs.updateString(5, "ACTIVE");
+					rs.updateRow();
+					
+					// returning the type
+					return type;
+				}
+			}
+			
+			return null;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				db.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return null;
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+			try {
+				db.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return null;
+		}
+		/*try{
 			  // Open the file that is the first 
 			  // command line parameter
 			  FileInputStream fstream = new FileInputStream("config.txt");
@@ -75,19 +128,59 @@ public class Web implements IWeb {
 		    }catch (Exception e){//Catch exception if any
 		    	System.err.println("Error: " + e.getMessage());			    
 				return null;
-		    }
+		    }*/
 	}
 
 	@Override
 	public boolean signOut(String username) {
-		return true;
+		try 
+		{
+			String query = "SELECT * from user where username=\""+ username +"\"";
+			db = new Database(Constants.url, Constants.USER, Constants.PASS);
+			db.setCommand(query);
+			ResultSet rs = db.execute();
+			
+			while(rs.next()){
+				
+				// making this user active
+				rs.updateString(5, "INACTIVE");
+				rs.updateRow();
+				
+				// returning true
+				return true;
+			}
+			
+			return false;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				db.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return false;
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+			try {
+				db.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return false;
+		}
 	}
 	
 	@Override
 	public ArrayList<Product> loadProducts(String username , String userType) {
 		
 		ArrayList<Product> products = null;
-		try{
+		/*try{
 			  String path = username +".txt";
 			  // Open the file that is the first 
 			  // command line parameter
@@ -116,16 +209,107 @@ public class Web implements IWeb {
 			  
 		    }catch (Exception e){//Catch exception if any
 			  System.err.println("Error: " + e.getMessage());
-			 }
-		   return products;
+			 }*/
+		
+			try{
+				String query = "SELECT * from user_service where username=\""+ username + "\"";
+				db = new Database(Constants.url, Constants.USER, Constants.PASS);
+				db.setCommand(query);
+				ResultSet rs = db.execute();
+				
+				while(rs.next()){
+					String serviceName = rs.getString(3);
+					Product product = new Product(serviceName);
+				    if(products == null){
+					  products = new ArrayList<Product>();
+				    }
+				    products.add(product);
+				}
+			}
+			catch (SQLException e) 
+			{
+				e.printStackTrace();
+				try {
+					db.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				return null;
+			} 
+			catch (ClassNotFoundException e) 
+			{
+				e.printStackTrace();
+				try {
+					db.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				return null;
+			}
+			
+		    return products;
 	}
 
 	@Override
 	public ArrayList<String> getSellers(String productName) {
 		
 		ArrayList<String> sellers = null;
-		ArrayList<String> sellersFiles = new ArrayList<String>();
+		ArrayList<String> userNames = new ArrayList<String>();
 		
+		try{
+			String query = "SELECT * from user_service where servicename=\""+ productName + "\"";
+			db = new Database(Constants.url, Constants.USER, Constants.PASS);
+			db.setCommand(query);
+			ResultSet rs = db.execute();
+			
+			// luam toate numele utilizatorilor ce doresc/ofera acest serviciu
+			while(rs.next()){
+				String userName = rs.getString(2);
+				userNames.add(userName);
+			}
+			
+			// luam utilizatorii care sunt vanzatori
+			query = "SELECT * from user where type=\"seller\"";
+			db.setCommand(query);
+			rs = db.execute();
+			
+			while(rs.next()){
+				// daca vanzatorul este in lista de useri ce detin/doresc acest serviciu
+				// il adaugam
+				String uName = rs.getString(2);
+				if(userNames.contains(uName)){
+					if(sellers == null){
+						sellers = new ArrayList<String>();
+					}
+					sellers.add(uName);
+				}
+			}
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				db.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return null;
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+			try {
+				db.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return null;
+		}
+		/*
 		// search in setup.txt for sellers
 		FileInputStream fstream ;
 		DataInputStream in;
@@ -198,7 +382,8 @@ public class Web implements IWeb {
 			  System.err.println("Error: " + e.getMessage());
 			 }
 			    
-		}
+		}*/
+		
 		return sellers;
 		
 	}
