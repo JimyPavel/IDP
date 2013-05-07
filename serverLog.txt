@@ -1,497 +1,276 @@
- 0    [main] INFO  classes.Server  - [Accept] Accept 
- 2    [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:9225
- 2    [main] INFO  classes.Server  - [Read] READ: 
- 2    [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
- 3    [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 14837 [main] INFO  classes.Server  - [Accept] Accept 
- 14837 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:9279
- 14837 [main] INFO  classes.Server  - [Read] READ: 
- 14838 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
- 14838 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 95111 [main] INFO  classes.Server  - [Accept] Accept 
- 95112 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:9516
- 95112 [main] INFO  classes.Server  - [Read] READ: 
- 95112 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
- 95112 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 95145 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Offer Request received
- 95170 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 95171 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
- 95174 [pool-1-thread-4] INFO  classes.Server  - [Connect] CONNECT: 
- 95175 [pool-1-thread-4] INFO  classes.Server  - [WriteClient] WRITE: 
- 95182 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connection closed
- 101446 [main] INFO  classes.Server  - [Accept] Accept 
- 101446 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:9542
- 101446 [main] INFO  classes.Server  - [Read] READ: 
- 101446 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:10:lili
- 101447 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 101460 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer Made
- 101460 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 101460 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:10:lili
- 101461 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
- 101461 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
- 101462 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
- 104975 [main] INFO  classes.Server  - [Accept] Accept 
- 104975 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:9556
- 104975 [main] INFO  classes.Server  - [Read] READ: 
- 104976 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:10
- 104976 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 104976 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Offer accepted
- 104976 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 104976 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:10
- 104977 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
- 104977 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
- 104978 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
- 137135 [main] INFO  classes.Server  - [Accept] Accept 
- 137135 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:9660
- 137139 [main] INFO  classes.Server  - [Read] READ: 
- 137139 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 137140 [main] INFO  classes.Server  - [Read] READ: 
- 137140 [main] INFO  classes.Server  - [Read] Message: 
- 137140 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 137141 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Transfer
- 137141 [pool-1-thread-4] WARN  classes.Server  - [ParseInformation] Wrong message received: 
- 137141 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 137142 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 137143 [pool-1-thread-4] INFO  classes.Server  - [Connect] CONNECT: 
- 137143 [pool-1-thread-4] INFO  classes.Server  - [WriteClient] WRITE: 
- 137143 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connection closed
- 299661 [main] INFO  classes.Server  - [Accept] Accept 
- 299662 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10139
- 299662 [main] INFO  classes.Server  - [Read] READ: 
- 299662 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
- 299662 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 299663 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Sign out
- 299663 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] User lili is gonne
- 302162 [main] INFO  classes.Server  - [Accept] Accept 
- 302163 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10149
- 302163 [main] INFO  classes.Server  - [Read] READ: 
- 302163 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
- 302163 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 302167 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Sign out
- 302167 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] User jimy is gonne
- 455086 [main] INFO  classes.Server  - [Accept] Accept 
- 455087 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10590
- 455087 [main] INFO  classes.Server  - [Read] READ: 
- 455087 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
- 455087 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 465445 [main] INFO  classes.Server  - [Accept] Accept 
- 465445 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10621
- 465446 [main] INFO  classes.Server  - [Read] READ: 
- 465446 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
- 465446 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 470921 [main] INFO  classes.Server  - [Accept] Accept 
- 470921 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10642
- 470921 [main] INFO  classes.Server  - [Read] READ: 
- 470921 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
- 470921 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 470922 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Offer Request received
- 470922 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 470922 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
- 470923 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 470924 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 470940 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 475309 [main] INFO  classes.Server  - [Accept] Accept 
- 475309 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10664
- 475310 [main] INFO  classes.Server  - [Read] READ: 
- 475310 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:10:lili
- 475310 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 475313 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Offer Made
- 475314 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 475314 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:10:lili
- 475315 [pool-1-thread-3] INFO  classes.Server  - [Connect] CONNECT: 
- 475315 [pool-1-thread-3] INFO  classes.Server  - [WriteClient] WRITE: 
- 475315 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connection closed
- 478380 [main] INFO  classes.Server  - [Accept] Accept 
- 478380 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10678
- 478380 [main] INFO  classes.Server  - [Read] READ: 
- 478380 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:10
- 478381 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 478381 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer accepted
- 478381 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 478381 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:10
- 478382 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
- 478382 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
- 478385 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
- 478387 [main] INFO  classes.Server  - [Accept] Accept 
- 478388 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10684
- 478388 [main] INFO  classes.Server  - [Read] READ: 
- 478388 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 478388 [main] INFO  classes.Server  - [Read] READ: 
- 478389 [main] INFO  classes.Server  - [Read] Message: 
- 478389 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 478389 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Transfer
- 478389 [pool-1-thread-3] WARN  classes.Server  - [ParseInformation] Wrong message received: 
- 478390 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 478390 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 478391 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 478391 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 478395 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 524400 [main] INFO  classes.Server  - [Accept] Accept 
- 524401 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10824
- 524407 [main] INFO  classes.Server  - [Read] READ: 
- 524407 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
- 524407 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 524407 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Sign out
- 524408 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] User jimy is gonne
- 527970 [main] INFO  classes.Server  - [Accept] Accept 
- 527970 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:10836
- 527970 [main] INFO  classes.Server  - [Read] READ: 
- 527971 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
- 527971 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 527971 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Sign out
- 527971 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] User lili is gonne
- 614591 [main] INFO  classes.Server  - [Accept] Accept 
- 614592 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11093
- 614592 [main] INFO  classes.Server  - [Read] READ: 
- 614592 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
- 614592 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 625646 [main] INFO  classes.Server  - [Accept] Accept 
- 625647 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11137
- 625647 [main] INFO  classes.Server  - [Read] READ: 
- 625648 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
- 625648 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 629464 [main] INFO  classes.Server  - [Accept] Accept 
- 629465 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11152
- 629465 [main] INFO  classes.Server  - [Read] READ: 
- 629465 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
- 629465 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 629466 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Offer Request received
- 629466 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 629466 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
- 629468 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 629468 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 629492 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 633918 [main] INFO  classes.Server  - [Accept] Accept 
- 633918 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11167
- 633919 [main] INFO  classes.Server  - [Read] READ: 
- 633919 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 633919 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Offer Made
- 633920 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 633920 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 633921 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
- 633921 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
- 633921 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
- 633921 [main] INFO  classes.Server  - [Read] READ: 
- 633921 [main] INFO  classes.Server  - [Read] Message: 
- 633921 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 633923 [pool-1-thread-4] WARN  classes.Server  - [ParseInformation] Wrong message received: 
- 637936 [main] INFO  classes.Server  - [Accept] Accept 
- 637937 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11190
- 637937 [main] INFO  classes.Server  - [Read] READ: 
- 637937 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 637937 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 637937 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Offer accepted
- 637937 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 637937 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 637938 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 637938 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 637948 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 644135 [main] INFO  classes.Server  - [Accept] Accept 
- 644135 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11213
- 644135 [main] INFO  classes.Server  - [Read] READ: 
- 644136 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 644136 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 644136 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Transfer
- 644136 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 644136 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 644139 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
- 644139 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
- 644139 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
- 737265 [main] INFO  classes.Server  - [Accept] Accept 
- 737265 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11488
- 737265 [main] INFO  classes.Server  - [Read] READ: 
- 737266 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
- 737266 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 737271 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Sign out
- 737271 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] User lili is gonne
- 741254 [main] INFO  classes.Server  - [Accept] Accept 
- 741255 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11500
- 741257 [main] INFO  classes.Server  - [Read] READ: 
- 741257 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
- 741257 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 741263 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Sign out
- 741264 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] User jimy is gonne
- 909936 [main] INFO  classes.Server  - [Accept] Accept 
- 909937 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:11998
- 909937 [main] INFO  classes.Server  - [Read] READ: 
- 909937 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
- 909937 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 921145 [main] INFO  classes.Server  - [Accept] Accept 
- 921145 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:12046
- 921146 [main] INFO  classes.Server  - [Read] READ: 
- 921146 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
- 921146 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 925458 [main] INFO  classes.Server  - [Accept] Accept 
- 925458 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:12065
- 925458 [main] INFO  classes.Server  - [Read] READ: 
- 925458 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
- 925459 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 925459 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Offer Request received
- 925459 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 925460 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
- 925461 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
- 925461 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
- 925464 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
- 930772 [main] INFO  classes.Server  - [Accept] Accept 
- 930772 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:12085
- 930772 [main] INFO  classes.Server  - [Read] READ: 
- 930772 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 930773 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 930774 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer Made
- 930774 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 930775 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 930779 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
- 930779 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
- 930782 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
- 933765 [main] INFO  classes.Server  - [Accept] Accept 
- 933766 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:12101
- 933766 [main] INFO  classes.Server  - [Read] READ: 
- 933766 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 933766 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 933769 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Offer accepted
- 933769 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 933769 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 933770 [pool-1-thread-3] INFO  classes.Server  - [Connect] CONNECT: 
- 933771 [pool-1-thread-3] INFO  classes.Server  - [WriteClient] WRITE: 
- 933771 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connection closed
- 933776 [main] INFO  classes.Server  - [Accept] Accept 
- 933777 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:12107
- 933778 [main] INFO  classes.Server  - [Read] READ: 
- 933778 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 933778 [main] INFO  classes.Server  - [Read] READ: 
- 933778 [main] INFO  classes.Server  - [Read] Message: 
- 933778 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 933779 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Transfer
- 933779 [pool-1-thread-4] WARN  classes.Server  - [ParseInformation] Wrong message received: 
- 933780 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 933780 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 933780 [pool-1-thread-4] INFO  classes.Server  - [Connect] CONNECT: 
- 933781 [pool-1-thread-4] INFO  classes.Server  - [WriteClient] WRITE: 
- 933781 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connection closed
- 1013411 [main] INFO  classes.Server  - [Accept] Accept 
- 1013411 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:12330
- 1013411 [main] INFO  classes.Server  - [Read] READ: 
- 1013411 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
- 1013411 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1013412 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Sign out
- 1013412 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] User jimy is gonne
- 1016755 [main] INFO  classes.Server  - [Accept] Accept 
- 1016756 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:12342
- 1016756 [main] INFO  classes.Server  - [Read] READ: 
- 1016756 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
- 1016756 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1016756 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Sign out
- 1016756 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] User lili is gonne
- 1517083 [main] INFO  classes.Server  - [Accept] Accept 
- 1517084 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:13833
- 1517085 [main] INFO  classes.Server  - [Read] READ: 
- 1517085 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
- 1517085 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1526842 [main] INFO  classes.Server  - [Accept] Accept 
- 1526842 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:13863
- 1526842 [main] INFO  classes.Server  - [Read] READ: 
- 1526842 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
- 1526843 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1531720 [main] INFO  classes.Server  - [Accept] Accept 
- 1531720 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:13884
- 1531720 [main] INFO  classes.Server  - [Read] READ: 
- 1531720 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
- 1531721 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1531723 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Offer Request received
- 1531723 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 1531723 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
- 1531724 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
- 1531726 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
- 1531726 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
- 1536671 [main] INFO  classes.Server  - [Accept] Accept 
- 1536671 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:13903
- 1536671 [main] INFO  classes.Server  - [Read] READ: 
- 1536671 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 1536672 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1536672 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Offer Made
- 1536672 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 1536672 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 1536674 [pool-1-thread-3] INFO  classes.Server  - [Connect] CONNECT: 
- 1536675 [pool-1-thread-3] INFO  classes.Server  - [WriteClient] WRITE: 
- 1536676 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connection closed
- 1540668 [main] INFO  classes.Server  - [Accept] Accept 
- 1540668 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:13920
- 1540668 [main] INFO  classes.Server  - [Read] READ: 
- 1540669 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 1540669 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1540669 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer accepted
- 1540669 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 1540669 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 1540670 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
- 1540670 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
- 1540670 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
- 1540803 [main] INFO  classes.Server  - [Accept] Accept 
- 1540803 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:13926
- 1540803 [main] INFO  classes.Server  - [Read] READ: 
- 1540803 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 1540803 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1540813 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Transfer
- 1540813 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 1540813 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 1540817 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 1540817 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 1540818 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 1638887 [main] INFO  classes.Server  - [Accept] Accept 
- 1638887 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14217
- 1638888 [main] INFO  classes.Server  - [Read] READ: 
- 1638888 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
- 1638888 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1638888 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Sign out
- 1638888 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] User jimy is gonne
- 1642401 [main] INFO  classes.Server  - [Accept] Accept 
- 1642401 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14229
- 1642401 [main] INFO  classes.Server  - [Read] READ: 
- 1642401 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
- 1642401 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1642401 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Sign out
- 1642402 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] User lili is gonne
- 1678105 [main] INFO  classes.Server  - [Accept] Accept 
- 1678106 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14341
- 1678106 [main] INFO  classes.Server  - [Read] READ: 
- 1678106 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
- 1678106 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1691183 [main] INFO  classes.Server  - [Accept] Accept 
- 1691184 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14384
- 1691184 [main] INFO  classes.Server  - [Read] READ: 
- 1691184 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
- 1691184 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1695369 [main] INFO  classes.Server  - [Accept] Accept 
- 1695369 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14400
- 1695369 [main] INFO  classes.Server  - [Read] READ: 
- 1695369 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
- 1695369 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1695370 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Offer Request received
- 1695370 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 1695370 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
- 1695373 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 1695373 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 1695374 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 1698628 [main] INFO  classes.Server  - [Accept] Accept 
- 1698629 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14414
- 1698629 [main] INFO  classes.Server  - [Read] READ: 
- 1698629 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 1698629 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1698630 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer Made
- 1698630 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 1698630 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:20:lili
- 1698632 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
- 1698632 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
- 1698633 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
- 1701800 [main] INFO  classes.Server  - [Accept] Accept 
- 1701800 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14428
- 1701800 [main] INFO  classes.Server  - [Read] READ: 
- 1701800 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 1701800 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1701801 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Offer accepted
- 1701801 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 1701801 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:20
- 1701802 [pool-1-thread-3] INFO  classes.Server  - [Connect] CONNECT: 
- 1701802 [pool-1-thread-3] INFO  classes.Server  - [WriteClient] WRITE: 
- 1701809 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connection closed
- 1701811 [main] INFO  classes.Server  - [Accept] Accept 
- 1701811 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14434
- 1701811 [main] INFO  classes.Server  - [Read] READ: 
- 1701811 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 1701812 [main] INFO  classes.Server  - [Read] READ: 
- 1701812 [main] INFO  classes.Server  - [Read] Message: 
- 1701812 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1701812 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Transfer
- 1701813 [pool-1-thread-1] WARN  classes.Server  - [ParseInformation] Wrong message received: 
- 1701813 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 1701818 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaaaaaaaaaaaa
- 1701819 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 1701820 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 1701820 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 1711617 [main] INFO  classes.Server  - [Accept] Accept 
- 1711617 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14466
- 1711617 [main] INFO  classes.Server  - [Read] READ: 
- 1711617 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
- 1711618 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1711618 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Sign out
- 1711618 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] User jimy is gonne
- 1713221 [main] INFO  classes.Server  - [Accept] Accept 
- 1713221 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14474
- 1713222 [main] INFO  classes.Server  - [Read] READ: 
- 1713222 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
- 1713222 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1713222 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Sign out
- 1713222 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] User lili is gonne
- 1831241 [main] INFO  classes.Server  - [Accept] Accept 
- 1831242 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14821
- 1831242 [main] INFO  classes.Server  - [Read] READ: 
- 1831242 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
- 1831242 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1845120 [main] INFO  classes.Server  - [Accept] Accept 
- 1845120 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14869
- 1845121 [main] INFO  classes.Server  - [Read] READ: 
- 1845121 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
- 1845122 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1849037 [main] INFO  classes.Server  - [Accept] Accept 
- 1849038 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14879
- 1849039 [main] INFO  classes.Server  - [Read] READ: 
- 1849039 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
- 1849039 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer Request received
- 1849039 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 1849039 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
- 1849041 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
- 1849041 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
- 1849041 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
- 1849042 [main] INFO  classes.Server  - [Read] READ: 
- 1849042 [main] INFO  classes.Server  - [Read] Message: 
- 1849042 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1849042 [pool-1-thread-4] WARN  classes.Server  - [ParseInformation] Wrong message received: 
- 1853753 [main] INFO  classes.Server  - [Accept] Accept 
- 1853754 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14898
- 1853755 [main] INFO  classes.Server  - [Read] READ: 
- 1853755 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:10:lili
- 1853755 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1853756 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Offer Made
- 1853757 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 1853757 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:10:lili
- 1853759 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
- 1853759 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
- 1853760 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
- 1856367 [main] INFO  classes.Server  - [Accept] Accept 
- 1856367 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14913
- 1856367 [main] INFO  classes.Server  - [Read] READ: 
- 1856367 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:10
- 1856367 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1856367 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer accepted
- 1856368 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
- 1856368 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:10
- 1856368 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
- 1856369 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
- 1856369 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
- 1856374 [main] INFO  classes.Server  - [Accept] Accept 
- 1856374 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:14919
- 1856374 [main] INFO  classes.Server  - [Read] READ: 
- 1856375 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 1856375 [main] INFO  classes.Server  - [Read] READ: 
- 1856375 [main] INFO  classes.Server  - [Read] Message: 
- 1856375 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1856375 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Transfer
- 1856375 [pool-1-thread-4] WARN  classes.Server  - [ParseInformation] Wrong message received: 
- 1856376 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
- 1856376 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 1856377 [pool-1-thread-4] INFO  classes.Server  - [Connect] CONNECT: 
- 1856377 [pool-1-thread-4] INFO  classes.Server  - [WriteClient] WRITE: 
- 1856378 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connection closed
- 1882678 [main] INFO  classes.Server  - [Accept] Accept 
- 1882679 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:15011
- 1882679 [main] INFO  classes.Server  - [Read] READ: 
- 1882679 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
- 1882679 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1882682 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Sign out
- 1882682 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] User jimy is gonne
- 1883904 [main] INFO  classes.Server  - [Accept] Accept 
- 1883904 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:15017
- 1883904 [main] INFO  classes.Server  - [Read] READ: 
- 1883904 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
- 1883904 [main] INFO  classes.Server  - [Read] Connection closed: EOF
- 1883905 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Sign out
- 1883905 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] User lili is gonne
+ 1    [main] INFO  classes.Server  - [Accept] Accept 
+ 8    [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37329
+ 8    [main] INFO  classes.Server  - [Read] READ: 
+ 8    [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30001:jimy:buyer
+ 9    [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 6280 [main] INFO  classes.Server  - [Accept] Accept 
+ 6281 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37350
+ 6281 [main] INFO  classes.Server  - [Read] READ: 
+ 6282 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30002:lili:seller
+ 6282 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 13309 [main] INFO  classes.Server  - [Accept] Accept 
+ 13309 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37381
+ 13311 [main] INFO  classes.Server  - [Read] READ: 
+ 13311 [main] INFO  classes.Server  - [Read] Message: [connect]127.0.0.1:30003:ion:buyer
+ 13311 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 26674 [main] INFO  classes.Server  - [Accept] Accept 
+ 26674 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37420
+ 26675 [main] INFO  classes.Server  - [Read] READ: 
+ 26675 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:jimy
+ 26676 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 26677 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Offer Request received
+ 26682 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
+ 26682 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:jimy
+ 26686 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
+ 26686 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
+ 26700 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
+ 38145 [main] INFO  classes.Server  - [Accept] Accept 
+ 38145 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37465
+ 38146 [main] INFO  classes.Server  - [Read] READ: 
+ 38146 [main] INFO  classes.Server  - [Read] Message: [offerRequest]reparatii calculatoare:ion
+ 38146 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 38146 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Offer Request received
+ 38147 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
+ 38147 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [offerRequest]reparatii calculatoare:ion
+ 38149 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
+ 38149 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
+ 38150 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
+ 45620 [main] INFO  classes.Server  - [Accept] Accept 
+ 45621 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37492
+ 45621 [main] INFO  classes.Server  - [Read] READ: 
+ 45622 [main] INFO  classes.Server  - [Read] Message: [offerMade]ion:reparatii calculatoare:1:lili
+ 45622 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 45622 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Offer Made
+ 45623 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30003
+ 45623 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Message: [offerMade]ion:reparatii calculatoare:1:lili
+ 45625 [pool-1-thread-3] INFO  classes.Server  - [Connect] CONNECT: 
+ 45625 [pool-1-thread-3] INFO  classes.Server  - [WriteClient] WRITE: 
+ 45625 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connection closed
+ 49665 [main] INFO  classes.Server  - [Accept] Accept 
+ 49666 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37509
+ 49666 [main] INFO  classes.Server  - [Read] READ: 
+ 49666 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]ion:lili:reparatii calculatoare:1
+ 49666 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 49666 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Offer accepted
+ 49667 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
+ 49667 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]ion:lili:reparatii calculatoare:1
+ 49670 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
+ 49670 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
+ 49680 [main] INFO  classes.Server  - [Accept] Accept 
+ 49681 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37515
+ 49681 [main] INFO  classes.Server  - [Read] READ: 
+ 49681 [main] INFO  classes.Server  - [Read] Message: [transfer]ion:lili:reparatii calculatoare:a
+ 49681 [main] INFO  classes.Server  - [Read] READ: 
+ 49682 [main] INFO  classes.Server  - [Read] Message: 
+ 49682 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 49681 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Transfer
+ 49683 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30003
+ 49683 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [transfer]ion:lili:reparatii calculatoare:a
+ 49684 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
+ 49684 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
+ 49682 [pool-1-thread-3] WARN  classes.Server  - [ParseInformation] Wrong message received: 
+ 49692 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
+ 49694 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
+ 57539 [main] INFO  classes.Server  - [Accept] Accept 
+ 57539 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37547
+ 57540 [main] INFO  classes.Server  - [Read] READ: 
+ 57540 [main] INFO  classes.Server  - [Read] Message: [offerMade]jimy:reparatii calculatoare:12:lili
+ 57540 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 57540 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Offer Made
+ 57545 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 57545 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [offerMade]jimy:reparatii calculatoare:12:lili
+ 57548 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
+ 57548 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
+ 57549 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
+ 61890 [main] INFO  classes.Server  - [Accept] Accept 
+ 61890 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37570
+ 61890 [main] INFO  classes.Server  - [Read] READ: 
+ 61890 [main] INFO  classes.Server  - [Read] Message: [offerAccepted]jimy:lili:reparatii calculatoare:12
+ 61891 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 61891 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Offer accepted
+ 61891 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
+ 61891 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Message: [offerAccepted]jimy:lili:reparatii calculatoare:12
+ 61893 [pool-1-thread-4] INFO  classes.Server  - [Connect] CONNECT: 
+ 61893 [pool-1-thread-4] INFO  classes.Server  - [WriteClient] WRITE: 
+ 61893 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connection closed
+ 61901 [main] INFO  classes.Server  - [Accept] Accept 
+ 61902 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37576
+ 61902 [main] INFO  classes.Server  - [Read] READ: 
+ 61902 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 61902 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 61903 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Transfer
+ 61903 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 61903 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 61905 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
+ 61905 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
+ 61908 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
+ 62901 [main] INFO  classes.Server  - [Accept] Accept 
+ 62902 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37586
+ 62902 [main] INFO  classes.Server  - [Read] READ: 
+ 62902 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 62902 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 62902 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Transfer
+ 62902 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 62902 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 62903 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
+ 62904 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
+ 62915 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
+ 63902 [main] INFO  classes.Server  - [Accept] Accept 
+ 63902 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37595
+ 63903 [main] INFO  classes.Server  - [Read] READ: 
+ 63903 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 63903 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 63903 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Transfer
+ 63904 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 63904 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 63905 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
+ 63905 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
+ 63906 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
+ 64901 [main] INFO  classes.Server  - [Accept] Accept 
+ 64901 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37603
+ 64902 [main] INFO  classes.Server  - [Read] READ: 
+ 64902 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 64902 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 64902 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Transfer
+ 64903 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 64903 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 64904 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
+ 64904 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
+ 64905 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
+ 65901 [main] INFO  classes.Server  - [Accept] Accept 
+ 65901 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37613
+ 65901 [main] INFO  classes.Server  - [Read] READ: 
+ 65901 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 65901 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 65903 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Transfer
+ 65903 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 65903 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 65904 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
+ 65904 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
+ 65915 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
+ 66903 [main] INFO  classes.Server  - [Accept] Accept 
+ 66903 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37623
+ 66903 [main] INFO  classes.Server  - [Read] READ: 
+ 66903 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 66903 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 66904 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Transfer
+ 66904 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 66904 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 66906 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
+ 66906 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
+ 66906 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
+ 67901 [main] INFO  classes.Server  - [Accept] Accept 
+ 67902 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37632
+ 67903 [main] INFO  classes.Server  - [Read] READ: 
+ 67903 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 67903 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 67903 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Transfer
+ 67904 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 67904 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 67905 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
+ 67905 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
+ 67915 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
+ 68901 [main] INFO  classes.Server  - [Accept] Accept 
+ 68902 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37638
+ 68902 [main] INFO  classes.Server  - [Read] READ: 
+ 68902 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 68902 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 68903 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Transfer
+ 68903 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 68903 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 68905 [pool-1-thread-2] INFO  classes.Server  - [Connect] CONNECT: 
+ 68905 [pool-1-thread-2] INFO  classes.Server  - [WriteClient] WRITE: 
+ 68905 [pool-1-thread-2] INFO  classes.Server  - [SendMessage] Connection closed
+ 69901 [main] INFO  classes.Server  - [Accept] Accept 
+ 69901 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37647
+ 69902 [main] INFO  classes.Server  - [Read] READ: 
+ 69902 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 69902 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Transfer
+ 69906 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 69906 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 69908 [pool-1-thread-1] INFO  classes.Server  - [Connect] CONNECT: 
+ 69908 [pool-1-thread-1] INFO  classes.Server  - [WriteClient] WRITE: 
+ 69908 [pool-1-thread-1] INFO  classes.Server  - [SendMessage] Connection closed
+ 69911 [main] INFO  classes.Server  - [Read] READ: 
+ 69911 [main] INFO  classes.Server  - [Read] Message: 
+ 69911 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 69911 [pool-1-thread-5] WARN  classes.Server  - [ParseInformation] Wrong message received: 
+ 70902 [main] INFO  classes.Server  - [Accept] Accept 
+ 70902 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37657
+ 70903 [main] INFO  classes.Server  - [Read] READ: 
+ 70903 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 70903 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 70903 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Transfer
+ 70903 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 70903 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 70904 [pool-1-thread-4] INFO  classes.Server  - [Connect] CONNECT: 
+ 70905 [pool-1-thread-4] INFO  classes.Server  - [WriteClient] WRITE: 
+ 70905 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connection closed
+ 71901 [main] INFO  classes.Server  - [Accept] Accept 
+ 71902 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37666
+ 71902 [main] INFO  classes.Server  - [Read] READ: 
+ 71902 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 71902 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 71902 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Transfer
+ 71902 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 71902 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 71903 [pool-1-thread-3] INFO  classes.Server  - [Connect] CONNECT: 
+ 71903 [pool-1-thread-3] INFO  classes.Server  - [WriteClient] WRITE: 
+ 71914 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connection closed
+ 72903 [main] INFO  classes.Server  - [Accept] Accept 
+ 72903 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37674
+ 72903 [main] INFO  classes.Server  - [Read] READ: 
+ 72903 [main] INFO  classes.Server  - [Read] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 72904 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 72904 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Transfer
+ 72904 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30001
+ 72904 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Message: [transfer]jimy:lili:reparatii calculatoare:a
+ 72905 [pool-1-thread-5] INFO  classes.Server  - [Connect] CONNECT: 
+ 72905 [pool-1-thread-5] INFO  classes.Server  - [WriteClient] WRITE: 
+ 72905 [pool-1-thread-5] INFO  classes.Server  - [SendMessage] Connection closed
+ 93776 [main] INFO  classes.Server  - [Accept] Accept 
+ 93776 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37744
+ 93776 [main] INFO  classes.Server  - [Read] READ: 
+ 93777 [main] INFO  classes.Server  - [Read] Message: [offerRequest]hranire batran:jimy
+ 93777 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 93785 [pool-1-thread-4] INFO  classes.Server  - [ParseInformation] Offer Request received
+ 93786 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
+ 93786 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Message: [offerRequest]hranire batran:jimy
+ 93788 [pool-1-thread-4] INFO  classes.Server  - [Connect] CONNECT: 
+ 93789 [pool-1-thread-4] INFO  classes.Server  - [WriteClient] WRITE: 
+ 93789 [pool-1-thread-4] INFO  classes.Server  - [SendMessage] Connection closed
+ 102348 [main] INFO  classes.Server  - [Accept] Accept 
+ 102348 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37775
+ 102348 [main] INFO  classes.Server  - [Read] READ: 
+ 102349 [main] INFO  classes.Server  - [Read] Message: [offerRequest]plimbare caine:jimy
+ 102349 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 102350 [pool-1-thread-3] INFO  classes.Server  - [ParseInformation] Offer Request received
+ 102350 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connect to: 127.0.0.1:30002
+ 102350 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Message: [offerRequest]plimbare caine:jimy
+ 102352 [pool-1-thread-3] INFO  classes.Server  - [Connect] CONNECT: 
+ 102352 [pool-1-thread-3] INFO  classes.Server  - [WriteClient] WRITE: 
+ 102364 [pool-1-thread-3] INFO  classes.Server  - [SendMessage] Connection closed
+ 114033 [main] INFO  classes.Server  - [Accept] Accept 
+ 114034 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37817
+ 114034 [main] INFO  classes.Server  - [Read] READ: 
+ 114034 [main] INFO  classes.Server  - [Read] Message: [signOut]lili
+ 114034 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 114035 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] Sign out
+ 114035 [pool-1-thread-5] INFO  classes.Server  - [ParseInformation] User lili is gonne
+ 115177 [main] INFO  classes.Server  - [Accept] Accept 
+ 115177 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37824
+ 115177 [main] INFO  classes.Server  - [Read] READ: 
+ 115177 [main] INFO  classes.Server  - [Read] Message: [signOut]jimy
+ 115179 [main] INFO  classes.Server  - [Read] READ: 
+ 115179 [main] INFO  classes.Server  - [Read] Message: 
+ 115179 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 115182 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] Sign out
+ 115183 [pool-1-thread-1] INFO  classes.Server  - [ParseInformation] User jimy is gonne
+ 115183 [pool-1-thread-1] WARN  classes.Server  - [ParseInformation] Wrong message received: 
+ 117773 [main] INFO  classes.Server  - [Accept] Accept 
+ 117773 [main] INFO  classes.Server  - [Accept] Connection from: /127.0.0.1:37829
+ 117773 [main] INFO  classes.Server  - [Read] READ: 
+ 117773 [main] INFO  classes.Server  - [Read] Message: [signOut]ion
+ 117773 [main] INFO  classes.Server  - [Read] Connection closed: EOF
+ 117773 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] Sign out
+ 117774 [pool-1-thread-2] INFO  classes.Server  - [ParseInformation] User ion is gonne

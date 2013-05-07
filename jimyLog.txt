@@ -1,48 +1,166 @@
  0    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
  0    [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] Listen to the port: 30001
- 1    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30001:jimy:buyer
- 16   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
- 16   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
- 16   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
- 17811 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 17812 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]reparatii calculatoare:jimy
- 17814 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
- 17814 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
- 17819 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed
- 22534 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
- 22535 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
- 22535 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:14901
- 22535 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
- 22536 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
- 22536 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [offerMade]jimy:reparatii calculatoare:10:lili
- 22536 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: [offerMade]jimy:reparatii calculatoare:10:lili
- 22537 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
- 22537 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
- 22537 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
- 22537 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: 
- 22537 [pool-1-thread-2] WARN  classes.Network  - [WaitingOfferState] Wrong message received: 
- 22537 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
- 25131 [AWT-EventQueue-0] INFO  classes.Network  - [WaitingOfferState] jimy:lili:reparatii calculatoare:10:true
- 25141 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 25141 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Message: [offerAccepted]jimy:lili:reparatii calculatoare:10
- 25142 [pool-1-thread-4] INFO  classes.Network  - [Connect] CONNECT: 
- 25142 [pool-1-thread-4] INFO  classes.Network  - [WriteClient] WRITE: 
- 25142 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connection closed
- 25152 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
- 25152 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
- 25153 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:14922
- 25153 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
- 25153 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
- 25153 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 25153 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:aaaaaaaaaa
- 35155 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
- 35155 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
- 35155 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
- 35155 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: 
- 35155 [pool-1-thread-2] WARN  classes.Network  - [TransferState] Wrong message received: 
- 35155 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
- 51451 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
- 51452 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Message: [signOut]jimy
- 51453 [pool-1-thread-5] INFO  classes.Network  - [Connect] CONNECT: 
- 51454 [pool-1-thread-5] INFO  classes.Network  - [WriteClient] WRITE: 
- 51454 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Connection closed
+ 3    [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [connect]127.0.0.1:30001:jimy:buyer
+ 24   [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
+ 25   [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
+ 25   [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
+ 26699 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 26699 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]reparatii calculatoare:jimy
+ 26701 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
+ 26701 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
+ 26701 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed
+ 57574 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 57574 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 57574 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37550
+ 57575 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 57575 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 57576 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [offerMade]jimy:reparatii calculatoare:12:lili
+ 57576 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: [offerMade]jimy:reparatii calculatoare:12:lili
+ 57577 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 57577 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 57577 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
+ 57577 [pool-1-thread-2] INFO  classes.Network  - [WaitingOfferState] Message received: 
+ 57577 [pool-1-thread-2] WARN  classes.Network  - [WaitingOfferState] Wrong message received: 
+ 57577 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 61913 [AWT-EventQueue-0] INFO  classes.Network  - [WaitingOfferState] jimy:lili:reparatii calculatoare:12:true
+ 61914 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 61914 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Message: [offerAccepted]jimy:lili:reparatii calculatoare:12
+ 61916 [pool-1-thread-4] INFO  classes.Network  - [Connect] CONNECT: 
+ 61916 [pool-1-thread-4] INFO  classes.Network  - [WriteClient] WRITE: 
+ 61916 [pool-1-thread-4] INFO  classes.Network  - [WriteToServer] Connection closed
+ 61931 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 61931 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 61932 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37579
+ 61932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 61932 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 61933 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 61933 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 61934 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 61934 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 61934 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
+ 61934 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: 
+ 61934 [pool-1-thread-2] WARN  classes.Network  - [TransferState] Wrong message received: 
+ 61935 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 62932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 62932 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 62932 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37589
+ 62932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 62933 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 62933 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 62933 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 62942 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 62942 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 62942 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
+ 62942 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: 
+ 62943 [pool-1-thread-2] WARN  classes.Network  - [TransferState] Wrong message received: 
+ 62943 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 63932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 63932 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 63933 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37598
+ 63936 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 63937 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 63937 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 63937 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 63938 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 64931 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 64931 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 64932 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37606
+ 64932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 64932 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 64932 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 64932 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 64933 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 65931 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 65931 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 65932 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37616
+ 65932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 65932 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 65932 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 65932 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 65941 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 65941 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 65941 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
+ 65941 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: 
+ 65941 [pool-1-thread-2] WARN  classes.Network  - [TransferState] Wrong message received: 
+ 65941 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 66933 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 66933 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 66933 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37626
+ 66933 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 66933 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 66934 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 66934 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 66934 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 67933 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 67933 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 67933 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37635
+ 67933 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 67934 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 67934 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 67934 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 67942 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 67942 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 67942 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
+ 67942 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: 
+ 67943 [pool-1-thread-2] WARN  classes.Network  - [TransferState] Wrong message received: 
+ 67943 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 68932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 68932 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 68933 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37641
+ 68933 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 68933 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 68933 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 68933 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 68934 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 69935 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 69935 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 69935 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37650
+ 69935 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 69935 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 69935 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 69936 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 69936 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 70931 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 70932 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 70932 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37660
+ 70932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 70932 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 70932 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 70932 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 70933 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 71931 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 71931 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 71931 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37669
+ 71931 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 71931 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 71932 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 71932 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 71941 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 71941 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 71941 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: 
+ 71941 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: 
+ 71941 [pool-1-thread-2] WARN  classes.Network  - [TransferState] Wrong message received: 
+ 71941 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 72932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 72932 [pool-1-thread-2] INFO  classes.Network  - [Accept] ACCEPT: 
+ 72932 [pool-1-thread-2] INFO  classes.Network  - [Accept] Connection from: /127.0.0.1:37677
+ 72932 [pool-1-thread-2] INFO  classes.Network  - [ListenToPort] waiting
+ 72933 [pool-1-thread-2] INFO  classes.Network  - [Read] READ: 
+ 72933 [pool-1-thread-2] INFO  classes.Network  - [Read] Message read: [transfer]jimy:lili:reparatii calculatoare:a
+ 72933 [pool-1-thread-2] INFO  classes.Network  - [TransferState] Message received: [transfer]jimy:lili:reparatii calculatoare:a
+ 72934 [pool-1-thread-2] INFO  classes.Network  - [Read] Connection closed: EOF
+ 93801 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 93801 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]hranire batran:jimy
+ 93803 [pool-1-thread-5] INFO  classes.Network  - [Connect] CONNECT: 
+ 93803 [pool-1-thread-5] INFO  classes.Network  - [WriteClient] WRITE: 
+ 93803 [pool-1-thread-5] INFO  classes.Network  - [WriteToServer] Connection closed
+ 102367 [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 102367 [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Message: [offerRequest]plimbare caine:jimy
+ 102368 [pool-1-thread-1] INFO  classes.Network  - [Connect] CONNECT: 
+ 102369 [pool-1-thread-1] INFO  classes.Network  - [WriteClient] WRITE: 
+ 102369 [pool-1-thread-1] INFO  classes.Network  - [WriteToServer] Connection closed
+ 115202 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connect to: 127.0.0.1:30000
+ 115202 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Message: [signOut]jimy
+ 115204 [pool-1-thread-3] INFO  classes.Network  - [Connect] CONNECT: 
+ 115204 [pool-1-thread-3] INFO  classes.Network  - [WriteClient] WRITE: 
+ 115205 [pool-1-thread-3] INFO  classes.Network  - [WriteToServer] Connection closed

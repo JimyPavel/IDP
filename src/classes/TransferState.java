@@ -44,10 +44,11 @@ public class TransferState implements IState{
 			
 			String c = br.readLine();
 			while(c  != null){
-				String message = "[transfer]" + info[0]+":"+info[1]+":"+info[2]+":"+c;
-				network.WriteToServer(message);
 				for(int j=0;j<c.length();j++)
 				{
+					String message = "[transfer]" + info[0]+":"+info[1]+":"+info[2]+":"+c.charAt(j);
+					network.WriteToServer(message);
+				
 					network.getMediator().transfer(info[0], info[2]);
 					Thread.sleep(1000);
 				}
@@ -101,10 +102,7 @@ public class TransferState implements IState{
 				writer.write(infos[3]);
 				writer.close();
 				
-				for(int j=0; j<infos[3].length(); j++){
-					network.getMediator().transfer(infos[1], infos[2]);
-					Thread.sleep(1000);
-				}
+				network.getMediator().transfer(infos[1], infos[2]);
 				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -112,10 +110,7 @@ public class TransferState implements IState{
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			} 
 			
 		}
 	}

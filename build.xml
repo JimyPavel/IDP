@@ -11,6 +11,10 @@
 	<path id="mypath">
 		<pathelement location="log4j-1.2.17.jar" />
 	</path>
+	
+	<path id="mysql">
+		<pathelement location="mysql-connector-java-5.1.7-bin.jar" />
+	</path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -57,24 +61,28 @@
 	            <classpath>
 	            	<path refid="IDP.classpath" />
 	            	<path refid="mypath"/>
+	            	<path refid="mysql"/>
 	        	</classpath>
 	        </java>
     		<java classname="classes.Main" failonerror="true" fork="yes">
 	            <classpath>
 	            	<path refid="IDP.classpath" />
 	            	<path refid="mypath"/>
+	            	<path refid="mysql"/>
 	        	</classpath>
 	        </java>
 	    	<java classname="classes.Main" failonerror="true" fork="yes">
 	            <classpath>
 	            	<path refid="IDP.classpath" />
 	            	<path refid="mypath"/>
+	            	<path refid="mysql"/>
 	        	</classpath>
 	        </java>
 	    	<java classname="classes.Main" failonerror="true" fork="yes">
 	            <classpath>
 	            	<path refid="IDP.classpath" />
 	            	<path refid="mypath"/>
+	            	<path refid="mysql"/>
 	        	</classpath>
 	        </java>
     	</parallel>
