@@ -13,4 +13,6 @@ public interface IGui {
 	public void DropOffer(String productName, String buyer);
 	
 	public void OfferRefused(String buyer, String product, String value);
+	
+	public void transfer(String user, String product);
 }

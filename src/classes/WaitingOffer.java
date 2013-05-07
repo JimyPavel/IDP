@@ -15,7 +15,7 @@ public class WaitingOffer implements IState{
 	
 	@Override
 	public void sendMessage() {
-		// TODO Auto-generated method stub
+		
 		Network.logger.info("[WaitingOfferState] "+ details);
 		String []info = details.split(":");
 		if(info.length < 5)
@@ -27,6 +27,7 @@ public class WaitingOffer implements IState{
 		if(info[4].equals("true"))
 		{
 			message = "[offerAccepted]" + info[0]+":"+info[1]+":"+info[2]+":"+info[3];
+			network.setState(network.getTransferState());
 		}
 		else
 		{

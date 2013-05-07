@@ -39,6 +39,7 @@ public class Network implements INetwork {
 	private IState waitingAcceptState;
 	private IState waitingOfferSate;
 	private IState dropOfferState;
+	private IState transferState;
 	
 	public Network (IMediator mediator)
 	{
@@ -51,6 +52,7 @@ public class Network implements INetwork {
 		waitingAcceptState = new WaitingAccept(this);
 		waitingOfferSate = new WaitingOffer(this);
 		dropOfferState = new DropOfferState(this);
+		transferState = new TransferState(this);
 		
 		state = connectState;
 		BasicConfigurator.configure();
@@ -146,6 +148,7 @@ public class Network implements INetwork {
 		String details = buyer+":"+seller+":"+product+":"+value+":"+"true";
 		state.addDetails(details);
 		state.sendMessage();
+		
 	}
 	
 	// client -> drop offer request
@@ -285,6 +288,8 @@ public class Network implements INetwork {
 				info[0].equals("[offerAccepted")||
 				info[0].equals("[dropOffer"))
 			this.setState(getWaitingAcceptState());
+		else if(info[0].equals("[transfer"))
+			this.setState(getTransferState());
 	}
 	
 	public void write(SelectionKey key) throws IOException {
@@ -448,9 +453,19 @@ public class Network implements INetwork {
 		return dropOfferState;
 	}
 	
+	public IState getTransferState()
+	{
+		return transferState;
+	}
+	
 	public void setState(IState newState)
 	{
 		state = newState;
+	}
+	
+	public IState getState()
+	{
+		return state;
 	}
 	
 	public IMediator getMediator()

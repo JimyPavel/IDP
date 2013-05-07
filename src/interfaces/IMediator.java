@@ -107,4 +107,6 @@ public interface IMediator {
 	public void signOutAnnounce(String username);
 	
 	public int getPort(String username);
+	
+	public void transfer(String user, String product);
 }

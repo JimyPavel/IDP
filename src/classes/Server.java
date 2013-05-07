@@ -141,29 +141,6 @@ public class Server {
 			socketChannel.close();
 		}
 	}
-
-/*	private static void WriteIpPort(String ip, int port, String userName, String userType){
-		
-		try{
-			FileOutputStream fs = new FileOutputStream(Server.File, true);
-			DataOutputStream out = new DataOutputStream(fs);
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
-			
-			writer.write(ip + " " + port + " "  + userName + " " + userType);
-			writer.newLine();
-			writer.close();
-			logger.info("[WriteIpPort] User "+userName+ " of type " + userType + " connected with ip "+ip+" and port "+port);
-			
-		} catch(IOException ex)
-		{
-			logger.error("Exception when trying to write ip and port for server");
-			ex.printStackTrace();
-		} catch(Exception ex)
-		{
-			ex.printStackTrace();
-		}
-
-	}*/
 	
 	private static void addFileLogging(String fileName) {
 		
@@ -189,184 +166,183 @@ public class Server {
 		}
 	}
 	
-	private static void ParseInformation(String info){
-		String []pieces = info.split("]");
-		if(pieces.length < 2)
-		{
-			logger.warn("[ParseInformation] Wrong message received: " + info);
-			return;
-		}
+	private static void ParseInformation(final String info){
 		
-		String typeOfMessage = pieces[0].substring(1);
-		
-		if (typeOfMessage.equals("connect"))
-		{
-			String []address = pieces[1].split(":");
-			if(address.length < 4)
-			{
-				logger.warn("[ParseInformation] Wrong address received: "+pieces[1]);
-				return;
-			}
-			
-			int port = Integer.parseInt(address[1]);
-			String userName = address[2];
-			String userType = address[3];
-			
-			usersAddress.put(port, userType);
-			usersName.put(port, userName);
-		}
-		else if(typeOfMessage.equals("offerRequest"))
-		{
-			// trimite cererea tuturor seller-ilor
-			logger.info("[ParseInformation] Offer Request received");
-			
-			Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
-			while (it.hasNext()) {
-			  Map.Entry<Integer, String> entry = it.next();
-
-			  if (entry.getValue().equals(User.SELLER_TYPE))
-			  {
-				  SendMessage(info, entry.getKey());
-			  }
-			}
-		}
-		else if(typeOfMessage.equals("offerMade"))
-		{
-			logger.info("[ParseInformation] Offer Made");
-			// buyer, product, value, seller
-			String []infos = pieces[1].split(":");
-			
-			if(infos.length < 4)
-			{
-				logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
-				return;
-			}
-			String buyer = infos[0];
-			
-			Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
-			while (it.hasNext()) {
-			  Map.Entry<Integer, String> entry = it.next();
-
-			  if (entry.getValue().equals(buyer))
-			  {
-				  SendMessage(info, entry.getKey());
-			  }
-			}
-		}
-		else if(typeOfMessage.equals("offerAccepted"))
-		{
-			logger.info("[ParseInformation] Offer accepted");
-			String []infos = pieces[1].split(":");
-			// buyer, seller, product, value
-			if(infos.length < 4)
-			{
-				logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
-				return;
-			}
-						
-			Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
-			
-			while (it.hasNext()) {
-			  Map.Entry<Integer, String> entry = it.next();
-			  if (entry.getValue().equals(User.SELLER_TYPE))
-			  {
-				  SendMessage(info, entry.getKey());
-			  }
-			}
-			
-		}
-		else if(typeOfMessage.equals("refusedOffer"))
-		{
-			logger.info("[ParseInformation] Offer refused");
-			String []infos = pieces[1].split(":");
-			// buyer, seller, product, value
-			if(infos.length < 4)
-			{
-				logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
-				return;
-			}
-			
-			String seller = infos[1];	
-			Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
-			while (it.hasNext()) {
-			  Map.Entry<Integer, String> entry = it.next();
-
-			  if (entry.getValue().equals(seller))
-			  {
-				  SendMessage(info, entry.getKey());
-			  }
-			}
-		}
-		else if(typeOfMessage.equals("dropOffer")){
-			logger.info("[ParseInformation] Drop Offer");
-			
-			String []infos = pieces[1].split(":");
-			// buyer, seller, product, value
-			if(infos.length < 2)
-			{
-				logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
-				return;
-			}
-			
-			Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
-			while (it.hasNext()) {
-			  Map.Entry<Integer, String> entry = it.next();
-
-			  if (entry.getValue().equals(User.SELLER_TYPE))
-			  {
-				  SendMessage(info, entry.getKey());
-			  }
-			}
-		}
-		else if(typeOfMessage.equals("signOut")){
-			logger.info("[ParseInformation] Sign out");
-				
-				Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
-				while (it.hasNext()) {
-				    Map.Entry<Integer, String> entry = it.next();
-	
-				    if (entry.getValue().equals(pieces[1]))
-				    {
-					    int port = entry.getKey();
-					    usersAddress.remove(port);
-					    usersName.remove(port);
-					  
-/*						FileInputStream fstream = new FileInputStream(File);
-						// Get the object of DataInputStream
-						DataInputStream in = new DataInputStream(fstream);
-						BufferedReader br = new BufferedReader(new InputStreamReader(in));
-						String strLine;
-						
-						strLine = br.readLine();
-						while(strLine!=null && strLine != System.getProperty("line.separator") && strLine != " "){
-							
-							System.out.println(strLine);
-							String date[] = strLine.split(" ");
-							
-							if(date.length == 4)
-							{
-								if(Integer.parseInt(date[1]) != port){
-									s = s + strLine + System.getProperty("line.separator");
-								}
-							}
-							strLine = br.readLine();
-						}
-						br.close();
-						
-						FileOutputStream fs = new FileOutputStream(Server.File, false);
-						DataOutputStream out = new DataOutputStream(fs);
-						BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
-						
-						writer.write(s);
-						writer.close();*/
-						logger.info("[ParseInformation] User " + pieces[1] + " is gonne");
-						
-					    break;
-				    }
+		pool.execute(new Runnable() {
+			public void run() {
+				String []pieces = info.split("]");
+				if(pieces.length < 2)
+				{
+					logger.warn("[ParseInformation] Wrong message received: " + info);
+					return;
 				}
+				
+				String typeOfMessage = pieces[0].substring(1);
+				
+				if (typeOfMessage.equals("connect"))
+				{
+					String []address = pieces[1].split(":");
+					if(address.length < 4)
+					{
+						logger.warn("[ParseInformation] Wrong address received: "+pieces[1]);
+						return;
+					}
+					
+					int port = Integer.parseInt(address[1]);
+					String userName = address[2];
+					String userType = address[3];
+					
+					usersAddress.put(port, userType);
+					usersName.put(port, userName);
+				}
+				else if(typeOfMessage.equals("offerRequest"))
+				{
+					// trimite cererea tuturor seller-ilor
+					logger.info("[ParseInformation] Offer Request received");
+					
+					Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
+					while (it.hasNext()) {
+					  Map.Entry<Integer, String> entry = it.next();
+		
+					  if (entry.getValue().equals(User.SELLER_TYPE))
+					  {
+						  SendMessage(info, entry.getKey());
+					  }
+					}
+				}
+				else if(typeOfMessage.equals("offerMade"))
+				{
+					logger.info("[ParseInformation] Offer Made");
+					// buyer, product, value, seller
+					String []infos = pieces[1].split(":");
+					
+					if(infos.length < 4)
+					{
+						logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
+						return;
+					}
+					String buyer = infos[0];
+					
+					Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
+					while (it.hasNext()) {
+					  Map.Entry<Integer, String> entry = it.next();
+		
+					  if (entry.getValue().equals(buyer))
+					  {
+						  SendMessage(info, entry.getKey());
+					  }
+					}
+				}
+				else if(typeOfMessage.equals("offerAccepted"))
+				{
+					logger.info("[ParseInformation] Offer accepted");
+					String []infos = pieces[1].split(":");
+					// buyer, seller, product, value
+					if(infos.length < 4)
+					{
+						logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
+						return;
+					}
+								
+					Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
+					
+					while (it.hasNext()) {
+					  Map.Entry<Integer, String> entry = it.next();
+					  if (entry.getValue().equals(User.SELLER_TYPE))
+					  {
+						  SendMessage(info, entry.getKey());
+					  }
+					}
+					
+				}
+				else if(typeOfMessage.equals("transfer"))
+				{
+					logger.info("[ParseInformation] Transfer");
+					String []infos = pieces[1].split(":");
+					// buyer, seller, product, value
+					if(infos.length < 4)
+					{
+						logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
+						return;
+					}
+					String buyer = infos[0];			
+					Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
+					
+					while (it.hasNext()) {
+					  Map.Entry<Integer, String> entry = it.next();
+					  if (entry.getValue().equals(buyer))
+					  {
+						  SendMessage(info, entry.getKey());
+					  }
+					}
+					
+				}
+				else if(typeOfMessage.equals("refusedOffer"))
+				{
+					logger.info("[ParseInformation] Offer refused");
+					String []infos = pieces[1].split(":");
+					// buyer, seller, product, value
+					if(infos.length < 4)
+					{
+						logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
+						return;
+					}
+					
+					String seller = infos[1];	
+					Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
+					while (it.hasNext()) {
+					  Map.Entry<Integer, String> entry = it.next();
+		
+					  if (entry.getValue().equals(seller))
+					  {
+						  SendMessage(info, entry.getKey());
+					  }
+					}
+				}
+				else if(typeOfMessage.equals("dropOffer")){
+					logger.info("[ParseInformation] Drop Offer");
+					
+					String []infos = pieces[1].split(":");
+					// buyer, seller, product, value
+					if(infos.length < 2)
+					{
+						logger.warn("[ParseInformation] Wrong message received: " + pieces[1]);
+						return;
+					}
+					
+					Iterator<Map.Entry<Integer, String>> it = usersAddress.entrySet().iterator();
+					while (it.hasNext()) {
+					  Map.Entry<Integer, String> entry = it.next();
+		
+					  if (entry.getValue().equals(User.SELLER_TYPE))
+					  {
+						  SendMessage(info, entry.getKey());
+					  }
+					}
+				}
+				else if(typeOfMessage.equals("signOut")){
+					logger.info("[ParseInformation] Sign out");
+						
+						Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
+						while (it.hasNext()) {
+						    Map.Entry<Integer, String> entry = it.next();
 			
+						    if (entry.getValue().equals(pieces[1]))
+						    {
+							    int port = entry.getKey();
+							    usersAddress.remove(port);
+							    usersName.remove(port);
+							  
+								logger.info("[ParseInformation] User " + pieces[1] + " is gonne");
+								
+							    break;
+						    }
+						}
+					
 
-		}
+				}
+			}
+		});
 	}
 	
 	private static void SendMessage(final String message, final int port)

@@ -144,4 +144,9 @@ public class Mediator implements IMediator{
 	public int getPort(String username){
 		return web.getPort(username);
 	}
+	
+	public void transfer(String user, String product)
+	{
+		gui.transfer(user, product);
+	}
 }

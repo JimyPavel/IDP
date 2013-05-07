@@ -57,6 +57,11 @@ public class WaitingAccept implements IState{
 			if(network.getMediator().getUsername().equals(infos[1]))
 			{
 				network.getMediator().OfferAccepted(infos[0], infos[2], infos[3]);
+				network.setState(network.getTransferState());
+				
+				//start transfer
+				network.getState().addDetails(pieces[1]);
+				network.getState().sendMessage();
 			}
 			// oferta neacceptata
 			else

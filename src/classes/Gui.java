@@ -12,8 +12,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -37,7 +35,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 
 import interfaces.IMediator;
 import interfaces.IGui;
@@ -501,35 +498,9 @@ public class Gui extends JPanel implements IGui{
 									 // we tell to mediator to start transfer
 								    mediator.startTransfer(userName, offer.getSeller(), offer.getProduct(), offer.getValue());
 								    
-									// we start the progress bar
-									ExportTask task = new ExportTask(Integer.parseInt(offer.getValue()));
-									PropertyChangeListener listener = new PropertyChangeListener() {
-										@Override
-										public void propertyChange(PropertyChangeEvent evt) {
-											JProgressBar progressBar = 
-												(JProgressBar)table.getModel().getValueAt(r, 3);
-											progressBar.setMaximum(Integer.parseInt(offer.getValue()));
-											if ("progress".equals(evt.getPropertyName())) {
-									        	Integer newValue = (Integer)evt.getNewValue();
-									        	
-									        	// if the transfer is on 2%, we change the status
-									        	if(newValue == 2){
-									        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
-									        	}
-									        	else if(newValue == progressBar.getMaximum()){
-									        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
-									        		offer.setTransferMade(true);
-									        	}
-									        	progressBar.setValue((Integer)evt.getNewValue());
-									        	model.setValueAt(progressBar, r, 3);
-									        	table.setModel(model);
-											}
-										}
-									};
-									task.addPropertyChangeListener(listener);
-								    task.execute();
-								    
-								   
+								    JProgressBar progressBar = 
+										(JProgressBar)table.getModel().getValueAt(r, 3);
+									progressBar.setMaximum(Integer.parseInt(offer.getValue()));
 								}
 							});
 		            		acceptOfferB.setEnabled(false);
@@ -886,6 +857,7 @@ public class Gui extends JPanel implements IGui{
 			      // we iterate in the list of buyers, searching for that buyers who "accepted" the offer
 			      // for this productName
 				  for(int i=0; i<buyers.size() ;i++){
+					
 					  if(((Buyer)buyers.get(i)).getUsername().equals(buyer))
 					  {
 				    	  ArrayList<Request> requests = ((Buyer)buyers.get(i)).getRequests();
@@ -913,36 +885,10 @@ public class Gui extends JPanel implements IGui{
 				    				  // we change the status again in transfer started
 				    				  request.getOffer().setTransferInProgress(true);
 									  table.getModel().setValueAt("TRANSFER STARTED", r, 2);
-										
-									  // we start the progress bar
-									  ExportTask task = new ExportTask(Integer.parseInt(request.getOffer().getValue()));
-									  PropertyChangeListener listener = new PropertyChangeListener() {
-										@Override
-										public void propertyChange(PropertyChangeEvent evt) {
-											JProgressBar progressBar = 
-												(JProgressBar)table.getModel().getValueAt(r, 3);
-											progressBar.setMaximum(Integer.parseInt(request.getOffer().getValue()));
-											if ("progress".equals(evt.getPropertyName())) {
-									        	Integer newValue = (Integer)evt.getNewValue();
-									        	
-									        	// if the transfer is on 2%, we change the status
-									        	if(newValue == 2){
-									        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
-									        	}
-									        	else if(newValue == progressBar.getMaximum()){
-									        		request.getOffer().setTransferMade(true);
-									        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
-									        	}
-									        	int x = (Integer)evt.getNewValue();
-									        	
-									        	progressBar.setValue(x);
-									        	model.setValueAt(progressBar, r, 3);
-									        	table.setModel(model);
-											}
-										}
-									  };
-										task.addPropertyChangeListener(listener);
-									    task.execute();
+									  
+									  JProgressBar progressBar = 
+											(JProgressBar)table.getModel().getValueAt(r, 3);
+									  progressBar.setMaximum(Integer.parseInt(request.getOffer().getValue()));
 				    			  }
 				    		  }
 				    	  }
@@ -953,6 +899,116 @@ public class Gui extends JPanel implements IGui{
 		}
 	}
 
+	
+	public void transfer(String buyer, String product)
+	{
+		// we parse every entry from the "tableEntries"
+		if(tableEntries != null){
+			@SuppressWarnings("rawtypes")
+			Set set = tableEntries.entrySet();
+			if(set != null){
+				@SuppressWarnings("rawtypes")
+				Iterator it = set.iterator();
+			    while (it.hasNext()) {
+			      @SuppressWarnings({ "rawtypes", "unchecked" })
+				  Map.Entry<String,ArrayList<User>> entry = (Map.Entry) it.next();
+			      
+			      // we take the product name
+			      String productName = product;
+			      // and the list of buyers
+			      ArrayList<User> buyers = (ArrayList<User>)entry.getValue();
+			      
+			      // we iterate in the list of buyers, searching for that buyers who "accepted" the offer
+			      // for this productName
+			      if(userType.equals(User.SELLER_TYPE)){
+					  for(int i=0; i<buyers.size() ;i++){
+						  if(((Buyer)buyers.get(i)).getUsername().equals(buyer))
+						  {
+					    	  ArrayList<Request> requests = ((Buyer)buyers.get(i)).getRequests();
+					    	  
+					    	  // we iterate the list of requests and see if we made an offer for one of them
+					    	  for(int j=0; j<requests.size();j++){
+					    		 final Request request = (Request)requests.get(j);
+					    		  if(request.getProductName().equals(productName)){
+					    			  // once we found the offer we made , we start the transfer
+					    			  if(request.getOffer() != null){
+					    				  // we search the row in table , having the productName
+					    				  int rowNo = -1;
+					    				  for(int k=0; k < mainProducts.size() ;k++){
+					    					  if(mainProducts.get(k).getName().equals(productName)){
+					    						  rowNo = k;
+					    						  break;
+					    					  }
+					    				  }
+					    				  final int r = rowNo;
+					    				 
+										JProgressBar progressBar = 
+											(JProgressBar)table.getModel().getValueAt(r, 3);
+								
+							        	Integer newValue = progressBar.getValue()+1;
+							        	// if the transfer is on 2%, we change the status
+							        	if(newValue == 2){
+							        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
+							        	}
+							        	else if(newValue == progressBar.getMaximum()){
+							        		request.getOffer().setTransferMade(true);
+							        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
+							        	}
+							        	
+							        	progressBar.setValue(newValue);
+							        	model.setValueAt(progressBar, r, 3);
+							        	table.setModel(model);
+					    			  }
+					    		  }
+					    	  }
+					      }
+					    }
+			      }
+			      else if(userType.equals(User.BUYER_TYPE)){
+			    	  for(int i=0; i<buyers.size() ;i++){
+						  if(((Seller)buyers.get(i)).getUsername().equals(buyer))
+						  {
+							  ArrayList<Offer> offers = ((Seller)buyers.get(i)).getOffers();
+					    	  
+					    	  // we iterate the list of requests and see if we made an offer for one of them
+					    	  for(int j=0; j<offers.size();j++){
+					    		 final Offer offer = (Offer)offers.get(j);
+					    		  if(offer.getProduct().equals(productName)){
+					    				  int rowNo = -1;
+					    				  for(int k=0; k < mainProducts.size() ;k++){
+					    					  if(mainProducts.get(k).getName().equals(productName)){
+					    						  rowNo = k;
+					    						  break;
+					    					  }
+					    				  }
+					    				  final int r = rowNo;
+					    				 
+										JProgressBar progressBar = 
+											(JProgressBar)table.getModel().getValueAt(r, 3);
+								
+							        	Integer newValue = progressBar.getValue()+1;
+							        	// if the transfer is on 2%, we change the status
+							        	if(newValue == 2){
+							        		table.getModel().setValueAt("TRANSFER IN PROGRESS", r, 2);
+							        	}
+							        	else if(newValue == progressBar.getMaximum()){
+							        		offer.setTransferMade(true);
+							        		table.getModel().setValueAt("TRANSFER COMPLETED", r, 2);
+							        	}
+							        	
+							        	progressBar.setValue(newValue);
+							        	model.setValueAt(progressBar, r, 3);
+							        	table.setModel(model);
+					    			  
+					    		  }
+					    	  }
+						  }
+			    	  }
+			      }
+			    }
+			}
+		}
+}
 	// metoda pt seller, in care este refuzata oferta sa
 	public void OfferRefused(String buyer, String product, String value){
 		
@@ -1282,6 +1338,7 @@ public class Gui extends JPanel implements IGui{
 		return userName;
 	}
 	
+	
 	//metoda pentru buyers unde primesc ofertele
 	@Override
 	public void OfferReceived(String product, String value, String seller) {
@@ -1392,6 +1449,9 @@ public class Gui extends JPanel implements IGui{
 				break;
 			}
 		}
-	}	
+	}
+	
+	
+	
 
 }
