@@ -1,3 +1,0 @@
-127.0.0.1 30000 server server
-127.0.0.1 30001 jimy buyer
-127.0.0.1 30002 lili seller

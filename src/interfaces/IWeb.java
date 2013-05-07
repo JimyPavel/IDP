@@ -26,7 +26,6 @@ public interface IWeb {
 	// this method will return a list of sellers who offer this product
 	public ArrayList<String> getSellers(String productName);
 	
-	// this method will return a list of buyers who wants an offer for this product
-	public ArrayList<String> getBuyers (String productName);
+	public int getPort(String username);
 	
 }

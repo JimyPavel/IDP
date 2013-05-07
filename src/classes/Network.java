@@ -1,12 +1,7 @@
 package classes;
 
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -32,7 +27,6 @@ public class Network implements INetwork {
 	public static ExecutorService pool = Executors.newFixedThreadPool(5);
 	public static Logger logger = Logger.getLogger(Network.class);
 	public static boolean running = true;
-	private static final String File = "setup.txt";
 	private String user;
 	
 	// starea curenta
@@ -64,26 +58,21 @@ public class Network implements INetwork {
 	}
 	@Override
 	public boolean userValid(String username, String password) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isLogged(String username) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean notifyStatusChanged(String username, Offer offer,
-			String status) {
-		// TODO Auto-generated method stub
+	public boolean notifyStatusChanged(String username, Offer offer, String status) {
 		return false;
 	}
 
 	@Override
 	public void addFileLogging(String fileName) {
-		// TODO Auto-generated method stub
 		try{
 			// delete previous log file
 			File f = new File(fileName);
@@ -109,56 +98,24 @@ public class Network implements INetwork {
 	// connect
 	@Override
 	public void setIpAndPort(String userType) {
-		// TODO Auto-generated method stub
+		
 		
 		try{
+			
 			this.setState(getConnectState());
 			this.user = userType;
 			
-			int lines = 0;
-			FileInputStream fstream = new FileInputStream(Network.File);
-			// Get the object of DataInputStream
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			String strLine;
-			String lastIp = "";
-			int lastPort = 0;
-			
-			// citeste adresa serverului 
-			strLine = br.readLine();
-			while(strLine!=null && strLine != System.getProperty("line.separator") && strLine != " "){
-				
-				String pieces[] = strLine.split(" ");
-				
-				if(pieces.length == 4)
-				{
-					if (lines == 0)
-					{
-						PortServer = Integer.parseInt(pieces[1]);
-						IpServer = pieces[0];
-					}
-					lines++;
-					
-					lastPort = Integer.parseInt(pieces[1]);
-					lastIp = pieces[0];
-				}
-				strLine = br.readLine();
-			}
-			br.close();
-			
-			PORT = lastPort + 1;
-			Ip = lastIp;
+			PortServer = Constants.portServer;
+			IpServer = Constants.IpServer;
+			Ip = Constants.IpUser;
+			PORT = mediator.getPort(mediator.getUsername());
 			
 			// anunta serverul ca s-a logat (state e connect)
 			state.sendMessage();
 			
 			ListenToPort();
 			
-		} catch (IOException e) {
-			logger.error("Exception when trying to read information about other users");
-			e.printStackTrace();
-		} catch(Exception ex)
-		{
+		} catch(Exception ex){
 			ex.printStackTrace();
 		}
 	
@@ -167,7 +124,6 @@ public class Network implements INetwork {
 	// client -> launch offer request
 	@Override
 	public void LaunchOfferRequest(String product) {
-		// TODO Auto-generated method stub
 		this.setState(getOfferRequestState());
 		state.addDetails(product);
 		state.sendMessage();

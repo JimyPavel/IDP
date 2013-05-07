@@ -29,7 +29,6 @@ public class Mediator implements IMediator{
 	}
 
 	@Override
-	// for now this method will only return true
 	public boolean signOut(String username) {
 		return web.signOut(username);
 	}
@@ -41,7 +40,6 @@ public class Mediator implements IMediator{
 
 	@Override
 	public boolean acceptOffer(String username, Offer offer) {
-		// TODO:  network.acceptOffer() 
 		return true;
 	}
 
@@ -52,47 +50,37 @@ public class Mediator implements IMediator{
 
 	@Override
 	public void makeOffer(String username, Offer offer, String product) {
-		// TODO Auto-generated method stub
 		network.makeOffer(username, offer, product);
 	}
 	
+	@Override
 	public void OfferReceived(String product, String value, String seller){
 		gui.OfferReceived(product, value, seller);
 	}
 
 	@Override
 	public boolean cancelRequest(String username, String product) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean cancelOffer(String username, Offer offer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean changeStatus(String username, Offer offer, String status) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public int getTransferStatus(String buyerUsername, String sellerUsername,
-			Offer offer) {
-		// TODO Auto-generated method stub
+	public int getTransferStatus(String buyerUsername, String sellerUsername, Offer offer) {
 		return 0;
 	}
 
 	@Override
 	public ArrayList<String> getSellers(String productName) {
 		return web.getSellers(productName);
-	}
-	
-	@Override
-	public ArrayList<String> getBuyers(String productName){
-		return web.getBuyers(productName);
 	}
 
 	@Override
@@ -102,19 +90,16 @@ public class Mediator implements IMediator{
 
 	@Override
 	public void setIpAndPort(String userType) {
-		// TODO Auto-generated method stub
 		network.setIpAndPort(userType);
 	}
 
 	@Override
 	public void setLoggerFile(String name) {
-		// TODO Auto-generated method stub
 		network.addFileLogging(name+"Log.txt");
 	}
 
 	@Override
 	public void LaunchOfferRequest(String product) {
-		// TODO Auto-generated method stub
 		network.LaunchOfferRequest(product);
 	}
 
@@ -126,23 +111,22 @@ public class Mediator implements IMediator{
 	@Override
 	public void signOutAnnounce(String username){
 		network.signOutAnnounce(username);
+		// update database
+		web.signOut(username);
 	}
 	
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return gui.getUsername();
 	}
 
 	@Override
 	public void OfferRequestReceived(String product, String buyer) {
-		// TODO Auto-generated method stub
 		gui.OfferRequestReceived(product, buyer);
 	}
 
 	@Override
 	public void OfferAccepted(String buyer, String product, String value) {
-		// TODO Auto-generated method stub
 		gui.OfferAccepted(buyer, product, value);
 	}
 	
@@ -152,9 +136,12 @@ public class Mediator implements IMediator{
 	}
 	
 	@Override
-	public void OfferRefused(String buyer, String product, String value)
-	{
+	public void OfferRefused(String buyer, String product, String value){
 		gui.OfferRefused(buyer, product, value);
 	}
 
+	@Override
+	public int getPort(String username){
+		return web.getPort(username);
+	}
 }

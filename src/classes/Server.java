@@ -17,9 +17,8 @@ import org.apache.log4j.RollingFileAppender;
 public class Server {
 	
 	public static final int BUF_SIZE	= 1024;
-	public static final String IP		= "127.0.0.1";
-	public static final int PORT		= 30000;
-	private static final String File = "setup.txt";
+	public static final String IP		= Constants.IpServer;
+	public static final int PORT		= Constants.portServer;
 	static Logger logger = Logger.getLogger(Server.class);
 	private static Hashtable<Integer, String> usersAddress;
 	private static Hashtable<Integer, String> usersName;
@@ -56,8 +55,6 @@ public class Server {
 						accept(key);
 					else if (key.isReadable())
 						read(key);
-					//else if (key.isWritable())
-						//write(key);
 				}
 			}
 			
@@ -88,7 +85,7 @@ public class Server {
 		socketChannel.register(key.selector(), SelectionKey.OP_READ, buf);
 		
 		logger.info("[Accept] Connection from: " + socketChannel.socket().getRemoteSocketAddress());
-		//key.interestOps(SelectionKey.OP_WRITE);
+		
 	}
 	
 	public static void read(SelectionKey key) throws IOException {
@@ -145,7 +142,7 @@ public class Server {
 		}
 	}
 
-	private static void WriteIpPort(String ip, int port, String userName, String userType){
+/*	private static void WriteIpPort(String ip, int port, String userName, String userType){
 		
 		try{
 			FileOutputStream fs = new FileOutputStream(Server.File, true);
@@ -166,10 +163,10 @@ public class Server {
 			ex.printStackTrace();
 		}
 
-	}
+	}*/
 	
 	private static void addFileLogging(String fileName) {
-		// TODO Auto-generated method stub
+		
 		try{
 			// delete previous log file
 			File f = new File(fileName);
@@ -210,12 +207,10 @@ public class Server {
 				logger.warn("[ParseInformation] Wrong address received: "+pieces[1]);
 				return;
 			}
-			String ip = address[0];
+			
 			int port = Integer.parseInt(address[1]);
 			String userName = address[2];
 			String userType = address[3];
-			
-			WriteIpPort(ip, port, userName, userType);
 			
 			usersAddress.put(port, userType);
 			usersName.put(port, userName);
@@ -325,8 +320,7 @@ public class Server {
 		}
 		else if(typeOfMessage.equals("signOut")){
 			logger.info("[ParseInformation] Sign out");
-				try{
-				String s= new String();
+				
 				Iterator<Map.Entry<Integer, String>> it = usersName.entrySet().iterator();
 				while (it.hasNext()) {
 				    Map.Entry<Integer, String> entry = it.next();
@@ -337,7 +331,7 @@ public class Server {
 					    usersAddress.remove(port);
 					    usersName.remove(port);
 					  
-						FileInputStream fstream = new FileInputStream(File);
+/*						FileInputStream fstream = new FileInputStream(File);
 						// Get the object of DataInputStream
 						DataInputStream in = new DataInputStream(fstream);
 						BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -364,17 +358,14 @@ public class Server {
 						BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
 						
 						writer.write(s);
-						writer.close();
+						writer.close();*/
 						logger.info("[ParseInformation] User " + pieces[1] + " is gonne");
 						
 					    break;
 				    }
 				}
-			}
-			catch(IOException ex)
-			{
-				
-			}
+			
+
 		}
 	}
 	

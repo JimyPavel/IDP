@@ -81,9 +81,6 @@ public interface IMediator {
 	// this method will return a list of sellers who offer this product
 	public ArrayList<String> getSellers(String productName);
 	
-	// this method will return a list of buyers who wants an offer for this product
-	public ArrayList<String> getBuyers (String productName);
-	
 	public void startTransfer(String buyer, String seller, String product, String value);
 	
 	// this method will create a file for logging, different for each user
@@ -108,4 +105,6 @@ public interface IMediator {
 	public void OfferRefused(String buyer, String product, String value);
 	
 	public void signOutAnnounce(String username);
+	
+	public int getPort(String username);
 }

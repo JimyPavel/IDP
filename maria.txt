@@ -1,3 +1,0 @@
-service:curatare toaleta
-service:spalat geamuri
-service:reparat calculator

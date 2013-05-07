@@ -10,9 +10,9 @@ public class ConnectState implements IState{
 	{
 		this.network = network;
 	}
+	
 	@Override
 	public void sendMessage() {
-		// TODO Auto-generated method stub
 		String message = "[connect]" + network.getIp()+":"+ network.getPort()+":"+
 						  network.getMediator().getUsername()+":"+network.getUserType();
 		network.WriteToServer(message);
